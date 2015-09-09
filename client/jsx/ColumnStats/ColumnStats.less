@@ -1,0 +1,253 @@
+
+// @import (reference) "../Shared/shared.less";
+// @import (reference) "../Shared/DepthChart/DepthChart.less";
+// @import (reference) "../Shared/Column/Column.less";
+
+@overall_score_height: 60px;
+@tile_circle_diameter : 84px;
+
+.columnStats {
+    /*<csstag
+        tag="section,column"
+        extend="column">
+        <div ...>
+            { .columnStats_content }
+            { .columnStats_depthChart }
+            { .columnStats_graph }
+        </div>
+    </csstag>*/
+    &:extend( .column );
+
+    .columnStats_content {
+        /*<csstag
+            tag="section,content">
+            <div ...>
+                { .columnStats_tile }
+                { .columnStats_tile }
+                { .columnStats_tile }
+                { .columnStats_tile }
+            </div>
+        </csstag>*/
+        &:extend(
+            .column
+            .column_Content
+        );
+        .calc( height ,
+            70% , -( @overall_score_height/2 + 10px ) );
+        float: left; clear: left;
+        padding: 20px 30px;
+
+        .columnStats_tile {
+            /*<csstag
+                tag="section,tile">
+                <div ...>
+                    { .tile_graph }
+                    { .tile_label }
+                </div>
+            </csstag>*/
+            width: 50%; height: 50%;
+            float: left;
+            position: relative;
+            background-color: #fff;
+            z-index: 10;
+            .hand();
+            &:hover {
+                //background-color: #eee;
+                //border: 3px solid #eee;
+                box-shadow: 0px 0px 6px rgba(  0,0,0,.1 );
+                z-index: 1000;
+            }
+
+            &.tagged_rules {
+                /*<csstag tag="tile"></csstag>*/
+                body.s_statDetails_tagged & {
+                    border: 1px solid #eee;
+                    z-index: 900;
+                    &:hover {
+                        box-shadow: none;
+                    }
+                }
+            }
+            &.complete_tags {
+                /*<csstag tag="tile"></csstag>*/
+                body.s_statDetails_complete & {
+                    border: 1px solid #eee;
+                    z-index: 900;
+                    &:hover {
+                        box-shadow: none;
+                    }
+                }
+            }
+
+            &.duplicates {
+                /*<csstag tag="tile"></csstag>*/
+                body.s_statDetails_duplicates & {
+                    border: 1px solid #eee;
+                    z-index: 900;
+                    &:hover {
+                        box-shadow: none;
+                    }
+                }
+            }
+
+            .tile_graph {
+                /*<csstag
+                    tag="graph">
+                    <div ...>
+                        { .tile_circle }
+                    </div>
+                </csstag>*/
+                width: 100%;
+                .calc( height , 100% , -28px );
+                position: absolute;
+                top: 0px; left: 0px;
+                font-size: 30px;
+                text-align: center;
+
+                .tile_circle {
+                    /*<csstag
+                        tag="graph">
+                        <div ...>43%</div>
+                    </csstag>*/
+                    position: absolute;
+                    .calc( top , 50% , -@tile_circle_diameter/2 );
+                    .calc( left , 50% , -@tile_circle_diameter/2 );
+                    width: @tile_circle_diameter;
+                    height: @tile_circle_diameter;
+                }
+            }
+
+
+
+            .tile_label {
+                /*<csstag
+                    tag="graph">
+                    <div ...>Rules of Dogs</div>
+                </csstag>*/
+                position: absolute;
+                left: 0px;
+                width: 100%;
+                text-align: center;
+                font-size: 10px;
+                bottom: 50%;
+                margin-bottom: -(( @tile_circle_diameter/2 ) + 4px );
+
+                .columnStats_typeBox {
+                    position: absolute;
+                    // top: 18px; left: 50%; margin-left: -10px;
+
+                    top: 0px; left: 28px;
+                    width: 20px; height: 18px;
+
+                }
+            }
+        }
+
+        .extendable_tile {
+            &:extend(
+                .columnStats
+                .columnStats_content
+                .columnStats_tile all
+            );
+
+            body.s_statDetails_extendable & {
+                border: 1px solid #eee;
+                z-index: 900;
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+    .columnStats_depthChart {
+        /*<csstag
+            tag="container">
+            <div ...></div>
+        </csstag>*/
+        .calc( height , 30% , -@overall_score_height/2 );
+        //width: 100%;
+        .calc( width , 100% , -60px );
+        float: left; clear: left;
+        padding: 10px 30px;
+        margin: 0px 30px;
+        border: 1px solid #fff;
+        .hand();
+
+        &:hover {
+            box-shadow: 0px 0px 6px rgba(  0,0,0,.1 );
+        }
+
+        body.s_statDetails_depth & {
+            border: 1px solid #eee;
+            z-index: 900;
+            &:hover {
+                box-shadow: none;
+            }
+        }
+    }
+
+    .columnStats_graph {
+        /*<csstag
+            tags="section,footer">
+            <div ...>
+                { .overall_score_label }
+                { .overall_score }
+                { .time_to_process }
+            </div>
+        </csstag>*/
+        position: relative;
+        width: 100%; height: @overall_score_height;
+        float:left; clear: left;
+
+        .overall_score {
+            /*<csstag tag="label">
+                <div ...>55%</div>
+            </csstag>*/
+            width: 100px;
+            float: right; clear: right;
+            text-align: center;
+            font-size: 30px; color: #555;
+            padding-top: 10px;
+            margin-right: 30px;
+            position: relative;
+
+            .overall_score_label {
+                /*<csstag tag="label,visualization">
+                    <div ...>Overall</div>
+                </csstag>*/
+                width: 100%;
+                text-align: center;
+                font-size: 10px;
+                color: #aaa;
+                float: right; clear: right;
+                margin-top: -6px;
+            }
+        }
+
+        .time_to_process {
+            /*<csstag tag="label,technical">
+                <div ...>33ms</div>
+            </csstag>*/
+            position: absolute;
+            left: 6px; bottom: 3px;
+            font-size: 10px; color: #eee;
+        }
+
+        .column_logo {
+            @column_logo_width: 179px * .8;
+            @column_logo_height: 38px * .8;
+
+            position: absolute;
+            left: 30px;
+            top: 26px;
+                /*@overall_score_height/2
+                    - @column_logo_height/2;*/
+
+            .column_logo_img {
+                width: @column_logo_width;
+                height: @column_logo_height;
+                background-size: 50%;
+            }
+        }
+    }
+}

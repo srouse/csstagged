@@ -1,0 +1,186 @@
+
+// @import (reference) "../Shared/shared.less";
+
+.ruleDetail {
+    /*<csstag tag="page,modal">
+        <div ...>
+            { .ruleDetail_slider }
+        </div>
+    </csstag>*/
+    width: 100vw; height: 100vh;
+    position: absolute;
+    top: 0px; left: 0px;
+    z-index: 1100;
+    overflow: hidden;
+    background-color: #fff;
+    display: none;
+
+    body.s_tree & {
+        display: block;
+    }
+    body.s_tag & {
+        display: block;
+    }
+}
+
+.ruleDetail_content {
+    /*<csstag tag="content">
+        <div ...></div>
+    </csstag>*/
+    .calc( width , 100% , -270px );
+    .calc( height , 100% , -70px );
+    position: absolute;
+    top: 70px; right: 0px;
+    background-color: #fff;
+    display: none;// tab managed
+}
+
+.ruleDetail_header {
+    /*<csstag tag="header">
+        <div ...>
+            { .ruleDetail_back }
+            { .ruleDetail_title }
+            { .ruleDetail_headerNav }
+        </div>
+    </csstag>*/
+    width: 100%; height: 70px;
+
+    .ruleDetail_title {
+        /*<csstag tag="container">
+            <div ...>
+                { .ruleDetail_titleText }
+                { .ruleDetail_iconBox }
+            </div>
+        </csstag>*/
+        .calc( width , 100% , -380px + -80px );
+        height: 100%;
+        float: left;
+
+        .ruleDetail_titleText {
+            /*<csstag tag="title">
+                <div ...>
+                    A Title
+                </div>
+            </csstag>*/
+            float: left;
+            padding: 20px 0px;
+            padding-left: 20px;
+            height: 100%;
+            font-size: 22px;
+            .hand();
+            &:hover {
+                background-color: #eee;
+            }
+        }
+
+        .ruleDetail_iconBox {
+            /*<csstag tag="container,nav_item">
+                <div ...>
+                    <div class='rule_icon'></div>
+                </div>
+            </csstag>*/
+            width: 50px; height: 100%;
+            position: relative; float: left;
+        }
+    }
+
+    .ruleDetail_headerNav {
+        /*<csstag tag="nav">
+            <div ...>
+                { .ruleDetail_item_css }
+                { .ruleDetail_item_children }
+                { .ruleDetail_item_example }
+                { .ruleDetail_back }
+            </div>
+        </csstag>*/
+        float: right; clear: right;
+        width: 410px; height: 100%;
+        background-color: #fff;
+        position: relative;
+
+        @item_color: #ccc;
+        @item_selected: #000;
+        .ruleDetail_item {
+            /*<csstag tag="nav_item">
+                <div ...>
+                    link_title
+                </div>
+            </csstag>*/
+            color: @item_color; height: 100%;
+            padding-top: 24px;
+            .calc( width , 33.3333% , -70px/3 );
+            float: left; text-align: center;
+            .hand();
+            &:hover {
+                color: @item_selected;
+            }
+        }
+        .ruleDetail_item_children {
+            /*<csstag tag="nav_item">
+                <div ...>
+                    children
+                </div>
+            </csstag>*/
+            &:extend(
+                .ruleDetail_header
+                .ruleDetail_headerNav
+                .ruleDetail_item
+            );
+            color: @item_selected !important;
+            body.s_detailTab & {
+                color: @item_color !important;
+                &:hover {
+                    color: @item_selected !important;
+                }
+            }
+        }
+        .ruleDetail_item_css {
+            /*<csstag tag="nav_item">
+                <div ...>
+                    overview
+                </div>
+            </csstag>*/
+            &:extend(
+                .ruleDetail_header
+                .ruleDetail_headerNav
+                .ruleDetail_item
+            );
+
+            body.s_detailTab_css & {
+                color: @item_selected;
+            }
+        }
+        .ruleDetail_item_example {
+            /*<csstag tag="nav_item">
+                <div ...>
+                    example
+                </div>
+            </csstag>*/
+            &:extend(
+                .ruleDetail_header
+                .ruleDetail_headerNav
+                .ruleDetail_item
+            );
+            body.s_detailTab_example & {
+                color: @item_selected;
+            }
+        }
+
+        .ruleDetail_back {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            width: 70px; height: 100%;
+            background-image: url("_assets/close.png");
+            background-color: #fff;
+            .hand();
+            margin-right: 0px;
+            float: right;
+            transition: all .2s;
+
+            &:hover {
+                background-color: #eee;
+            }
+        }
+    }
+}

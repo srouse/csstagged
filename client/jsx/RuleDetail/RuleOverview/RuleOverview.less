@@ -1,0 +1,69 @@
+
+// @import (reference) "../../Shared/shared.less";
+// @import (reference) "../RuleDetail.less";
+
+.ruleDetail_Overview {
+    /*<csstag tag="page">
+        <div ... style="display: block;">
+            { .ruleDetail_code }
+        </div>
+    </csstag>*/
+    &:extend(
+        .ruleDetail_content
+    );
+
+    .calc( width , 100% , -(290px*2) );
+    z-index: 100;
+
+    body.s_detailTab_css & {
+        display: block;
+    }
+
+    @media ( max-width: @screen-lg-min ) {
+        .calc( width , 100% , -( 290px + 100px ) );
+    }
+
+    .ruleDetail_code {
+        /*<csstag tag="content">
+            <div ...>
+                { .ruleDetail_title }
+                { .ruleDetail_pre }
+            </div>
+        </csstag>*/
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        overflow: auto;
+        padding: 30px 70px;
+
+        .ruleDetail_title {
+            /*<csstag tag="code">
+                <div ...>Pseudo Selectors</div>
+            </csstag>*/
+            width: 100%;
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+            color: #333;
+            padding-top: 20px;
+            clear: both;
+        }
+
+        .ruleDetail_pre {
+            /*<csstag tag="code">
+<pre ...>
+a [
+    color: #f00;
+]
+</pre>
+            </csstag>*/
+            width: 100%;
+            font-family: "Muli", sans-serif;
+            float: left;
+            white-space: pre-wrap;       /* CSS 3 */
+            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        }
+    }
+}

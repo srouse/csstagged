@@ -1,0 +1,163 @@
+
+// @import (reference) "../Shared/shared.less";
+
+.overallVisual {
+    /*<csstag tag="visualization"
+                dependencies="html">
+        <div ...>
+            { .cssp_OverallVisual_taggedRules }
+        </div>
+    </csstag>*/
+    width: 100%;
+    height: 90px;
+    border-top: 1px solid #d9d9d9;
+    padding-left: 30px; padding-top: 30px;
+    position: relative;
+    z-index: 200;
+
+    .cssp_OverallVisual_taggedRules {
+        /*<csstag tag="section">
+            <div ...>
+                { .overallVisual_taggedBar }
+                { .overallVisual_rulesBar }
+            </div>
+        </csstag>*/
+        .calc( width , 100% , -30px );
+        position: relative;
+
+        .overallVisual_bar {
+            /*<csstag tag="visualization">
+                <div ... style="width: 54%;">
+                    { .overallBar_total }
+                    { .overallBar_percent }
+                    { .label }
+                </div>
+            </csstag>*/
+            height: 30px; float: left;
+            padding-top: 2px;
+            position: relative;
+            z-index: 200;
+            color: #333;
+            background-color: #ddd;
+
+            .overallBar_total {
+                /*<csstag tag="label">
+                    <div ...>33</div>
+                </csstag>*/
+                font-size: 16px;
+                padding-right: 12px;
+                float: right;
+            }
+            .overallBar_percent {
+                /*<csstag tag="label">
+                    <div ...>44%</div>
+                </csstag>*/
+                font-size: 12px;
+                padding-left: 10px;
+                padding-top: 4px;
+                padding-right: 10px;
+                float: right;
+            }
+        }
+
+        .overallVisual_taggedBar {
+            /*<csstag tag="visualization">
+                <div ... style="width: 54%;">
+                    { .tagged_total }
+                    { .tagged_percent }
+                    { .label }
+                </div>
+            </csstag>*/
+            &:extend(
+                .overallVisual
+                .cssp_OverallVisual_taggedRules
+                .overallVisual_bar
+            );
+            background-color: @csstagged_tagged_rule_color;
+
+            .tagged_total {
+                /*<csstag tag="label">
+                    <div ...>44</div>
+                </csstag>*/
+                &:extend(
+                    .overallVisual
+                    .cssp_OverallVisual_taggedRules
+                    .overallVisual_bar
+                    .overallBar_total
+                );
+            }
+            .tagged_percent {
+                /*<csstag tag="label">
+                    <div ...>22%</div>
+                </csstag>*/
+                &:extend(
+                    .overallVisual
+                    .cssp_OverallVisual_taggedRules
+                    .overallVisual_bar
+                    .overallBar_percent
+                );
+            }
+
+            .label {
+                /*<csstag tag="label">
+                    <div ...>tagged</div>
+                </csstag>*/
+                position:absolute;
+                right: 0px; bottom: -15px;
+                padding-right: 3px;
+                padding-top: 0px;
+                height: 14px;
+                color: #bbb;
+                font-size: 12px;
+                background-color: #fff;
+                border-right: 1px solid #ddd;
+            }
+        }
+
+        .overallVisual_rulesBar {
+            /*<csstag tag="visualization">
+                <div ... style="width: 46%;">
+                    { .rules_total }
+                    { .rules_percent }
+                    { .label }
+                </div>
+            </csstag>*/
+            &:extend(
+                .overallVisual
+                .cssp_OverallVisual_taggedRules
+                .overallVisual_bar
+            );
+            background-color: @csstagged_simple_rule_color;
+
+            .rules_total {
+                /*<csstag tag="label">
+                    <div ...>122</div>
+                </csstag>*/
+                &:extend(
+                    .overallVisual
+                    .cssp_OverallVisual_taggedRules
+                    .overallVisual_bar
+                    .overallBar_total
+                );
+                float: left;
+                padding-left: 12px;
+                padding-right: 0px;
+            }
+            .rules_percent {
+                /*<csstag tag="label">
+                    <div ...>23%</div>
+                </csstag>*/
+                &:extend(
+                    .overallVisual
+                    .cssp_OverallVisual_taggedRules
+                    .overallVisual_bar
+                    .overallBar_percent
+                );
+                float: left;
+            }
+        }
+    }
+
+
+
+}

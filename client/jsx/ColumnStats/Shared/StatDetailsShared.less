@@ -1,0 +1,168 @@
+
+// @import (reference) "../../Shared/shared.less";
+
+.statDetails {
+    /*<csstag tag="page">
+        <div ...>
+            { .statDetails_columnList }
+            { .statDetails_columnExplanation }
+        </div>
+    </csstag>*/
+    width: 66.66666%;
+    .calc( height , 100% , -90px );
+    position: absolute;
+    top: 0px;//110px;
+    right: 0px;
+    background-color: #555;//rgba( 0,0,0,.9);
+    z-index: 1000;
+    color: #ddd;
+
+    .statDetails_column {
+        /*<csstag tag="column">
+        </csstag>*/
+        width: 50%; height: 100%;
+        padding: 14px 0px;
+        float: left;
+    }
+
+    .statDetails_columnList {
+        /*<csstag tag="column">
+            <div ...>
+                { .statDetails_row }
+                { .statDetails_row }
+                { .statDetails_row }
+                { .statDetails_row }
+            </div>
+        </csstag>*/
+        &:extend(
+            .statDetails
+            .statDetails_column
+        );
+
+        // Considered states...
+        &.nano .nano-content { padding: 20px; }
+        &.nano .nano-pane   {
+            background: none;
+            margin: 10px 0px;
+            margin-right: 4px;
+        }
+        &.nano .nano-slider { background: #777; }
+
+        .statDetails_row {
+            /*<csstag tag="row">
+                <div ...>
+                    rule item
+                    { .statDetails_typeIcon }
+                </div>
+            </csstag>*/
+            width: 100%; height: 34px;
+            padding: 0px 30px;
+            padding-top: 4px;
+            position: relative;
+            .hand();
+
+            &:hover {
+                background-color: rgba( 0,0,0,.5);
+            }
+
+            .statDetails_typeIcon {
+                /*<csstag tag="icon_positioner">
+                    <div ...>
+                        { .tagged_incomplete_icon }
+                    </div>
+                </csstag>*/
+                position: absolute;
+                right: 40px; top: 0px;
+                height: 100%; width: 6px;
+            }
+        }
+
+        .statDetails_sectionHeader {
+            &:extend(
+                .statDetails
+                .statDetails_columnList
+                .statDetails_row
+            );
+            font-size: 12px;
+            text-align: left;
+            font-style: italic;
+            font-weight: light;
+            padding: 0px 0px;
+            padding-top: 6px;
+            border-bottom: 1px solid #777;
+            .calc( width , 100% , -60px );
+            margin: 0px 30px;
+            // margin-top: 20px;
+        }
+    }
+
+    .statDetails_columnExplanation {
+        /*<csstag tag="column">
+            <div ...>
+                { .statDetails_divider }
+                { .statDetails_explanation }
+            </div>
+        </csstag>*/
+        &:extend(
+            .statDetails
+            .statDetails_column
+        );
+
+        .statDetails_divider {
+            /*<csstag tag="divider">
+                <div ...></div>
+            </csstag>*/
+            .calc( height , 100% , -60px );
+            width: 1px;
+            background-color: #555;
+            position: absolute;
+            top: 30px; left: 50%;
+        }
+
+        .statDetails_explanation {
+            /*<csstag tag="column">
+                <div ...>
+                    { .statDetails_h1 }
+                    { .statDetails_p }
+                </div>
+            </csstag>*/
+
+            .statDetails_h1 {
+                /*<csstag tag="h1">
+                    <div ...>Title</div>
+                </csstag>*/
+                font-weight: normal;
+                font-size: 20px;
+                padding: 0px;
+                margin: 0px;
+                margin: 0px 30px;
+                margin-bottom: 20px;
+                padding-top: 2px;
+            }
+
+
+            .statDetails_p {
+                /*<csstag tag="p">
+                    <div ...>Some text that describes what's going on.</div>
+                </csstag>*/
+                font-size: 13px;
+                margin: 0px 30px;
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .statDetails_close {
+        /*<csstag tag="button,close">
+            <div ...></div>
+        </csstag>*/
+        width: 60px; height: 60px;
+        position: absolute;
+        right: 0px; top: 0px;
+        background-image: url("_assets/close_light.png");
+        .hand();
+        &:hover {
+            background-color: rgba( 0,0,0,.5);
+        }
+    }
+}

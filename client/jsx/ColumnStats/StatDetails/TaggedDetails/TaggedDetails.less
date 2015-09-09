@@ -1,0 +1,16 @@
+
+// @import (reference) "../../../Shared/shared.less";
+// @import (reference) "../../Shared/StatDetailsShared.less";
+
+.taggedDetails {
+    /*<csstag tag="page">
+        <div ...></div>
+    </csstag>*/
+    &:extend(
+        .statDetails all
+    );
+
+    .statDetails_column {
+        height: 100px;
+    }
+}

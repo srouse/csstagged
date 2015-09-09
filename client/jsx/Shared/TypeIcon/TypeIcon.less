@@ -1,0 +1,110 @@
+
+// @import (reference) "../shared.less";
+
+.typeIcon {
+	width: 16px; height: 16px;
+	position: absolute;
+	left: 50%; top: 50%;
+	margin-top: -8px;
+	margin-left: -8px;
+
+	.extendedIcon {
+		width: 100%; height: 50%;
+		position: absolute;
+		left: 0px; top: 50%;
+		overflow: hidden;
+
+		.extendedIcon_content {
+			width: 100%; height: 200%;
+			border-radius: 50%;
+			position: absolute;
+			top: -100%; left: 0px;
+			border: 3px solid #111;
+		}
+	}
+
+	.extendeeIcon {
+		width: 100%; height: 50%;
+		position: absolute;
+		left: 0px; top: 0px;
+		overflow: hidden;
+
+		.extendeeIcon_content {
+			width: 100%; height: 200%;
+			border-radius: 50%;
+			position: absolute;
+			top: 0px; left: 0px;
+			border: 3px solid #ccc;
+		}
+	}
+
+	.type_icon {
+		/*<csstag tag="visualization">
+			<div ...>
+	            { .extraText }
+	        </div>
+		</csstag>*/
+		width: 6px; height: 6px;
+		border-radius: 50%;
+		position: absolute;
+		left: 5px; top: 5px;
+	    background-color: #000;
+	}
+
+	.tagged_icon {
+		/*<csstag tag="visualization"
+	        extendable="false">
+			<div ...>
+	            { .extraText }
+	        </div>
+		</csstag>*/
+		&:extend(
+			.typeIcon
+			.type_icon
+		);
+		background-color: @csstagged_tagged_rule_color;
+	}
+
+	.tagged_incomplete_icon {
+		/*<csstag tag="visualization"
+	        extendable="false">
+			<div ...>
+	            { .extraText }
+	        </div>
+		</csstag>*/
+		&:extend(
+			.typeIcon
+			.type_icon
+		);
+		border: 1px solid @csstagged_tagged_rule_color;
+	    background-color: transparent;
+	}
+
+	.rule_icon {
+		/*<csstag tag="visualization"
+	        extendable="false">
+			<div ...>
+	            { .extraText }
+	        </div>
+		</csstag>*/
+		&:extend(
+			.typeIcon
+			.type_icon
+		);
+		background-color: @csstagged_simple_rule_color;
+	}
+
+	.dup_icon {
+		/*<csstag tag="visualization"
+	        extendable="false">
+			<div ...>
+	            { .extraText }
+	        </div>
+		</csstag>*/
+		&:extend(
+			.typeIcon
+			.type_icon
+		);
+		background-color: @csstagged_duplicate_color;
+	}
+}

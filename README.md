@@ -14,4 +14,10 @@ creating projects that are scalable and manageable long term.
 
 ## Installation
 
-Provide code examples and explanations of how to get the project.
+1. view "/node_modules/csstagged/client/" to preview how it should look
+2. add csstagged to your package.json and install
+3. move /node_modules/csstagged/install/csstagged to your server root
+4. do an npm install on the csstagged folder
+5. (check for node_modules path excludes in .htaccess)
+6. add updates to your Gruntfile.js to include concat, less, and css_parse (
+    example is in install folder as well )

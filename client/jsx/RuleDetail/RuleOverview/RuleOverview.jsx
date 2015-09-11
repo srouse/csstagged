@@ -1,83 +1,157 @@
 
+
 var RuleOverview = React.createClass({
 
-    processSelectorIntoHTML: function ( selector ) {
-        var rule_arr = selector.split(" ");
-        var new_rule_arr = [];
-        for ( var i=0; i<rule_arr.length; i++ ) {
-            new_rule_arr.push( rule_arr[i] );
-            new_rule_arr.push( <br /> );
-        }
-        return new_rule_arr;
-    },
-
     gotoRule: function ( rule_uuid ) {
-        RouteState.merge({tree:rule_uuid});
-    },
-
-    componentDidUpdate: function () {
-        $("code").removeClass("rainbow");// it won't refresh otherwise
-        Rainbow.color();
-    },
-
-    componentDidMount: function () {
-        Rainbow.color();
+        RouteState.merge({rule:rule_uuid});
     },
 
     render: function() {
-        var rule =  this.props.css_info.uuid_hash[
-                        this.props.rule_uuid
-                    ];
-
         var rule = this.props.rule;
 
-        if ( !rule ) {
-            return <div></div>;
+        var children = [];
+        var parents = [];
+        var states = [];
+        var relationships = [];
+        var duplicates = [];
+
+        // CHILDRENS
+        if ( rule.children ) {
+            for ( var r=0; r<rule.children.length; r++ ) {
+                var child = rule.children[r];
+                children.push(
+                    <div className="ruleOverview_subName"
+                        onClick={
+                            this.gotoRule.bind( this , child.uuid )
+                        }>
+                        { child.name }
+                    </div>
+                );
+
+            }
         }
 
-        var state_code = [];
-        var state_header = "";
-        state_header = <div className="ruleDetail_title">States</div>;
+        // PARENTs (SELECTOR)
+        var parent = rule;
+        var count = 0;
+        while ( parent.parent_rule_uuid ) {
+            parent = this.props.css_info.uuid_hash[ parent.parent_rule_uuid ];
+            if ( parent ) {
+                parents.unshift(
+                    <div className="ruleOverview_subName"
+                        onClick={
+                            this.gotoRule.bind( this , parent.uuid )
+                        }>
+                        { parent.name }
+                    </div>
+                );
+            }else{
+                parent = {parent_rule_uuid:false};
+            }
+        }
+        parents.push(
+            <div className="ruleOverview_subName"
+                onClick={
+                    this.gotoRule.bind( this , rule.uuid )
+                }>
+                { rule.name }
+            </div>
+        );
+
+
+        var parent_back =
+            <div
+                className="ruleOverview_parentPlaceholder">
+            </div>;
+
+        if ( rule.parent_rule_uuid ) {
+            parent = this.props.css_info.uuid_hash[ rule.parent_rule_uuid ];
+            parent_back =
+                <div className="ruleOverview_parentLink"
+                    onClick={
+                        this.gotoRule.bind(
+                            this , rule.parent_rule_uuid
+                        )
+                    }>
+                </div>;
+        }
+
+        // STATES
         if ( rule.states ) {
-            $.each( rule.states , function ( index , state ) {
-                state_code.push(
-                    <pre className="ruleDetail_pre"
-                        key={ "state_" + index }>
-                        <code data-language="css">
-                            { ruleToCSSString( state , true ) }
-                        </code>
-                    </pre>
-                )
-            });
+            for ( var r=0; r<rule.states.length; r++ ) {
+                states.push(
+                    <div className="ruleOverview_stateSubName"
+                        title={ rule.states[r].selector }>
+                        { rule.states[r].selector }
+                    </div>
+                );
+            }
         }
 
-        var pseudo_code = [];
-        var pseudo_header = "";
-        if ( rule.pseudos ) {
-            pseudo_header = <div className="ruleDetail_title">Pseudo Selectors</div>;
-            $.each( rule.pseudos , function ( index , pseudo ) {
-                pseudo_code.push(
-                    <pre className="ruleDetail_pre"
-                        key={ "pseudo_" + index }>
-                        <code data-language="css">
-                            { ruleToCSSString( pseudo , true ) }
-                        </code>
-                    </pre>
-                )
-            });
+        // RELATIONSHIPS
+        if ( rule.relationships ) {
+            for ( var r=0; r<rule.relationships.length; r++ ) {
+                var relationship =  this.props.css_info.selector_hash[
+                                        rule.relationships[r]
+                                    ];
+                if ( relationship ) {
+                    relationships.push(
+                        <div className="ruleOverview_subName"
+                            onClick={
+                                this.viewRuleDetail.bind( this , relationship.uuid )
+                            } title={ relationship.selector }>
+                            { relationship.name }
+                        </div>
+                    );
+                }
+            }
         }
 
-        return  <div className="ruleDetail_Overview">
-                    <div className="ruleDetail_code">
-                        <pre className="ruleDetail_pre">
-                            <code data-language="css">
-                                { ruleToCSSString( rule , true ) }
-                            </code>
-                        </pre>
-                        { pseudo_header }
-                        { pseudo_code }
-                        { state_header }
-                        { state_code }
+        // DUPS
+        var name_rule = this.props.css_info.name_hash[ rule.name ];
+        if ( name_rule && name_rule.is_duplicate ) {
+            var unique_selectors = {};
+            for ( var r=0; r<name_rule.source.length; r++ ) {
+                var child = name_rule.source[r];
+                if ( !unique_selectors[child.selector] ) {
+                    unique_selectors[child.selector] = true;
+                    duplicates.push(
+                        <div className="ruleOverview_subName"
+                            onClick={
+                                this.viewRuleDetailViaSelector.bind(
+                                    this , child.selector
+                                )
+                            } title={ child.selector }>
+                            { child.selector }
+                        </div>
+                    );
+                }
+            }
+        }
+
+        return  <div className="ruleOverview">
+                    <div className="ruleOverview_context">
+                        <div className="ruleOverview_subTitle">
+                            full selector
+                        </div>
+                        { parents }
+                        <div className="ruleOverview_subTitle">
+                            children
+                        </div>
+                        { children }
+                        <div className="ruleOverview_subTitle">
+                            states
+                        </div>
+                        { states }
+                        <div className="ruleOverview_subTitle">
+                            relationships
+                        </div>
+                        { relationships }
+                        <div className="ruleOverview_subTitle">
+                            duplicate names
+                        </div>
+                        { duplicates }
+                        <div className="list_bottom_padding"></div>
                     </div>
                 </div>;
     }

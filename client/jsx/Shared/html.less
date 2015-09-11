@@ -58,3 +58,27 @@ html {
     }
 
 }
+
+.expandoBack {
+    width: 30px; height: 100%;
+    float: left;
+    background-image: url('_assets/back_arrow.png');
+    transition: width .3s, background-size .3s;
+    .hand();
+
+    &:hover {
+        width: 70px;
+        background-color: #eee;
+    }
+}
+
+.expandoClose {
+    &:extend(
+        .expandoBack all
+    );
+    background-image: url('_assets/close_arrow.png');
+
+    &:hover {
+        background-image: url('_assets/close_arrow_dark.png');
+    }
+}

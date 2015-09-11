@@ -3,114 +3,68 @@
 
 .ruleDetailNav {
     // width: 25%;
-    width: 290px;
-    .calc( height , 100% , -70px );
-    border-right: 1px solid #eee;
+    // width: 290px;
+    // .calc( height , 100% , -70px );
+    height: 69px;
+    // border-right: 1px solid #eee;
     border-left: 1px solid #eee;
     float: left;
-    position: relative;
+    position: absolute;
+    top: 0px;
+    // left: @phi_inv;//399px;
+    .calc( left , @phi_inv , -1px );
     z-index: 200;
     background-color: #fff;
+    display: none;
+
+    body.s_detailTab & {
+        display: block;
+    }
 
     .ruleDetailNav_title {
         /*<csstag tag="title">
             <div ...>rule_name</div>
         </csstag>*/
         width: 100%;
-        float: left; clear: left;
-        height: 40px;
-        // border-bottom: 1px solid #eee;
+        float: left;
+        height: 70px;
+
         padding-left: 0px;
         padding-right: 10px;
         margin-bottom: 10px;
         position: relative;
         overflow: hidden;
 
-        .ruleDetailNav_titleText {
-            padding-top: 8px;
-            font-size: 16px;
-            color: #999;
+        .ruleDetailNav_back {
+            width: 40px; height: 100%;
             float: left;
-            margin-left: 20px;
+            background-image: url('_assets/back_arrow.png');
+            transition: width .3s;
+            .hand();
+
+            &:hover {
+                width: 60px;
+                background-color: #eee;
+            }
+        }
+
+        .ruleDetailNav_titleText {
+            padding-top: 16px;
+            font-size: 22px;
+            color: #333;
+            float: left;
+            margin-left: 0px;
         }
 
         .ruleDetailNav_typeIcon {
-            right: 20px; top: 8px;
-            width: 16px; height: 30px;
-            position: absolute;
-            left: auto;
+            float: left;
+            width: 16px; height: 100%;
+            position: relative;
+            margin-left: 20px;
 
             &:hover {
                 background-color: #eee;
             }
-        }
-    }
-
-    .ruleDetailNav_context {
-        /*<csstag
-            tag="row">
-        </csstag>*/
-        padding-left: 20px;
-        .calc( height , 100% , -30px );
-        width: 270px;
-        float: left;
-        overflow: auto;
-
-        .ruleDetailNav_subName {
-            /*<csstag
-                tag="text">
-            </csstag>*/
-            float: left; clear: left;
-            height: 30px; width: 100%;
-            padding-top: 8px;
-            font-size: 12px;
-            color: #555;
-            white-space: nowrap;
-            overflow: hidden;
-            .hand();
-            &:hover {
-                background-color: #eee;
-            }
-        }
-
-        .ruleDetailNav_stateSubName {
-            &:extend(
-                .ruleDetailNav
-                .ruleDetailNav_context
-                .ruleDetailNav_subName
-            );
-
-            .unhand();
-            &:hover {
-                background-color: none;
-            }
-        }
-
-        .ruleDetailNav_subTitle {
-            /*<csstag
-                tag="title,text">
-            </csstag>*/
-            &:extend(
-                .ruleDetailNav
-                .ruleDetailNav_context
-                .ruleDetailNav_subName
-            );
-
-            // border-bottom: 1px solid #eee;
-            margin-top: 8px;
-            padding-top: 0px;
-            height: 16px;
-            font-size: 10px;
-            color: #aaa;
-            font-style: italic;
-            padding-left: 0px;
-        }
-
-        .ruleDetailNav_line {
-            height: 1px; width: 100%;
-            background-color: #eee;
-            float: left; clear: left;
-            margin-top: 6px;
         }
     }
 }

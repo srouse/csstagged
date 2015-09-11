@@ -27,7 +27,7 @@
     /*<csstag tag="content">
         <div ...></div>
     </csstag>*/
-    .calc( width , 100% , -270px );
+    width: @phi;
     .calc( height , 100% , -70px );
     position: absolute;
     top: 70px; right: 0px;
@@ -44,6 +44,7 @@
         </div>
     </csstag>*/
     width: 100%; height: 70px;
+    border-bottom: 1px solid #eee;
 
     .ruleDetail_title {
         /*<csstag tag="container">
@@ -63,11 +64,13 @@
                 </div>
             </csstag>*/
             float: left;
-            padding: 20px 0px;
-            padding-left: 20px;
+            padding: 16px 0px;
+            padding-left: 0px;
             height: 100%;
             font-size: 22px;
+            color: #555;
             .hand();
+
             &:hover {
                 background-color: #eee;
             }
@@ -88,7 +91,7 @@
         /*<csstag tag="nav">
             <div ...>
                 { .ruleDetail_item_css }
-                { .ruleDetail_item_children }
+                { .ruleDetail_item_overview }
                 { .ruleDetail_item_example }
                 { .ruleDetail_back }
             </div>
@@ -97,6 +100,11 @@
         width: 410px; height: 100%;
         background-color: #fff;
         position: relative;
+        display: none;
+
+        body.s_detailTab & {
+            display: block;
+        }
 
         @item_color: #ccc;
         @item_selected: #000;
@@ -109,29 +117,28 @@
             color: @item_color; height: 100%;
             padding-top: 24px;
             .calc( width , 33.3333% , -70px/3 );
-            float: left; text-align: center;
+            float: right; text-align: center;
             .hand();
+
             &:hover {
                 color: @item_selected;
+                border-bottom: 3px solid #ccc;
             }
         }
-        .ruleDetail_item_children {
+        .ruleDetail_item_overview {
             /*<csstag tag="nav_item">
                 <div ...>
-                    children
+                    overview
                 </div>
             </csstag>*/
             &:extend(
                 .ruleDetail_header
                 .ruleDetail_headerNav
-                .ruleDetail_item
+                .ruleDetail_item all
             );
-            color: @item_selected !important;
-            body.s_detailTab & {
-                color: @item_color !important;
-                &:hover {
-                    color: @item_selected !important;
-                }
+            body.s_detailTab_overview & {
+                color: @item_selected;
+                border-bottom: 3px solid #555;
             }
         }
         .ruleDetail_item_css {
@@ -143,11 +150,12 @@
             &:extend(
                 .ruleDetail_header
                 .ruleDetail_headerNav
-                .ruleDetail_item
+                .ruleDetail_item all
             );
 
             body.s_detailTab_css & {
                 color: @item_selected;
+                border-bottom: 3px solid #555;
             }
         }
         .ruleDetail_item_example {
@@ -159,10 +167,11 @@
             &:extend(
                 .ruleDetail_header
                 .ruleDetail_headerNav
-                .ruleDetail_item
+                .ruleDetail_item all
             );
             body.s_detailTab_example & {
                 color: @item_selected;
+                border-bottom: 3px solid #555;
             }
         }
 

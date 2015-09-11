@@ -1,69 +1,79 @@
 
-// @import (reference) "../../Shared/shared.less";
-// @import (reference) "../RuleDetail.less";
-
-.ruleDetail_Overview {
+.ruleOverview {
     /*<csstag tag="page">
-        <div ... style="display: block;">
-            { .ruleDetail_code }
-        </div>
+        <div ... style="display: block;"></div>
     </csstag>*/
     &:extend(
         .ruleDetail_content
     );
-
-    .calc( width , 100% , -(290px*2) );
     z-index: 100;
 
-    body.s_detailTab_css & {
+    body.s_detailTab_overview & {
         display: block;
     }
 
     @media ( max-width: @screen-lg-min ) {
-        .calc( width , 100% , -( 290px + 100px ) );
+        .calc( width , 100% , -100px );
     }
 
-    .ruleDetail_code {
-        /*<csstag tag="content">
-            <div ...>
-                { .ruleDetail_title }
-                { .ruleDetail_pre }
-            </div>
+    .ruleOverview_context {
+        /*<csstag
+            tag="row">
         </csstag>*/
+        padding: 30px;
+        .calc( height , 100% , -30px );
         width: 100%;
-        height: 100%;
-        background-color: #fff;
+        float: left;
         overflow: auto;
-        padding: 30px 70px;
 
-        .ruleDetail_title {
-            /*<csstag tag="code">
-                <div ...>Pseudo Selectors</div>
+        .ruleOverview_subName {
+            /*<csstag
+                tag="text">
             </csstag>*/
-            width: 100%;
-            border-bottom: 1px solid #eee;
-            font-size: 18px;
+            float: left; clear: left;
+            height: 30px; width: 100%;
+            padding-top: 8px;
+            font-size: 16px;
             color: #333;
-            padding-top: 20px;
-            clear: both;
+            white-space: nowrap;
+            overflow: hidden;
+            .hand();
+            &:hover {
+                background-color: #eee;
+            }
         }
 
-        .ruleDetail_pre {
-            /*<csstag tag="code">
-<pre ...>
-a [
-    color: #f00;
-]
-</pre>
-            </csstag>*/
-            width: 100%;
-            font-family: "Muli", sans-serif;
-            float: left;
-            white-space: pre-wrap;       /* CSS 3 */
-            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-            white-space: -pre-wrap;      /* Opera 4-6 */
-            white-space: -o-pre-wrap;    /* Opera 7 */
-            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        .ruleOverview_stateSubName {
+            &:extend(
+                .ruleOverview
+                .ruleOverview_context
+                .ruleOverview_subName
+            );
+
+            .unhand();
+            &:hover {
+                background-color: none;
+            }
         }
+
+        .ruleOverview_subTitle {
+            /*<csstag
+                tag="title,text">
+            </csstag>*/
+            &:extend(
+                .ruleOverview
+                .ruleOverview_context
+                .ruleOverview_subName
+            );
+
+            // border-bottom: 1px solid #eee;
+            margin-top: 8px;
+            padding-top: 0px;
+            font-size: 16px;
+            color: #999;
+            padding-left: 0px;
+            border-bottom: 1px solid #eee;
+        }
+
     }
 }

@@ -6,7 +6,8 @@
     /*<csstag tag="page">
     </csstag>*/
 
-    .calc( width , 100% , -290px );
+    // .calc( width , 100% , -290px );
+    width: 100%;
     .calc( height , 100% , -70px );
     float: left;
     background-color: #fff;
@@ -16,6 +17,7 @@
     position: relative;
     z-index: 200;
     transition: width .3s;
+    border-right: 1px solid #eee;
 
     display: block;
     /*body.s_detailTab_exampleOFF & {
@@ -23,9 +25,8 @@
         width: 120px;
     }*/
 
-    body.s_detailTab_example &,
-    body.s_detailTab_css & {
-        width: 290px;
+    body.s_detailTab & {
+        width: @phi_inv;
     }
 
     @media ( max-width: @screen-lg-min ) {

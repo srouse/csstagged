@@ -29,9 +29,14 @@ var RuleNestingColumn = React.createClass({
     },
 
     gotoRule: function ( rule_uuid ) {
-        RouteState.toggle(
-            {rule:rule_uuid},
-            {rule:""}
+        var detailTab = "css";
+        console.log(RouteState.route.detailTab );
+        if ( RouteState.route.detailTab ) {
+            detailTab = RouteState.route.detailTab;
+        }
+
+        RouteState.merge(
+            {rule:rule_uuid,detailTab:detailTab}
         );
     },
 
@@ -41,9 +46,6 @@ var RuleNestingColumn = React.createClass({
 
         if ( !rule )
             return <div>no rule</div>;
-
-        console.log( "RULENEST" );
-        console.log( rule );
 
         var child;
         var children = [];

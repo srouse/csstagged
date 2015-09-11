@@ -64,9 +64,8 @@ var RuleDetail = React.createClass({
     },
 
     change_tab: function ( tab_name ) {
-        RouteState.toggle(
-            {detailTab:tab_name},
-            {detailTab:""}
+        RouteState.merge(
+            {detailTab:tab_name}
         );
     },
 
@@ -110,6 +109,8 @@ var RuleDetail = React.createClass({
 
                     <div className="ruleDetail_header">
                         <div className="ruleDetail_title">
+                            <div className="expandoClose"
+                                onClick={ this.close }></div>
                             <div className="ruleDetail_titleText"
                                 onClick={ this.toRoot }>
                                 { tree_rule.name }
@@ -120,11 +121,11 @@ var RuleDetail = React.createClass({
                         </div>
 
                         <div className="ruleDetail_headerNav">
-                            <div className="ruleDetail_item_children"
+                            <div className="ruleDetail_item_example"
                                 onClick={
-                                    this.change_tab.bind( this , "")
+                                    this.change_tab.bind( this , "example")
                                 }>
-                                rule tree
+                                example
                             </div>
                             <div className="ruleDetail_item_css"
                                 onClick={
@@ -132,22 +133,27 @@ var RuleDetail = React.createClass({
                                 }>
                                 css
                             </div>
-                            <div className="ruleDetail_item_example"
+                            <div className="ruleDetail_item_overview"
                                 onClick={
-                                    this.change_tab.bind( this , "example")
+                                    this.change_tab.bind( this , "overview" )
                                 }>
-                                example
+                                overview
                             </div>
-                            <div className="ruleDetail_back"
-                                onClick={ this.close }></div>
+
+                            { /*<div className="ruleDetail_back"
+                                onClick={ this.close }></div> */ }
 
                         </div>
                     </div>
 
 
-                    <RuleOverview
+                    <RuleCSS
                         css_info={ this.props.css_info }
                         rule_uuid={ this.state.rule_uuid }
+                        rule={ rule } />
+
+                    <RuleOverview
+                        css_info={ this.props.css_info }
                         rule={ rule } />
 
                     <RulePreview

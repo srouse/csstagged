@@ -6,6 +6,13 @@ var RuleOverview = React.createClass({
         RouteState.merge({rule:rule_uuid});
     },
 
+    viewRuleDetailViaSelector: function ( selector ) {
+        var rule = this.props.css_info.selector_hash[selector];
+        if ( rule ) {
+            this.viewRuleDetail( rule.uuid );
+        }
+    },
+
     render: function() {
         var rule = this.props.rule;
 

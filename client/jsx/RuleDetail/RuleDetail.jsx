@@ -69,6 +69,14 @@ var RuleDetail = React.createClass({
         );
     },
 
+    closeDetail: function () {
+        RouteState.merge(
+            {
+                rule:"",detailTab:""
+            }
+        );
+    },
+
     close: function () {
         RouteState.merge({tree:"",tag:"",rule:""});
     },
@@ -109,15 +117,17 @@ var RuleDetail = React.createClass({
 
                     <div className="ruleDetail_header">
                         <div className="ruleDetail_title">
-                            <div className="expandoClose"
+                            <div className="ruleDetail_close"
                                 onClick={ this.close }></div>
-                            <div className="ruleDetail_titleText"
+                            { /* <div className="ruleDetail_titleText"
                                 onClick={ this.toRoot }>
                                 { tree_rule.name }
                             </div>
                             <div className="ruleDetail_iconBox">
                                 <TypeIcon rule={ tree_rule } />
-                            </div>
+                            </div> */ }
+                            <div className="ruleDetail_showTree"
+                                onClick={ this.closeDetail }></div>
                         </div>
 
                         <div className="ruleDetail_headerNav">

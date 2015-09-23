@@ -42,8 +42,8 @@ var RuleDetailNav = React.createClass({
 
         return  <div className="ruleDetailNav">
                     <div className="ruleDetailNav_title">
-                        <div className="expandoClose"
-                            onClick={ this.closeDetail }></div>
+                        { /* <div className="expandoClose"
+                            onClick={ this.closeDetail }></div> */ }
                         <div className="ruleDetailNav_titleText">
                             { rule.name }
                         </div>

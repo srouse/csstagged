@@ -27,7 +27,8 @@
     /*<csstag tag="content">
         <div ...></div>
     </csstag>*/
-    width: @phi;
+    // width: @phi;
+    .calc( width , 100% , -300px );
     .calc( height , 100% , -70px );
     position: absolute;
     top: 70px; right: 0px;
@@ -53,9 +54,45 @@
                 { .ruleDetail_iconBox }
             </div>
         </csstag>*/
-        .calc( width , 100% , -380px + -80px );
+        width: 300px;
         height: 100%;
+        position: relative;
         float: left;
+
+        .ruleDetail_close {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            width: 70px; height: 100%;
+            float: left;
+            background-image: url('_assets/close_arrow.png');
+            .hand();
+
+            &:hover {
+                background-color: #eee;
+                background-image: url('_assets/close_arrow_dark.png');
+            }
+        }
+
+        .ruleDetail_showTree {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            width: 70px; height: 100%;
+            float: right;
+            background-image: url('_assets/show_tree.png');
+            .hand();
+            display: none;
+
+            &:hover {
+                background-color: #eee;
+                background-image: url('_assets/show_tree_dark.png');
+            }
+
+            body.s_detailTab & {
+                display: block;
+            }
+        }
 
         .ruleDetail_titleText {
             /*<csstag tag="title">
@@ -67,7 +104,7 @@
             padding: 16px 0px;
             padding-left: 0px;
             height: 100%;
-            font-size: 22px;
+            font-size: 14px;
             color: #555;
             .hand();
 

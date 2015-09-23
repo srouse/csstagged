@@ -21,12 +21,12 @@ var RuleNesting = React.createClass({
             <RuleNestingColumn {...this.props}
                 rule={ rule } index={ 0 } />;
 
-            if ( rule.children && rule.children.length == 0 ) {
+        /*if ( rule.children && rule.children.length == 0 ) {
             content =
                 <div className="ruleNesting_noChildren">
                     no children
                 </div>;
-        }
+        }*/
 
         return  <div className="ruleNesting">
                     { content }

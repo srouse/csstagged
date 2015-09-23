@@ -56,14 +56,6 @@ module.exports = function(grunt) {
     };
 
     configObj.watch = configObj.watch || {};
-    configObj.watch["css_parse"] = {
-        files:[
-            "../_client/*.css",
-            'client/_client/csscomp.css'
-        ],
-        tasks: "css_parse"
-    };
-
     configObj.watch["react"] = {
         files:[
             'client/**/*.jsx',

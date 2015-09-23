@@ -29,8 +29,7 @@ var RuleNestingColumn = React.createClass({
     },
 
     gotoRule: function ( rule_uuid ) {
-        var detailTab = "css";
-        console.log(RouteState.route.detailTab );
+        var detailTab = "example";
         if ( RouteState.route.detailTab ) {
             detailTab = RouteState.route.detailTab;
         }
@@ -87,10 +86,13 @@ var RuleNestingColumn = React.createClass({
                             " no_children" : "";
 
         var rule_title = "";
+        var extra_title_class = "";
         if ( this.props.index == 0 ) {
-            extra_class += " first_one";
-        }else{
-            var extra_title_class = "";
+            // extra_class += " first_one";
+            // extra_title_class += " first_title";
+        }
+        //else{
+
             if ( rule.uuid == RouteState.route.rule )
                 extra_title_class += " selected";
 
@@ -106,7 +108,7 @@ var RuleNestingColumn = React.createClass({
                         <TypeIcon rule={ rule } />
                     </div>
                 </div>;
-        }
+        //}
 
         return  <div className={ "ruleNestingColumn" + extra_class }
                     key={ rule.uuid +"-"+ rule.children.length }>

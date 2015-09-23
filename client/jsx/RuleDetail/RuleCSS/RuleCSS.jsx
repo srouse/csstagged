@@ -43,14 +43,16 @@ var RuleCSS = React.createClass({
                 state_code.push(
                     <pre className="ruleDetail_pre"
                         key={ "state_" + index }>
-                        <code data-language="css">
-                            { ruleToCSSString( state , true ) }
+                        <code data-language="css"
+                            dangerouslySetInnerHTML={{
+                                __html:ruleToCSSString( state , true )
+                            }}>
                         </code>
                     </pre>
                 )
             });
         }
-
+console.log("GOING");
         var pseudo_code = [];
         var pseudo_header = "";
         if ( rule.pseudos ) {
@@ -59,8 +61,10 @@ var RuleCSS = React.createClass({
                 pseudo_code.push(
                     <pre className="ruleDetail_pre"
                         key={ "pseudo_" + index }>
-                        <code data-language="css">
-                            { ruleToCSSString( pseudo , true ) }
+                        <code data-language="css"
+                            dangerouslySetInnerHTML={{
+                                __html:ruleToCSSString( pseudo , true )
+                            }}>
                         </code>
                     </pre>
                 )
@@ -70,8 +74,10 @@ var RuleCSS = React.createClass({
         return  <div className="ruleCSS">
                     <div className="ruleDetail_code">
                         <pre className="ruleDetail_pre">
-                            <code data-language="css">
-                                { ruleToCSSString( rule , true ) }
+                            <code data-language="css"
+                                dangerouslySetInnerHTML={{
+                                    __html:ruleToCSSString( rule , true )
+                                }}>
                             </code>
                         </pre>
                         { pseudo_header }

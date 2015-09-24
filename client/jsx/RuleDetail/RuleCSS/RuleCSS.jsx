@@ -52,7 +52,7 @@ var RuleCSS = React.createClass({
                 )
             });
         }
-console.log("GOING");
+
         var pseudo_code = [];
         var pseudo_header = "";
         if ( rule.pseudos ) {

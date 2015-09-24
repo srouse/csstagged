@@ -1,7 +1,11 @@
 
-// @import (reference) "../shared.less";
-
 .typeIcon {
+	/*<csstag tag="visualization">
+		<div ...>
+			{ .tagged_incomplete_icon }
+			{ .extendedIcon }
+		</div>
+	</csstag>*/
 	width: 16px; height: 16px;
 	position: absolute;
 	left: 50%; top: 50%;
@@ -9,12 +13,20 @@
 	margin-left: -8px;
 
 	.extendedIcon {
+		/*<csstag tag="visualization">
+			<div ...>
+				{ .extendedIcon_content }
+			</div>
+		</csstag>*/
 		width: 100%; height: 50%;
 		position: absolute;
 		left: 0px; top: 50%;
 		overflow: hidden;
 
 		.extendedIcon_content {
+			/*<csstag tag="visualization">
+				<div ...></div>
+			</csstag>*/
 			width: 100%; height: 200%;
 			border-radius: 50%;
 			position: absolute;
@@ -24,12 +36,20 @@
 	}
 
 	.extendeeIcon {
+		/*<csstag tag="visualization">
+			<div ...>
+				{ .extendeeIcon_content }
+			</div>
+		</csstag>*/
 		width: 100%; height: 50%;
 		position: absolute;
 		left: 0px; top: 0px;
 		overflow: hidden;
 
 		.extendeeIcon_content {
+			/*<csstag tag="visualization">
+				<div ...></div>
+			</csstag>*/
 			width: 100%; height: 200%;
 			border-radius: 50%;
 			position: absolute;
@@ -40,9 +60,7 @@
 
 	.type_icon {
 		/*<csstag tag="visualization">
-			<div ...>
-	            { .extraText }
-	        </div>
+			<div ...></div>
 		</csstag>*/
 		width: 6px; height: 6px;
 		border-radius: 50%;
@@ -54,9 +72,7 @@
 	.tagged_icon {
 		/*<csstag tag="visualization"
 	        extendable="false">
-			<div ...>
-	            { .extraText }
-	        </div>
+			<div ...></div>
 		</csstag>*/
 		&:extend(
 			.typeIcon
@@ -68,9 +84,7 @@
 	.tagged_incomplete_icon {
 		/*<csstag tag="visualization"
 	        extendable="false">
-			<div ...>
-	            { .extraText }
-	        </div>
+			<div ...></div>
 		</csstag>*/
 		&:extend(
 			.typeIcon
@@ -83,9 +97,7 @@
 	.rule_icon {
 		/*<csstag tag="visualization"
 	        extendable="false">
-			<div ...>
-	            { .extraText }
-	        </div>
+			<div ...></div>
 		</csstag>*/
 		&:extend(
 			.typeIcon
@@ -97,9 +109,7 @@
 	.dup_icon {
 		/*<csstag tag="visualization"
 	        extendable="false">
-			<div ...>
-	            { .extraText }
-	        </div>
+			<div ...></div>
 		</csstag>*/
 		&:extend(
 			.typeIcon

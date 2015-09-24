@@ -47,6 +47,8 @@
     width: 100%; height: 70px;
     border-bottom: 1px solid #eee;
 
+
+
     .ruleDetail_title {
         /*<csstag tag="container">
             <div ...>
@@ -58,6 +60,11 @@
         height: 100%;
         position: relative;
         float: left;
+        transition: width .3s;
+
+        @media ( max-width: @screen-lg-min ) {
+            width: 120px;
+        }
 
         .ruleDetail_close {
             /*<csstag tag="button">
@@ -67,10 +74,15 @@
             float: left;
             background-image: url('_assets/close_arrow.png');
             .hand();
+            transition: width .3s;
 
             &:hover {
                 background-color: #eee;
                 background-image: url('_assets/close_arrow_dark.png');
+            }
+
+            @media ( max-width: @screen-lg-min ) {
+                width: 60px;
             }
         }
 
@@ -83,6 +95,7 @@
             background-image: url('_assets/show_tree.png');
             .hand();
             display: none;
+            transition: width .3s;
 
             &:hover {
                 background-color: #eee;
@@ -91,6 +104,10 @@
 
             body.s_detailTab & {
                 display: block;
+            }
+
+            @media ( max-width: @screen-lg-min ) {
+                width: 60px;
             }
         }
 

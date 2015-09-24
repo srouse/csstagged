@@ -1,16 +1,8 @@
 
-
 var RulePreview = React.createClass({
 
-
-    pageResized: function(){
-
-    },
-
     componentDidMount: function() {
-        // $(window).resize( function () {
 
-        // })
     },
 
     componentWillUnmount: function(){
@@ -21,7 +13,7 @@ var RulePreview = React.createClass({
         if ( !times_called )
             times_called = 1;
 
-        if ( times_called > 30 ) {
+        if ( times_called > 100 ) {
             return {
                 html:"<div>Error, too many cycles</div>",
                 rule_names:rule_names
@@ -38,6 +30,7 @@ var RulePreview = React.createClass({
             for ( var sr=0; sr<sub_rules.length; sr++ ) {
                 sub_rule_html = sub_rules[sr];
                 sub_rule_name = $(sub_rule_html).attr("comp");
+
                 // TODO Look for names..if not found, then look for selectors
                 if ( this.props.css_info.name_hash[sub_rule_name] ) {
                     sub_rule_name_arr.push( sub_rule_name );
@@ -142,8 +135,6 @@ var RulePreview = React.createClass({
             html.push( sub_comp_info.html );
 
             // get the relavent sub component css in there...
-
-
             for ( var i=0; i<sub_comp_info.rule_names.length; i++ ) {
                 var sub_comp_name = sub_comp_info.rule_names[i];
                 var sub_comp_rule = this.props.css_info.name_hash[
@@ -171,31 +162,85 @@ var RulePreview = React.createClass({
         return html.join("");
     },
 
+    toggleBGColor: function () {
+        var iframe = $(".rulePreview_iframe");
+
+        if ( !this.frame_bg || this.frame_bg == "#eee" ) {
+            this.frame_bg = "#fff";
+        }else{
+            this.frame_bg = "#eee";
+        }
+
+        $(".rulePreview_iframe").css("background-color",this.frame_bg);
+    },
+
+    outlineElement: function () {
+        var rule = this.props.rule;
+        var rule_dom = $(".rulePreview_iframe").contents().find( rule.selector );
+
+        var showing_border = "1px solid #f00";
+        if ( !this.ele_border || this.ele_border != showing_border ) {
+            this.prev_border = rule_dom.css("border");
+            this.ele_border = showing_border;
+        }else{
+            this.ele_border = "prev";
+        }
+
+        if ( this.ele_border == "prev" ) {
+            rule_dom.css("border", this.prev_border );
+        }else{
+            rule_dom.css("border", showing_border );
+        }
+    },
+
+    toggleVisibility: function () {
+        var rule = this.props.rule;
+        var rule_dom = $(".rulePreview_iframe").contents().find( rule.selector );
+
+        var prev_display = rule_dom.css("display");
+        if ( prev_display == "block" ) {
+            rule_dom.css("display", "none" );
+        }else{
+            rule_dom.css("display", "block" );
+        }
+    },
+
     render: function() {
         var rule = this.props.rule;
         var example = this.findRuleExample( rule );
 
+        this.ele_border = false;
+
         return  <div className="rulePreview">
                     <div className="rulePreview_stage">
                         <MagicFrame example={ example } />
+                    </div>
+                    <div className="rulePreview_nav">
+                        <div className="rulePreview_toggleBGColor"
+                            onClick={ this.toggleBGColor }>
+                        </div>
+                        <div className="rulePreview_outline"
+                            onClick={ this.outlineElement }>
+                        </div>
+                        <div className="rulePreview_visibility"
+                            onClick={ this.toggleVisibility }>
+                        </div>
                     </div>
                 </div>;
     }
 
 });
 
-
 var MagicFrame = React.createClass({
     render: function() {
-        return <iframe style={{border: 'none'}} />;
+        return <iframe style={{border: 'none'}} className="rulePreview_iframe" />;
     },
     componentDidMount: function() {
         this.renderFrameContents();
     },
     renderFrameContents: function() {
-        var doc = this.getDOMNode().contentDocument
-        if(doc.readyState === 'complete') {
-            //React.render(this.props.children, doc.body);
+        var doc = this.getDOMNode().contentDocument;
+        if( doc.readyState === 'complete' ) {
             $(doc.body).html( this.props.example );
         } else {
             setTimeout(this.renderFrameContents, 0);
@@ -205,7 +250,6 @@ var MagicFrame = React.createClass({
         this.renderFrameContents();
     },
     componentWillUnmount: function() {
-        React.unmountComponentAtNode(this.getDOMNode().contentDocument.body);
+        React.unmountComponentAtNode( this.getDOMNode().contentDocument.body );
     }
-
 });

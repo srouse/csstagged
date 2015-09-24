@@ -50,6 +50,9 @@
         /*<csstag tag="list">
             <div class="column_List">
                 { .column_List_Row }
+                { .column_List_Row }
+                { .column_List_Row }
+                { .column_List_Row }
             </div>
         </csstag>*/
         &:extend(
@@ -87,7 +90,6 @@
             /*<csstag tag="list_row">
                 <div ...>
                     { .column_rowTitle }
-                    { .column_rowTotal }
                 <div>
             </csstag>*/
             float: left; clear: left;
@@ -104,6 +106,7 @@
                 /*<csstag tag="title">
                     <div ...>
                         Column Title
+                        { .column_typeBox }
                     </div>
                 </csstag>*/
                 position: relative;
@@ -117,7 +120,7 @@
                 .column_typeBox {
                     /*<csstag tag="container">
                         <div ...>
-                            { .rule_icon }
+                            { .typeIcon }
                         </div>
                     </csstag>*/
                     position: absolute;

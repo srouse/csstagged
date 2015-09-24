@@ -6,42 +6,108 @@
     /*<csstag tags="page,rulePreview">
         <div ...>
             { .rulePreview_stage }
+            { .rulePreview_nav }
         </div>
     </csstag>*/
     &:extend(
         .ruleDetail_content
     );
-    z-index: 100;
+    z-index: 300;
 
     body.s_detailTab_example & {
         display: block;
     }
 
     @media ( max-width: @screen-lg-min ) {
-        .calc( width , 100% , -100px );
+        .calc( width , 100% , -120px );
     }
 
     .rulePreview_stage {
         /*<csstag tags="page,rulePreview">
             <div ...>
-                <iframe></iframe>
+                { .rulePreview_iframe }
             </div>
         </csstag>*/
-        /*.calc( width , 100% , -60px );
-        .calc( height , 100% , -60px );
-        top: 30px;
-        left: 30px;*/
         width: 100%; height: 100%;
-
         background-color: #fff;
-        // box-shadow: 0px 0px 6px 0px rgba( 0,0,0,.1);
-        border: 1px solid #eee;
         position: absolute;
+        left: 0px; top: 0px;
 
-
-        iframe {
+        .rulePreview_iframe {
+            /*<csstag tags="page,rulePreview">
+                <iframe style="border:none;" ...></iframe>
+            </csstag>*/
             width: 100%; height: 100%;
             background-color: #eee;
+        }
+    }
+
+    .rulePreview_nav {
+        /*<csstag tag="navigation">
+            <div ...>
+                { .rulePreview_toggleBGColor }
+                { .rulePreview_outline }
+                { .rulePreview_visibility }
+            </div>
+        </csstag>*/
+        position: absolute;
+        width: 299px; height: 40px;
+        background-color: #fff;
+        border-top: 1px solid #eee;
+        left: -300px; bottom: 0px;
+        z-index: 1000;
+
+        @media ( max-width: @screen-lg-min ) {
+            width: 119px; left: -120px;
+        }
+
+        .rulePreview_navItem {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            width: 20px; height: 20px;
+            margin-right: 10px;
+            margin-top: 10px;
+            .hand();
+            float: right;
+        }
+
+        .rulePreview_toggleBGColor {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            &:extend(
+                .rulePreview
+                .rulePreview_nav
+                .rulePreview_navItem
+            );
+            background-color: #eee;
+            //border: 1px solid #aaa;
+        }
+
+        .rulePreview_outline {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            &:extend(
+                .rulePreview
+                .rulePreview_nav
+                .rulePreview_navItem
+            );
+            background-color: #fff;
+            border: 1px solid #f00;
+        }
+        .rulePreview_visibility {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            &:extend(
+                .rulePreview
+                .rulePreview_nav
+                .rulePreview_navItem
+            );
+            background-color: #aaa;
+            border: 1px solid #eee;
         }
     }
 

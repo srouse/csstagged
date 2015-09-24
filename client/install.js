@@ -36,7 +36,7 @@ for ( var c=0; c<css_install.length; c++ ) {
     css_link = css_install[c];
     html.push(
         "<link rel='stylesheet' type='text/css' href='"
-        + install_base + css_link
+            + install_base + css_link
         +"'></link>"
     );
 }
@@ -57,7 +57,7 @@ document.write( html.join("\n") );
 window.onload = function () {
     RouteState.listenToHash();
     $.ajax(
-        "csstagged.json"
+        "csstagged.json?" + Math.random()
     ).done(
         function ( css_dom ) {
             var css_info = processRules ( css_dom );

@@ -19,6 +19,7 @@
 
     .statDetails_column {
         /*<csstag tag="column">
+            <div ...></div>
         </csstag>*/
         width: 50%; height: 100%;
         padding: 14px 0px;
@@ -28,7 +29,7 @@
     .statDetails_columnList {
         /*<csstag tag="column">
             <div ...>
-                { .statDetails_row }
+                { .statDetails_sectionHeader }
                 { .statDetails_row }
                 { .statDetails_row }
                 { .statDetails_row }
@@ -68,7 +69,7 @@
             .statDetails_typeIcon {
                 /*<csstag tag="icon_positioner">
                     <div ...>
-                        { .tagged_incomplete_icon }
+                        { .typeIcon }
                     </div>
                 </csstag>*/
                 position: absolute;
@@ -78,6 +79,12 @@
         }
 
         .statDetails_sectionHeader {
+            /*<csstag tag="header">
+                <div ...>
+                    rule item
+                    { .statDetails_typeIcon }
+                </div>
+            </csstag>*/
             &:extend(
                 .statDetails
                 .statDetails_columnList

@@ -14,6 +14,7 @@
     // left: @phi_inv;//399px;
     // .calc( left , @phi_inv , -1px );
     left: 299px;
+    transition: left .3s;
 
     z-index: 200;
     background-color: #fff;
@@ -21,6 +22,10 @@
 
     body.s_detailTab & {
         display: block;
+    }
+
+    @media ( max-width: @screen-lg-min ) {
+        left: 119px;
     }
 
     .ruleDetailNav_title {

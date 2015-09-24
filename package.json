@@ -19,13 +19,13 @@
         "raphael":"~2.1",
         "nanoscroller":"~0.8"
     },
-    "bundledDependencies": {
-        "jquery": "~1.11",
-        "react" : "~0.13",
-        "routestate":"~0.3",
-        "raphael":"~2.1",
-        "nanoscroller":"~0.8"
-    },
+    "bundledDependencies": [
+        "jquery",
+        "react",
+        "routestate",
+        "raphael",
+        "nanoscroller"
+    ],
     "devDependencies" : {
     },
     "scripts": {

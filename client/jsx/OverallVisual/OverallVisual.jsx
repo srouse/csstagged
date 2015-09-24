@@ -9,6 +9,20 @@ var OverallVisual = React.createClass({
 
         var show_tag_labels = ( comps_percent > 10 );
 
+        var rules_percent_dom = [];
+        if ( rules_percent > 3 ) {
+            rules_percent_dom.push (
+                <span className="rules_total">
+                    { totals.rules }
+                </span>
+            );
+            rules_percent_dom.push (
+                <span className="rules_percent">
+                    { rules_percent }%
+                </span>
+            );
+        }
+
         return  <div className='overallVisual'>
                     <div className="cssp_OverallVisual_taggedRules">
                         <div className="overallVisual_taggedBar"
@@ -25,18 +39,9 @@ var OverallVisual = React.createClass({
                         </div>
                         <div className='overallVisual_rulesBar'
                             style={{width: rules_percent + "%"}}>
-                            <span className="rules_total">
-                                { totals.rules }
-                            </span>
-                            <span className="rules_percent">
-                                { rules_percent }%
-                            </span>
-                            { /* <div className="label">
-                                 untagged
-                            </div> */ }
+                            { rules_percent_dom }
                         </div>
                     </div>
-
                 </div>;
     }
 });

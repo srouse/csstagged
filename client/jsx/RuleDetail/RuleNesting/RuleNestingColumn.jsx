@@ -91,24 +91,23 @@ var RuleNestingColumn = React.createClass({
             // extra_class += " first_one";
             // extra_title_class += " first_title";
         }
-        //else{
 
-            if ( rule.uuid == RouteState.route.rule )
-                extra_title_class += " selected";
+        if ( rule.uuid == RouteState.route.rule )
+            extra_title_class += " selected";
 
-            rule_title =
-                <div className={ "ruleNestingColumn_title" + extra_title_class }
-                    onClick={
-                        this.gotoRule.bind( this , rule.uuid )
-                    }>
-                    <div className="ruleNesting_titleText">
-                        { rule.name }
-                    </div>
-                    <div className="ruleNesting_typeIcon">
-                        <TypeIcon rule={ rule } />
-                    </div>
-                </div>;
-        //}
+        rule_title =
+            <div className={ "ruleNestingColumn_title" + extra_title_class }
+                onClick={
+                    this.gotoRule.bind( this , rule.uuid )
+                }>
+                <div className="ruleNesting_titleText">
+                    { rule.name }
+                </div>
+                <div className="ruleNesting_typeIcon">
+                    <TypeIcon rule={ rule } />
+                </div>
+            </div>;
+
 
         return  <div className={ "ruleNestingColumn" + extra_class }
                     key={ rule.uuid +"-"+ rule.children.length }>
@@ -119,17 +118,23 @@ var RuleNestingColumn = React.createClass({
                         }}>
                     </div>
 
-                    <div className={ "ruleNestingColumn_stackedLine" + extra_class }
+                    <div className={
+                            "ruleNestingColumn_stackedLine" + extra_class
+                        }
                         style={{height:
                             (( stack_max_height ) * 30 ) + "px"
                         }}>
                     </div>
 
-                    <div className={ "ruleNestingColumn_lineCover" + extra_class }>
+                    <div className={
+                            "ruleNestingColumn_lineCover" + extra_class
+                        }>
                     </div>
 
                     { rule_title }
-                    <div className={ "ruleNestingColumn_children" + extra_class }>
+                    <div className={
+                            "ruleNestingColumn_children" + extra_class
+                        }>
                         { children }
                     </div>
 

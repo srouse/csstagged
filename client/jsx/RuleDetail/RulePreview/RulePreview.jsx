@@ -200,8 +200,25 @@ var RulePreview = React.createClass({
         var prev_display = rule_dom.css("display");
         if ( prev_display == "block" ) {
             rule_dom.css("display", "none" );
+            $(".rulePreview_visibility").removeClass("visible");
         }else{
             rule_dom.css("display", "block" );
+            $(".rulePreview_visibility").addClass("visible");
+        }
+    },
+
+    componentDidUpdate: function() {
+        var rule = this.props.rule;
+        var rule_dom = $(".rulePreview_iframe").contents().find( rule.selector );
+
+        if (
+            rule_dom.css("display") == "none" ||
+            rule_dom.css("visibility") == "hidden"
+        ) {
+            // changing state would be circular...
+            $(".rulePreview_visibility").removeClass("visible");
+        }else{
+            $(".rulePreview_visibility").addClass("visible");
         }
     },
 

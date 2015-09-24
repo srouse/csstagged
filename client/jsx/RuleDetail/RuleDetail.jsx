@@ -103,8 +103,6 @@ var RuleDetail = React.createClass({
                 tree_rule = {name:"no rule",children:[]};
         }
 
-
-
         var rule =  this.props.css_info.uuid_hash[
                         this.state.rule_uuid
                     ];

@@ -14,10 +14,6 @@
     );
     z-index: 300;
 
-    body.s_detailTab_example & {
-        display: block;
-    }
-
     @media ( max-width: @screen-lg-min ) {
         .calc( width , 100% , -120px );
     }
@@ -66,11 +62,15 @@
             /*<csstag tag="button">
                 <div ...></div>
             </csstag>*/
-            width: 20px; height: 20px;
-            margin-right: 30px;
-            margin-top: 10px;
+            width: 40px; height: 40px;
+            margin-right: 0px;
+            margin-top: 0px;
             .hand();
             float: right;
+
+            &:hover {
+                background-color: #eee;
+            }
         }
 
         .rulePreview_toggleBGColor {
@@ -80,9 +80,9 @@
             &:extend(
                 .rulePreview
                 .rulePreview_nav
-                .rulePreview_navItem
+                .rulePreview_navItem all
             );
-            margin-right: 20px;
+            margin-right: 10px;
             background-color: #fff;
             background-image: url("_assets/bg_color_icon.png");
             &:hover {
@@ -97,7 +97,7 @@
             &:extend(
                 .rulePreview
                 .rulePreview_nav
-                .rulePreview_navItem
+                .rulePreview_navItem all
             );
             background-image: url("_assets/outline_icon.png");
             &:hover {
@@ -105,26 +105,19 @@
             }
         }
 
-        .rulePreview_visibility {
+        .rulePreview_html {
             /*<csstag tag="button">
                 <div ...></div>
             </csstag>*/
             &:extend(
                 .rulePreview
                 .rulePreview_nav
-                .rulePreview_navItem
+                .rulePreview_navItem all
             );
             background-color: #fff;
-            background-image: url("_assets/invisible_icon.png");
+            background-image: url("_assets/html_icon.png");
             &:hover {
-                background-image: url("_assets/invisible_icon_dark.png");
-            }
-
-            &.visible {
-                background-image: url("_assets/visible_icon.png");
-                &:hover {
-                    background-image: url("_assets/visible_icon_dark.png");
-                }
+                background-image: url("_assets/html_icon_dark.png");
             }
         }
     }

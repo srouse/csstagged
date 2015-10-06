@@ -13,12 +13,25 @@
     );
     z-index: 100;
 
-    body.s_detailTab_css & {
-        display: block;
-    }
-
     @media ( max-width: @screen-lg-min ) {
         .calc( width , 100% , 100px );
+    }
+
+    .ruleDetail_textarea {
+        /*<csstag tag="content">
+            <textarea ...>
+                <hi>there</hi>
+            </textarea>
+        </csstag>*/
+        width: 100%;
+        height: 300px;
+        background-color: #000;
+        color: #eee;
+        padding: 20px;
+        font-family: 'Muli', sans-serif;
+    	font-weight: extralight;
+        border: 0px;
+        resize: none;
     }
 
     .ruleDetail_code {
@@ -36,7 +49,10 @@
 
         .ruleDetail_title {
             /*<csstag tag="code">
-                <div ...>Pseudo Selectors</div>
+                <div ...>
+                    Pseudo Selectors
+                    { .ruleDetail_titleButton }
+                </div>
             </csstag>*/
             width: 100%;
             border-bottom: 1px solid #eee;
@@ -44,6 +60,17 @@
             color: #333;
             padding-top: 20px;
             clear: both;
+            position: relative;
+
+            .ruleDetail_titleButton {
+                /*<csstag tag="button">
+                    <div ...>React</div>
+                </csstag>*/
+                position: absolute;
+                right: 10px;
+                bottom: 0px;
+                .hand();
+            }
         }
 
         .ruleDetail_pre {

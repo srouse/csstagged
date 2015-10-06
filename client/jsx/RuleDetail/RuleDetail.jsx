@@ -20,26 +20,36 @@ var RuleDetail = React.createClass({
 
     componentDidMount: function() {
         var me = this;
-        this.route_listener = RouteState.addDiffListener(
+        RouteState.addDiffListener(
     		"tree",
     		function ( route , prev_route ) {
                 me.setState({
                     tree_rule_uuid:route.tree
                 });
-    		}
+    		},
+            "rule_detail"
     	);
 
-        this.route_listener_tag = RouteState.addDiffListener(
+        RouteState.addDiffListener(
     		"tag",
     		function ( route , prev_route ) {
                 me.setState({
                     tag:route.tag
                 });
-    		}
+    		},
+            "rule_detail"
+    	);
+
+        RouteState.addDiffListener(
+    		"detailTab",
+    		function ( route , prev_route ) {
+                me.forceUpdate();
+    		},
+            "rule_detail"
     	);
 
         var me = this;
-        this.route_listener_rule = RouteState.addDiffListener(
+        RouteState.addDiffListener(
     		"rule",
     		function ( route , prev_route ) {
                 var rule_uuid = route.rule;
@@ -53,14 +63,13 @@ var RuleDetail = React.createClass({
                 me.setState({
                     rule_uuid:rule_uuid
                 });
-    		}
+    		},
+            "rule_detail"
     	);
     },
 
     componentWillUnmount: function(){
-        RouteState.removeDiffListener( this.route_listener );
-        RouteState.removeDiffListener( this.route_listener_tag );
-        RouteState.removeDiffListener( this.route_listener_rule );
+        RouteState.removeDiffListenersViaClusterId( "rule_detail" );
     },
 
     change_tab: function ( tab_name ) {
@@ -111,6 +120,23 @@ var RuleDetail = React.createClass({
             rule = tree_rule;
         }
 
+        var content = "";
+        if ( RouteState.route.detailTab == "code" ) {
+            content = <RuleCSS
+                        css_info={ this.props.css_info }
+                        rule_uuid={ this.state.rule_uuid }
+                        rule={ rule } />;
+        }else if ( RouteState.route.detailTab == "overview" ) {
+            content = <RuleOverview
+                        css_info={ this.props.css_info }
+                        rule={ rule } />;
+        }else if ( RouteState.route.detailTab == "example" ) {
+            content = <RulePreview
+                        css_info={ this.props.css_info }
+                        rule_uuid={ this.state.rule_uuid }
+                        rule={ rule } />;
+        }
+
         return  <div className="ruleDetail">
 
                     <div className="ruleDetail_header">
@@ -137,9 +163,9 @@ var RuleDetail = React.createClass({
                             </div>
                             <div className="ruleDetail_item_css"
                                 onClick={
-                                    this.change_tab.bind( this , "css")
+                                    this.change_tab.bind( this , "code")
                                 }>
-                                css
+                                code
                             </div>
                             <div className="ruleDetail_item_overview"
                                 onClick={
@@ -154,20 +180,7 @@ var RuleDetail = React.createClass({
                         </div>
                     </div>
 
-
-                    <RuleCSS
-                        css_info={ this.props.css_info }
-                        rule_uuid={ this.state.rule_uuid }
-                        rule={ rule } />
-
-                    <RuleOverview
-                        css_info={ this.props.css_info }
-                        rule={ rule } />
-
-                    <RulePreview
-                        css_info={ this.props.css_info }
-                        rule_uuid={ this.state.rule_uuid }
-                        rule={ rule } />
+                    { content }
 
                     <RuleNesting
                         css_info={ this.props.css_info }
@@ -177,8 +190,6 @@ var RuleDetail = React.createClass({
                         css_info={ this.props.css_info }
                         rule_uuid={ this.state.rule_uuid }
                         rule={ rule } />
-
-
 
                 </div>;
     }

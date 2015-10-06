@@ -2,11 +2,18 @@
 var RulePreview = React.createClass({
 
     componentDidMount: function() {
-
+        var me = this;
+        RouteState.addDiffListener(
+    		"react",
+    		function ( route , prev_route ) {
+                me.forceUpdate();
+    		},
+            "rule_preview"
+    	);
     },
 
     componentWillUnmount: function(){
-
+        RouteState.removeDiffListenersViaClusterId( "rule_preview" );
     },
 
     replaceComps: function ( html_str , rule_names , times_called ) {
@@ -163,48 +170,32 @@ var RulePreview = React.createClass({
     },
 
     toggleBGColor: function () {
-        var iframe = $(".rulePreview_iframe");
-
-        if ( !this.frame_bg || this.frame_bg == "#eee" ) {
-            this.frame_bg = "#fff";
-        }else{
-            this.frame_bg = "#eee";
-        }
-
-        $(".rulePreview_iframe").css("background-color",this.frame_bg);
+        RouteState.toggle({
+            bg:"white"
+        },{
+            bg:""
+        });
     },
 
     outlineElement: function () {
-        var rule = this.props.rule;
-        var rule_dom = $(".rulePreview_iframe").contents().find( rule.selector );
-
-        var showing_border = "1px solid #f00";
-        if ( !this.ele_border || this.ele_border != showing_border ) {
-            this.prev_border = rule_dom.css("border");
-            this.ele_border = showing_border;
-        }else{
-            this.ele_border = "prev";
-        }
-
-        if ( this.ele_border == "prev" ) {
-            rule_dom.css("border", this.prev_border );
-        }else{
-            rule_dom.css("border", showing_border );
-        }
+        RouteState.toggle({
+            outline:"outline"
+        },{
+            outline:""
+        });
     },
 
-    toggleVisibility: function () {
-        var rule = this.props.rule;
-        var rule_dom = $(".rulePreview_iframe").contents().find( rule.selector );
+    changeBackgroundColor: function () {
+        RouteState.toggle({
+            bg:"#fff"
+        },{
+            bg:""
+        });
+    },
 
-        var prev_display = rule_dom.css("display");
-        if ( prev_display == "block" ) {
-            rule_dom.css("display", "none" );
-            $(".rulePreview_visibility").removeClass("visible");
-        }else{
-            rule_dom.css("display", "block" );
-            $(".rulePreview_visibility").addClass("visible");
-        }
+    showHTML: function () {
+        var example = this.findRuleExample( this.props.rule );
+        console.log( example );
     },
 
     componentDidUpdate: function() {
@@ -224,13 +215,13 @@ var RulePreview = React.createClass({
 
     render: function() {
         var rule = this.props.rule;
-        var example = this.findRuleExample( rule );
+        var example = RuleUtil.findRuleExample( rule , this.props.css_info );
 
         this.ele_border = false;
 
         return  <div className="rulePreview">
                     <div className="rulePreview_stage">
-                        <MagicFrame example={ example } />
+                        <MagicFrame example={ example } rule={ rule } />
                     </div>
                     <div className="rulePreview_nav">
                         <div className="rulePreview_toggleBGColor"
@@ -239,8 +230,8 @@ var RulePreview = React.createClass({
                         <div className="rulePreview_outline"
                             onClick={ this.outlineElement }>
                         </div>
-                        <div className="rulePreview_visibility"
-                            onClick={ this.toggleVisibility }>
+                        <div className="rulePreview_html"
+                            onClick={ this.showHTML }>
                         </div>
                     </div>
                 </div>;
@@ -253,8 +244,30 @@ var MagicFrame = React.createClass({
         return <iframe style={{border: 'none'}} className="rulePreview_iframe" />;
     },
     componentDidMount: function() {
+        var me = this;
+        RouteState.addDiffListener(
+    		"outline",
+    		function ( route , prev_route ) {
+                me.postProcessElement();
+    		},
+            "rule_preview"
+    	);
+
+        RouteState.addDiffListener(
+    		"bg",
+    		function ( route , prev_route ) {
+                me.postProcessElement();
+    		},
+            "rule_preview"
+    	);
+
         this.renderFrameContents();
     },
+
+    componentWillUnmount: function(){
+        RouteState.removeDiffListenersViaClusterId( "rule_preview" );
+    },
+
     renderFrameContents: function() {
         var doc = this.getDOMNode().contentDocument;
         if( doc.readyState === 'complete' ) {
@@ -262,7 +275,34 @@ var MagicFrame = React.createClass({
         } else {
             setTimeout(this.renderFrameContents, 0);
         }
+
+        this.postProcessElement();
     },
+
+    postProcessElement: function () {
+        var rule = this.props.rule;
+        var doc = this.getDOMNode().contentDocument;
+        var rule_dom = $(doc).contents().find( rule.selector );
+
+        if ( RouteState.route.outline == "outline" ) {
+            this.prev_border = rule_dom.css("border");
+            rule_dom.css("border", "1px solid #f00" );
+        }else{
+            var border = ( this.prev_border ) ? this.prev_border : "none";
+            rule_dom.css("border", border );
+        }
+
+        // make sure it is always visible....
+        rule_dom.css("display", "block" );
+
+        var frame_bg = "#eee";
+        if ( RouteState.route.bg == "white" ) {
+            frame_bg = "#fff";
+        }
+
+        $(doc).contents().find( "body" ).css("background-color", frame_bg );
+    },
+
     componentDidUpdate: function() {
         this.renderFrameContents();
     },

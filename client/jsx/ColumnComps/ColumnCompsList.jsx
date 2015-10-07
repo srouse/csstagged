@@ -22,8 +22,16 @@ var ColumnCompsList = React.createClass({
 
     viewRuleDetail: function ( uuid ) {
         RouteState.toggle(
-            {tree:uuid},
-            {tree:""}
+            {
+                tree:uuid,
+                rule:uuid,
+                detailTab:"example"
+            },
+            {
+                tree:"",
+                rule:"",
+                detailTab:""
+            }
         );
     },
 

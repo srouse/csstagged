@@ -82,25 +82,28 @@ var RulePreview = React.createClass({
         this.ele_border = false;
 
         var states = [],state,state_class;
-        for ( var s=0; s<rule.states.length; s++ ) {
-            state = rule.states[s];
-            state_class = "rulePreview_state";
-            if ( RouteState.route.rulestate ) {
-                if ( s == RouteState.route.rulestate-1 ) {
-                    state_class += " selected";
-                }
-            }
 
-            states.push(
-                <div className={ state_class }
-                        title={ state.raw_selector }
-                        key={ state.raw_selector }
-                        onClick={
-                            this.changeState.bind( this , s+1+"" )
-                        }>
-                    { s }
-                </div>
-            );
+        if ( rule.states ) {
+            for ( var s=0; s<rule.states.length; s++ ) {
+                state = rule.states[s];
+                state_class = "rulePreview_state";
+                if ( RouteState.route.rulestate ) {
+                    if ( s == RouteState.route.rulestate-1 ) {
+                        state_class += " selected";
+                    }
+                }
+
+                states.push(
+                    <div className={ state_class }
+                            title={ state.raw_selector }
+                            key={ state.raw_selector }
+                            onClick={
+                                this.changeState.bind( this , s+1+"" )
+                            }>
+                        { s }
+                    </div>
+                );
+            }
         }
 
         return  <div className="rulePreview">

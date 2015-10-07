@@ -20,4 +20,33 @@ creating projects that are scalable and manageable long term.
 4. do an npm install on the csstagged folder
 5. (check for node_modules path excludes in .htaccess)
 6. add updates to your Gruntfile.js to include concat, less, and css_parse (
-    example is in install folder as well )
+    example is in install folder as well ). Examples are in
+    /node_modules/csstagged/install/
+
+
+
+.siteButton {
+    /*<csstag tag="button">
+        <div ...></div>
+    </csstag>*/
+    color: #000;
+}
+
+.mySection {
+    /*<csstag tag="section">
+        <div ...>
+            { .myButton }
+        </div>
+    </csstag>*/
+    width: 50%; height: 100%;
+
+    .myButton {
+        /*<csstag tag="button">
+            <div ...></div>
+        </csstag>*/
+        &:extends(
+            .siteButton
+        );    
+        color: #f00;
+    }
+}

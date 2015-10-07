@@ -16,6 +16,7 @@ var ColumnCompsRow = React.createClass({
             {tree:uuid},
             {tree:""}
         );*/
+        
         this.props.onDetailClick( uuid );
     },
 

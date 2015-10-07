@@ -28,31 +28,69 @@ RuleUtil.replaceComps = function (
 
             // TODO Look for names..if not found, then look for selectors
             if ( css_info.name_hash[sub_rule_name] ) {
-                sub_rule_name_arr.push( sub_rule_name );
                 sub_rule = css_info.name_hash[sub_rule_name];
+
                 if (    sub_rule.metadata
                         && sub_rule.metadata.example )
                 {
+                    sub_rule_name_arr.push( sub_rule_name );
+
                     $(sub_rule_html).replaceWith(
                         $( sub_rule.metadata.example )
                     );
-                    found_template = true;
                     break;
                 }else{
-                    if ( !found_template ) {
+                    if ( css_info.selector_hash[sub_rule_name] ) {
+                        sub_rule = css_info.selector_hash[sub_rule_name];
+                        if (    sub_rule.metadata
+                                && sub_rule.metadata.example )
+                        {
+                            sub_rule_name_arr.push( sub_rule_name );
+                            $(sub_rule_html).replaceWith(
+                                $( sub_rule.metadata.example )
+                            );
+                            break;
+                        }else{
+                            $( sub_rule_html ).replaceWith(
+                                "<div>error '"
+                                + sub_rule_name
+                                + "' [3]...('>' are filtered out of selectors)</div>"
+                            );
+                        }
+                    }else{
                         $( sub_rule_html ).replaceWith(
                             "<div>error '"
                             + sub_rule_name
-                            + "' not found (1)</div>"
+                            + "' [1]...('>' are filtered out of selectors)</div>"
                         );
                     }
                 }
             }else{
-                $(sub_rule_html).replaceWith(
-                    "<div>error template '"
-                    + sub_rule_name
-                    + "' not found (2)</div>"
-                );
+                if ( css_info.selector_hash[sub_rule_name] ) {
+                    sub_rule = css_info.selector_hash[sub_rule_name];
+                    if (    sub_rule.metadata
+                            && sub_rule.metadata.example )
+                    {
+                        sub_rule_name_arr.push( sub_rule_name );
+
+                        $(sub_rule_html).replaceWith(
+                            $( sub_rule.metadata.example )
+                        );
+                        break;
+                    }else{
+                        $( sub_rule_html ).replaceWith(
+                            "<div>error '"
+                            + sub_rule_name
+                            + "' [4]...('>' are filtered out of selectors)</div>"
+                        );
+                    }
+                }else{
+                    $(sub_rule_html).replaceWith(
+                        "<div>error template '"
+                        + sub_rule_name
+                        + "' [2]...('>' are filtered out of selectors)</div>"
+                    );
+                }
             }
         }
 
@@ -69,6 +107,8 @@ RuleUtil.replaceComps = function (
         };
     }
 };
+
+
 
 RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
     var html = ["<div>no example</div>"];
@@ -141,6 +181,12 @@ RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
                 var sub_comp_rule = css_info.name_hash[
                                         sub_comp_name
                                     ];
+                if ( !sub_comp_rule ) {
+                    sub_comp_rule = css_info.selector_hash[
+                                            sub_comp_name
+                                        ];
+                }
+
                 css.push(
                     _ruleAndPseudosToCSSString(
                         sub_comp_rule , true , img_prefix

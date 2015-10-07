@@ -4,6 +4,7 @@ function createNewRule ( selector , returnObj ) {
     var new_rule = {
         declarations:[],
         selector:selector,
+        raw_selector:selector,
         type:"rule",// it's not declared, so default to rule,
         selectors:[selector],
         source:[]

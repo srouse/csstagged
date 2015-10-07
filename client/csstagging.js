@@ -112,6 +112,9 @@ function processRules ( css_dom ) {
     var selector_rule;
     for ( var r=0; r<returnObj.selectors.length; r++ ) {
         selector_rule = returnObj.selectors[r];
+        if ( selector_rule.name == ">" ) {
+            console.log("CAT");
+        }
         contextualizeRule( selector_rule , returnObj );
     }
     // </CONTEXTUALIZE>
@@ -120,15 +123,19 @@ function processRules ( css_dom ) {
     var rules_name = processRuleNames ( returnObj.selectors );
     returnObj.names = rules_name.rules_by_name;
     returnObj.name_hash = rules_name.rule_name_hash;
+    // </NAMES>
 
-    // now consolidate into single named rules with array of source rules
-    // figure out what type of rule it is...
+    // <DIRECT_CHILDS>
+    this.processRuleDirectChild( returnObj.selectors );
+    // </DIRECT_CHILDS>
+
+    // <DUPS>
     var name_rule;
     for ( var r=0; r<returnObj.names.length; r++ ) {
         name_rule = returnObj.names[r];
         checkNameRuleForDuplication( name_rule , returnObj );
     }
-    // </NAMES>
+    // </DUPS>
 
     scoreDOM( returnObj );
 
@@ -143,11 +150,23 @@ function processRules ( css_dom ) {
     return returnObj;
 }
 
-
+    function isDirectChild ( rule , selector ) {
+        child_arr = selector.split(">");
+        if ( child_arr.length > 1 ) {
+            child_space_arr =   child_arr[
+                                    child_arr.length-1
+                                ].split(" ");
+            if ( child_space_arr.length == 2 ) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     function flattenSelectors ( rules ) {
         var selector;
         var new_rules = [];
+        var child_arr,child_space_arr,raw_selector;
 
         var rule,cloned_rule,selector_arr;
         for ( var r=0; r<rules.length; r++ ) {
@@ -156,14 +175,22 @@ function processRules ( css_dom ) {
             if ( rule.type == "rule" ) {
                 if ( rule.selectors.length > 1 ) {
                     for ( var s=0; s<rule.selectors.length; s++ ) {
-                        selector = rule.selectors[s];
+                        raw_selector = rule.selectors[s];
+                        selector = raw_selector.replace( /> /g , "" );
+
                         // make sure it's unique...
                         cloned_rule = JSON.parse(JSON.stringify(rule));
                         cloned_rule.selector = selector;
+                        cloned_rule.raw_selector = raw_selector;
+
                         new_rules.push( cloned_rule );
                     }
                 }else{
-                    rule.selector = rule.selectors[0];
+                    raw_selector = rule.selectors[0];
+                    selector = raw_selector.replace( /> /g , "" );
+
+                    rule.selector = selector;
+                    rule.raw_selector = raw_selector;
                     new_rules.push( rule );
                 }
             }
@@ -234,6 +261,8 @@ function processRules ( css_dom ) {
         for ( var d=0; d<selector_rule.source.length; d++ ) {
             source_rule = selector_rule.source[d];
             source_rule.name = selector_rule.name;
+
+
             // if this is the root selector, or if there isn't one...
             if (
                 !has_root_selector
@@ -279,20 +308,30 @@ function processRules ( css_dom ) {
         }
     }
 
+    function processRuleDirectChild ( rules ) {
+        for ( var r=0; r<rules.length; r++ ) {
+            rule = rules[r];
+            rule.direct_child_selector
+                = isDirectChild( rule , rule.raw_selector );
+        }
+    }
+
     function checkNameRuleForDuplication ( name_rule , returnObj ) {
-        var core_selector = name_rule.selector;
+        // original selectors are not processed....
+        // this may bite me later...
+        var core_selector = name_rule.raw_selector;
 
         for ( var d=0; d<name_rule.source.length; d++ ) {
             source_rule = name_rule.source[d];
-            if ( core_selector != source_rule.selector ) {
+
+            if (
+                core_selector != source_rule.selector &&
+                !source_rule.direct_child_selector
+            ) {
                 var first_selector = source_rule.selectors[0];
 
                 // need one entry that is the same...
                 if ( source_rule.selectors.indexOf( core_selector ) == -1 ) {
-                // if ( first_selector != core_selector ) {
-                    if ( name_rule.name == ".column_List" ) {
-                        console.log( {d:name_rule.source} );
-                    }
                     name_rule.is_duplicate = true;
                     returnObj.totals.name_duplicates++;
                     returnObj.duplicates.push( name_rule.name );
@@ -312,6 +351,17 @@ function processRules ( css_dom ) {
         // look up if it is a child of another comp
         // b/c it's less it will be in sequence (otherwise, fuck off)
         var selector_lookup = rule.selector.split(" ");
+        //take out first child selectors
+        var new_selector_lookup = [];
+        var sel_str;
+        for ( var i=0; i<selector_lookup.length; i++ ) {
+            sel_str = selector_lookup[i];
+            if ( sel_str != ">" ) {
+                new_selector_lookup.push( sel_str );
+            }
+        }
+        selector_lookup = new_selector_lookup;
+
         var selector_lookup_str;
         var parent_rule;
         var index = 0;

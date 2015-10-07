@@ -30,6 +30,7 @@ module.exports = function(grunt) {
                 'client/jsx/Shared/**/*.less',
                 'client/jsx/**/Shared/**/*.less',//process shared less first
                 'client/jsx/**/*.less',
+                "node_modules/nanoscroller/bin/css/nanoscroller.css"
             ]
         }
     }

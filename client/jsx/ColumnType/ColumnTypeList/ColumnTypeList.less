@@ -9,11 +9,11 @@
     width: 10px;
     .tail {
         color: pink;
-        .fur {
+        > .fur {
             height: 10px;
             .hair {
                 color: purple;
-                .flea {
+                > .flea {
                     text-decoration-style: dashed;
                     .flea_eye {
                         height: 1000px;
@@ -27,12 +27,40 @@
     }
 }
 .cat {
+    /*<csstag tag="example">
+        <div ...>
+            { .spit }
+        </div>
+    </csstag>*/
+
     &:extend(
         .dog all
     );
     width: 11px;
 
-    .fur {
+    /*.fur {
         color: pink;
+    }*/
+
+    .spit {
+        /*<csstag tag="example">
+            <div ...>THERE</div>
+        </csstag>*/
+        color: yellow;
+    }
+}
+
+.sloth {
+    /*<csstag tag="example">
+        <div ...>
+            { .sloth .spit }
+        </div>
+    </csstag>*/
+
+    > .spit {
+        /*<csstag tag="example">
+            <div ...>HI</div>
+        </csstag>*/
+        color: brown;
     }
 }

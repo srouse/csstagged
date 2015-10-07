@@ -33,6 +33,7 @@ function _ruleAndPseudosToCSSString ( rule , pretty , img_prefix ) {
     var css_str = ruleToCSSString( rule , pretty , img_prefix );
 
     // pseudos now...(recursive)
+    console.log( rule );
     if ( rule.pseudos ) {
         $.each( rule.pseudos , function ( i , pseudo ) {
             css_str += new_line + ruleToCSSString( pseudo , pretty , img_prefix );

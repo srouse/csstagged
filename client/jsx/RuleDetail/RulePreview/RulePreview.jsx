@@ -15,7 +15,7 @@ var RulePreview = React.createClass({
     componentWillUnmount: function(){
         RouteState.removeDiffListenersViaClusterId( "rule_preview" );
     },
-
+/*
     replaceComps: function ( html_str , rule_names , times_called ) {
         if ( !times_called )
             times_called = 1;
@@ -168,7 +168,7 @@ var RulePreview = React.createClass({
 
         return html.join("");
     },
-
+*/
     toggleBGColor: function () {
         RouteState.toggle({
             bg:"white"

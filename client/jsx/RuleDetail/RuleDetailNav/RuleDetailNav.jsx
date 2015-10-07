@@ -40,12 +40,15 @@ var RuleDetailNav = React.createClass({
         if ( !rule.name )
             return <div>no rule</div>;
 
+        var name = rule.name;
+        if ( rule.direct_child_selector ) {
+            name = "> " + name;
+        }
+        
         return  <div className="ruleDetailNav">
                     <div className="ruleDetailNav_title">
-                        { /* <div className="expandoClose"
-                            onClick={ this.closeDetail }></div> */ }
                         <div className="ruleDetailNav_titleText">
-                            { rule.name }
+                            { name }
                         </div>
                         <div className="ruleDetailNav_typeIcon">
                             <TypeIcon rule={ rule } />

@@ -95,13 +95,19 @@ var RuleNestingColumn = React.createClass({
         if ( rule.uuid == RouteState.route.rule )
             extra_title_class += " selected";
 
+
+        var name = rule.name;
+        if ( rule.direct_child_selector ) {
+            name = "> " + name;
+        }
+
         rule_title =
             <div className={ "ruleNestingColumn_title" + extra_title_class }
                 onClick={
                     this.gotoRule.bind( this , rule.uuid )
                 }>
                 <div className="ruleNesting_titleText">
-                    { rule.name }
+                    { name }
                 </div>
                 <div className="ruleNesting_typeIcon">
                     <TypeIcon rule={ rule } />

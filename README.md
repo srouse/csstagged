@@ -24,29 +24,32 @@ creating projects that are scalable and manageable long term.
     /node_modules/csstagged/install/
 
 
+<pre>
 
 .siteButton {
-    /*<csstag tag="button">
-        <div ...></div>
-    </csstag>*/
+    /*&lt;csstag tag="button"> // xml formatted comment
+        &lt;div ...>&lt;/div> // auto injects class name
+    &lt;/csstag>*/
     color: #000;
 }
 
 .mySection {
-    /*<csstag tag="section">
-        <div ...>
-            { .myButton }
-        </div>
-    </csstag>*/
+    /*&lt;csstag tag="section">
+        &lt;div ...>
+            { .myButton } // child templates referenced by name (or full selector)
+        &lt;/div>
+    &lt;/csstag>*/
     width: 50%; height: 100%;
 
     .myButton {
-        /*<csstag tag="button">
-            <div ...></div>
-        </csstag>*/
-        &:extends(
+        /*&lt;csstag tag="button">
+            &lt;div ...>&lt;/div>
+        &lt;/csstag>*/
+        &:extends( // understands extension (at least in LESS)
             .siteButton
         );    
         color: #f00;
     }
 }
+
+</pre>

@@ -4,7 +4,9 @@ function flattenStates ( rules , returnObj ) {
     var selector;
     var new_rules = [];
     var states = [];
+    var states_hash = {};
     var pseudos = [];
+    var pseudos_hash = {};
     var rule,is_state;
     for ( var r=0; r<rules.length; r++ ) {
         rule = rules[r];
@@ -12,8 +14,10 @@ function flattenStates ( rules , returnObj ) {
 
         if ( is_state == "state" ) {
             states.push( rule );
+            states_hash[ rule.selector ] = rule;
         }else if ( is_state == "pseudo" ) {
             pseudos.push( rule );
+            pseudos_hash[ rule.selector ] = rule;
         }else{
             new_rules.push( rule );
         }
@@ -21,7 +25,9 @@ function flattenStates ( rules , returnObj ) {
     return {
         selectors:new_rules,
         states:states,
-        pseudos:pseudos
+        states_hash:states_hash,
+        pseudos:pseudos,
+        pseudos_hash:pseudos_hash
     };
 }
 
@@ -40,7 +46,10 @@ function _checkIfStateOrPseudo ( rule ) {
     var selector;
     var hash_count,colon_count,dot_count;
     var first_dot,first_hash;
-    for ( var i=0; i<selector_arr.length; i++ ){
+    //for ( var i=0; i<selector_arr.length; i++ ){
+    // need to go backwards to give precedence to pseudos
+    // TODO: loop through entirely to look for pseudos first...
+    for ( var i=selector_arr.length-1; i>=0; i-- ){
         selector = selector_arr[i];
         hash_count = selector.split("#").length - 1;
         colon_count = selector.split(":").length - 1;
@@ -77,35 +86,65 @@ function _checkIfStateOrPseudo ( rule ) {
     return "rule";
 }
 
+function test( test ) {
+    return test == ".columnStats .columnStats_content .columnStats_tile .tile_graph .tile_circle";
+}
+
 function processState ( state , returnObj ) {
     state.type = "state";
     state.state_info = {};
     state.state_info = _getRuleAndStateInfo( state );
     returnObj.states.push( state );
 
+    if ( test(state.state_info.rule_processed_selector ) )
+        console.log( "PP:" , state.state_info );
     // now add the state to the right rule...
     var rule_cumulative = [],rule_cumulative_str;
     var focused_state, rule;
-    $.each( state.state_info.rules_by_index ,
+
+    //states only apply to things that are affected...
+    var selector = state.state_info.rule_processed_selector;
+    var rule = returnObj.selector_hash[ selector ];
+    if ( !rule ) {
+        rule = createNewRule ( selector , returnObj );
+    }
+    rule.states.push( state );
+
+    /*$.each( state.state_info.rules_by_index ,
         function ( index , focused_rule ) {
-            focused_state = state.state_info.states_by_index[ index ];
-            rule_cumulative.push( focused_rule );
-            if ( focused_state.length > 0 ) {
-                rule_cumulative_str = rule_cumulative.join(" ");
-                if (
-                    rule_cumulative_str.indexOf("body") != 0
-                    && rule_cumulative_str.indexOf("html") != 0
-                ) {
+            if (
+                focused_rule != "body" &&
+                focused_rule != "html"
+            ) {
+                focused_state = state.state_info.states_by_index[ index ];
+                rule_cumulative.push( focused_rule );
+                if ( focused_state.length > 0 ) {
+                    rule_cumulative_str = rule_cumulative.join(" ");
+
+                    if ( test(state.state_info.rule_selector) )
+                        console.log( rule_cumulative_str );
+
                     rule = returnObj.selector_hash[ rule_cumulative_str ];
                     if ( !rule ) {
                         rule = createNewRule ( rule_cumulative_str , returnObj );
+
+                        if ( test(state.state_info.rule_selector) )
+                            console.log( "CREATED: " , rule );
+
+                    }else{
+
+                        if ( test(state.state_info.rule_selector) )
+                            console.log( "FOUND: " , rule );
+
                     }
                     rule.states.push( state );
                 }
             }
         }
-    );
+    );*/
 }
+
+
 
 function processPseudo ( pseudo , returnObj ) {
     pseudo.type = "pseudo";
@@ -158,13 +197,34 @@ function processPseudo ( pseudo , returnObj ) {
                 states_by_index[i] = "";
             }
         }
+
+        var sel_clean_arr = sel_arr.slice(0);
+        var rules_by_index_processed = rules_by_index.slice(0);
+        if (
+            sel_clean_arr[0] == "body" ||
+            sel_clean_arr[0] == "html"
+        ) {
+            sel_clean_arr.shift();
+            rules_by_index_processed.shift();
+
+            if (
+                sel_clean_arr[0] == "body"
+            ) {
+                sel_clean_arr.shift();
+                rules_by_index_processed.shift();
+            }
+        }
+
         return {
+            rule_processed_selector:sel_clean_arr.join(" "),
             rule_selector:sel_arr.join(" "),
             states_by_index:states_by_index,
-            rules_by_index:rules_by_index
+            rules_by_index:rules_by_index,
+            rules_processed_by_index:rules_by_index_processed
         }
     }
 
+/*
     function _allPossibleRules ( selector ) {
         var sel_arr = selector.split(" ");
         var sel;
@@ -210,3 +270,4 @@ function processPseudo ( pseudo , returnObj ) {
             }
             return new_all_rules;
         }
+*/

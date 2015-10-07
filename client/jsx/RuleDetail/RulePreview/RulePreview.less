@@ -58,6 +58,17 @@
             width: 119px; left: -120px;
         }*/
 
+        .rulePreview_navLabel {
+            /*<csstag tag="label">
+                <div ...>states</div>
+            </csstag>*/
+            height: 40px;
+            float: left;
+            text-align: center;
+            font-size: 12px;
+            padding: 10px 10px;
+        }
+
         .rulePreview_navItem {
             /*<csstag tag="button">
                 <div ...></div>
@@ -67,9 +78,29 @@
             margin-top: 0px;
             .hand();
             float: right;
+            text-align: center;
+            font-size: 12px;
+            padding-top: 10px;
 
             &:hover {
                 background-color: #eee;
+            }
+        }
+
+        .rulePreview_state {
+            /*<csstag tag="button">
+                <div ...>1</div>
+            </csstag>*/
+            &:extend(
+                .rulePreview
+                .rulePreview_nav
+                .rulePreview_navItem all
+            );
+            float: left;
+
+            &.selected {
+                background-color: #777;
+                color: #fff;
             }
         }
 

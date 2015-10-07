@@ -114,6 +114,14 @@
                     .calc( left , 50% , -@tile_circle_diameter/2 );
                     width: @tile_circle_diameter;
                     height: @tile_circle_diameter;
+
+                    &.go {
+                        color: #f00;
+                    }
+
+                    body.s_go & {
+                        color: #0f0;
+                    }
                 }
             }
 

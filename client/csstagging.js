@@ -86,6 +86,8 @@ function processRules ( css_dom ) {
 
     // spliting out into rules, states, pseudo
     var rules_states = flattenStates( selectors , returnObj );
+    returnObj.states_hash = rules_states.states_hash;
+    returnObj.pseudos_hash = rules_states.pseudos_hash;
 
     var selectors = rules_states.selectors;
     for ( var r=0; r<selectors.length; r++ ) {
@@ -112,9 +114,6 @@ function processRules ( css_dom ) {
     var selector_rule;
     for ( var r=0; r<returnObj.selectors.length; r++ ) {
         selector_rule = returnObj.selectors[r];
-        if ( selector_rule.name == ">" ) {
-            console.log("CAT");
-        }
         contextualizeRule( selector_rule , returnObj );
     }
     // </CONTEXTUALIZE>

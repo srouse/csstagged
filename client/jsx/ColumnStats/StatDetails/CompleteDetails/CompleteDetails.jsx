@@ -59,7 +59,6 @@ var CompleteDetails = React.createClass({
         );
 
         $.each( rules , function ( i , rule_uuid ) {
-            console.log( rule_uuid );
             var rule = me.props.css_info.uuid_hash[ rule_uuid ];
             if ( rule ) {
                 rows.push(

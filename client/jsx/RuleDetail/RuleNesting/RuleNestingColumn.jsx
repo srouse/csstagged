@@ -35,7 +35,7 @@ var RuleNestingColumn = React.createClass({
         }
 
         RouteState.merge(
-            {rule:rule_uuid,detailTab:detailTab}
+            {rule:rule_uuid,detailTab:detailTab,rulestate:""}
         );
     },
 

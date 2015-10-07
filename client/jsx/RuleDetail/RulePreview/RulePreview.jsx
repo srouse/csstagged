@@ -14,7 +14,7 @@ var RulePreview = React.createClass({
         RouteState.addDiffListener(
     		"rulestate",
     		function ( route , prev_route ) {
-                me.forceUpdate();
+                //me.forceUpdate();
     		},
             "rule_preview"
     	);
@@ -200,8 +200,36 @@ var MagicFrame = React.createClass({
         var body = $(doc).contents().find( "body" );
         body.css("background-color", frame_bg );
 
-        // body sticks around during refresh...
-        body.removeClass();
+
+        //need to remove previous state without refresh entire page...
+        if ( RouteState.prev_route.rulestate ) {
+            var raw_selector =  rule.states[
+                                    RouteState.prev_route.rulestate-1
+                                ].raw_selector;
+            var class_arr = raw_selector.split(" ");
+
+            var cls,cls_arr,cls_build=[];
+
+            for ( var s=0; s<class_arr.length; s++ ) {
+                cls = class_arr[s];
+                cls_arr = cls.split(".");
+                cls_build.push( "." + cls_arr[1] );
+                // TODO: apply more if there are more than one state...
+                if (
+                    cls_arr.length > 2
+                ) {
+                    $(doc).contents().find( cls_build.join(" ") )
+                        .removeClass( cls_arr[2] );
+                }else if (
+                    cls_arr[0].length > 0
+                ) {
+                    $(doc).contents().find( cls_arr[0] )
+                        .removeClass( cls_arr[1] );
+                }
+            }
+        }
+
+
         if ( RouteState.route.rulestate ) {
             var raw_selector =  rule.states[
                                     RouteState.route.rulestate-1
@@ -209,7 +237,6 @@ var MagicFrame = React.createClass({
             var class_arr = raw_selector.split(" ");
 
             var cls,cls_arr,cls_build=[];
-
 
             for ( var s=0; s<class_arr.length; s++ ) {
                 cls = class_arr[s];

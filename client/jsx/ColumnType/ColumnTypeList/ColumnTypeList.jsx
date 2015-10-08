@@ -29,7 +29,6 @@ var ColumnTypeList = React.createClass({
                 detailTab:""
             }
         );
-        debugger;
     },
 
     componentDidMount: function() {

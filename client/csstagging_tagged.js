@@ -81,6 +81,10 @@ function processComponent ( tagged_rule , returnObj ) {
     if ( tagged_rule.metadata.global == "true" ) {
         returnObj.global_rules.push( tagged_rule );
         returnObj.url_prefix = comment_dom.attr("url_prefix");
+
+        if ( comment_dom.attr("ignore") )
+            returnObj.ignore = comment_dom.attr("ignore").split(",");
+
         var fonts = comment_dom.attr("fonts");
         if ( fonts ) {
             returnObj.fonts = fonts.split(",");

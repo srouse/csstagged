@@ -74,6 +74,7 @@ function processRules ( css_dom ) {
         //global rules...
         global_rules:[],
         url_prefix:"",//pulled from the global rules...last one wins
+        ignore:[],
         fonts:[]
     }
 
@@ -84,11 +85,43 @@ function processRules ( css_dom ) {
     // need 1:1 relationship selector to rule
     var selectors = flattenSelectors( rules );
 
+
+    //find ignore rules early...
+    var filtered_selectors = [];
+    var selector_rule;
+    var selector_rule_info,ignore_str;
+    var ignored_rules = [];
+    for ( var r=0; r<selectors.length; r++ ) {
+        selector_rule = selectors[r];
+
+        selector_rule_info = getTaggedCommentInfo( selector_rule );
+
+        if ( selector_rule_info && selector_rule_info.ignore ) {
+            ignore_str = selector_rule_info.ignore;
+            ignore_str = ignore_str.substring(1, ignore_str.length-1);
+            ignored_rules = ignored_rules.concat( ignore_str.split(",") );
+        }
+        //console.log( selector_rule.selector , selector_rule );
+        /*if ( !shouldBeIgnored( selector_rule.selector , returnObj ) ) {
+            filtered_selectors.push( selector_rule );
+        }*/
+    }
+
+    var filtered_selectors = [];
+    for ( var r=0; r<selectors.length; r++ ) {
+        selector_rule = selectors[r];
+        if ( !shouldBeIgnored( selector_rule.selector , ignored_rules ) ) {
+            filtered_selectors.push( selector_rule );
+        }
+    }
+    selectors = filtered_selectors;
+
     // spliting out into rules, states, pseudo
     var rules_states = flattenStates( selectors , returnObj );
     returnObj.states_hash = rules_states.states_hash;
     returnObj.pseudos_hash = rules_states.pseudos_hash;
 
+    var selector_rule;
     var selectors = rules_states.selectors;
     for ( var r=0; r<selectors.length; r++ ) {
         selector_rule = selectors[r];
@@ -156,6 +189,17 @@ function processRules ( css_dom ) {
                                     child_arr.length-1
                                 ].split(" ");
             if ( child_space_arr.length == 2 ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function shouldBeIgnored ( selector , ignore_filters ) {
+        var ignore_filter;
+        for ( var i=0; i<ignore_filters.length; i++ ) {
+            ignore_filter = ignore_filters[i];
+            if ( selector.indexOf( ignore_filter ) !== -1 ) {
                 return true;
             }
         }

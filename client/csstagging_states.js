@@ -86,18 +86,12 @@ function _checkIfStateOrPseudo ( rule ) {
     return "rule";
 }
 
-function test( test ) {
-    return test == ".columnStats .columnStats_content .columnStats_tile .tile_graph .tile_circle";
-}
-
 function processState ( state , returnObj ) {
     state.type = "state";
     state.state_info = {};
     state.state_info = _getRuleAndStateInfo( state );
     returnObj.states.push( state );
 
-    if ( test(state.state_info.rule_processed_selector ) )
-        console.log( "PP:" , state.state_info );
     // now add the state to the right rule...
     var rule_cumulative = [],rule_cumulative_str;
     var focused_state, rule;

@@ -205,7 +205,11 @@ var MagicFrame = React.createClass({
 
 
         //need to remove previous state without refresh entire page...
-        if ( RouteState.prev_route.rulestate ) {
+        if (
+            RouteState.prev_route.rulestate 
+            && rule.states
+            && rule.states.length > 0
+        ) {
             var raw_selector =  rule.states[
                                     RouteState.prev_route.rulestate-1
                                 ].raw_selector;

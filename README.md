@@ -1,16 +1,4 @@
 
-
-### HTML Comment Style
-
-```
-/*<csstag
-		tags="a,b,c"
-		global="true"
-		ignore=".3rdparty,.other">
-		<div ...></div>
-</csstag>*/
-```
-
 # csstagged
 
 ## Synopsis

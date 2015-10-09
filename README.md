@@ -24,18 +24,20 @@ creating projects that are scalable and manageable long term.
     /node_modules/csstagged/install/
 
 ## Tags
+<pre>
 -ctag-tag: "button";
 -ctag-global: "true";
--ctag-example: "<div ...>Label</div>";
+-ctag-example: "&lt;div ...>Label&lt;/div>";
 -ctag-ignore: ".nano";
 -ctag-url_prefix: "/client/_client/";
+</pre>
 
 ## Example
 <pre>
 
 .siteButton {
     -ctag-tag: "button";
-    -ctag-example: "<div ...>Label</div>"; // auto injects class name
+    -ctag-example: "&lt;div ...>Label&lt;/div>"; // auto injects class name
 
     color: #000;
 }
@@ -43,13 +45,13 @@ creating projects that are scalable and manageable long term.
 .mySection {
     -ctag-tag: "section";
     // child templates referenced by name (or full selector)
-    -ctag-example: "<div ...>{ .myButton }</div>";
+    -ctag-example: "&lt;div ...>{ .myButton }&lt;/div>";
 
     width: 50%; height: 100%;
 
     .myButton {
         -ctag-tag: "button";
-        -ctag-example: "<div ...>label</div>";
+        -ctag-example: "&lt;div ...>label&lt;/div>";
 
         &:extends( // understands extension (at least in LESS)
             .siteButton

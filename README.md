@@ -1,3 +1,16 @@
+
+
+### HTML Comment Style
+
+```
+/*<csstag
+		tags="a,b,c"
+		global="true"
+		ignore=".3rdparty,.other">
+		<div ...></div>
+</csstag>*/
+```
+
 # csstagged
 
 ## Synopsis
@@ -25,88 +38,93 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 ### CSS Tag Style
 (a tag with a comment and a -ctag will ignore the comment)
 
-	-ctag-tag: "button";
+```CSS
+-ctag-tag: "button";
 
-	// a global rule will be injected into preview every time.
-	-ctag-global: "true";
+// a global rule will be injected into preview every time.
+-ctag-global: "true";
 
-	// "..." auto injects class="[classname]"
-	-ctag-example: "<div ...>Label</div>";
+// "..." auto injects class="[classname]"
+-ctag-example: "<div ...>Label</div>";
 
-	// any selector starting with these will be ignored
-	-ctag-ignore: ".nano";
+// any selector starting with these will be ignored
+-ctag-ignore: ".nano";
 
-	// a way to force url image/font roots
-	-ctag-url_prefix: "/client/_client/";
-
+// a way to force url image/font roots
+-ctag-url_prefix: "/client/_client/";
+```
 
 ### HTML Comment Style
 
-
-	/*<csstag
-		tags="a,b,c"
-		global="true"
-		ignore=".3rdparty,.other">
-		<div ...></div>
-	</csstag>*/
-
+```CSS
+/*<csstag
+	tags="a,b,c"
+	global="true"
+	ignore=".3rdparty,.other">
+	<div ...></div>
+</csstag>*/
+```
 
 ## Example
 
-	.siteButton {
+```CSS
+.siteButton {
+	-ctag-tag: "button";
+	-ctag-example: "<div ...>Label</div>";
+
+	color: #000;
+}
+
+.mySection {
+	-ctag-tag: "section";
+	-ctag-example: "<div ...>{ .myButton }</div>";
+
+	width: 50%; height: 100%;
+
+	.myButton {
 		-ctag-tag: "button";
-		-ctag-example: "<div ...>Label</div>";
+		-ctag-example: "<div ...>label</div>";
 
-		color: #000;
+		&:extends(
+			.siteButton
+		);
+		color: #f00;
 	}
-
-	.mySection {
-		-ctag-tag: "section";
-		-ctag-example: "<div ...>{ .myButton }</div>";
-
-		width: 50%; height: 100%;
-
-		.myButton {
-			-ctag-tag: "button";
-			-ctag-example: "<div ...>label</div>";
-
-			&:extends(
-				.siteButton
-			);
-			color: #f00;
-		}
-	}
+}
+```
 
 ## Example (Comment)
 
-	.siteButton {
+```CSS
+.siteButton {
+	/*<csstag
+		tags="button">
+		<div ...>Label</div>
+	</csstag>*/
+
+	color: #000;
+}
+
+.mySection {
+	/*<csstag
+		tags="section">
+		<div ...>
+			{ .myButton }
+		</div>
+	</csstag>*/
+
+	width: 50%; height: 100%;
+
+	.myButton {
 		/*<csstag
 			tags="button">
 			<div ...>Label</div>
 		</csstag>*/
 
-		color: #000;
+		&:extends(
+			.siteButton
+		);
+		color: #f00;
 	}
-
-	.mySection {
-		/*<csstag
-			tags="section">
-			<div ...>
-				{ .myButton }
-			</div>
-		</csstag>*/
-
-		width: 50%; height: 100%;
-
-		.myButton {
-			/*<csstag
-				tags="button">
-				<div ...>Label</div>
-			</csstag>*/
-
-			&:extends(
-				.siteButton
-			);
-			color: #f00;
-		}
-	}
+}
+```

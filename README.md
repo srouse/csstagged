@@ -14,16 +14,22 @@ creating projects that are scalable and manageable long term.
 
 ## Installation
 
-1. view "/node_modules/csstagged/client/" to preview how it should look
-2. add csstagged to your package.json and install
-3. move /node_modules/csstagged/install/csstagged to your server root
-4. do an npm install on the csstagged folder
-5. (check for node_modules path excludes in .htaccess)
-6. add updates to your Gruntfile.js to include concat, less, and css_parse (
+
+1. add csstagged to your package.json and install
+2. after installing, view "/node_modules/csstagged/client/" on your server
+to preview how it should look
+3. create "csstagged" on your root and move move
+    /node_modules/csstagged/install/csstagged/index.html to this folder
+4. (check for node_modules path excludes in .htaccess)
+5. add updates to your Gruntfile.js to include concat, less, and css_parse (
     example is in install folder as well ). Examples are in
     /node_modules/csstagged/install/
+    This requires Less to be concated into a single file before Less processed.
+    The css_parse will create the file that csstagged uses. Make sure it is
+    built into the "csstaged" folder.
 
 ## Tags
+
 <pre>
 -ctag-tag: "button";
 -ctag-global: "true";
@@ -33,6 +39,7 @@ creating projects that are scalable and manageable long term.
 </pre>
 
 ## Example
+
 <pre>
 
 .siteButton {

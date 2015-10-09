@@ -66,10 +66,7 @@ function getTaggedCommentInfo ( rule ) {
             var prop = declaration.property.slice(6);
             if ( prop == "example" && rule.name ) {
                 var clean_name = rule.name.replace(/\./,"");
-                var process_example =
-                    declaration.value.replace(
-                        "...","class='"+clean_name+"'"
-                    );
+                var process_example = declaration.value;
                 process_example = process_example.substring(1, process_example.length-1);
                 process_example = $.trim( process_example );
                 ctag_info[ prop ] = process_example;
@@ -101,13 +98,7 @@ function getTaggedComment ( rule ) {
         for ( var i=0; i<rule.declarations.length; i++ ) {
             declaration = rule.declarations[i];
             if ( declaration.type == "comment" ) {
-                // one replacement "..." changes to class='name'
-                // ":hover" will still not work...
-                var clean_name = rule.name.replace(/\./,"");
-                var processed_comment =
-                    declaration.comment.replace(
-                        "...","class='"+clean_name+"'"
-                    );
+                var processed_comment = declaration.comment;
                 var trimmed_comment = $.trim( processed_comment );
                 if ( trimmed_comment.indexOf("<csstag") == 0 ) {
                     return processed_comment;

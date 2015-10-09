@@ -11,9 +11,10 @@
         tag="section,column"
         extend="column">
         <div ...>
+            { .columnStats_graph }
             { .columnStats_content }
             { .columnStats_depthChart }
-            { .columnStats_graph }
+
         </div>
     </csstag>*/
     &:extend( .column );
@@ -168,6 +169,7 @@
             }
         }
     }
+
     .columnStats_depthChart {
         /*<csstag
             tag="container">
@@ -198,64 +200,32 @@
     .columnStats_graph {
         /*<csstag
             tags="section,footer">
-            <div ...>
-                { .overall_score_label }
-                { .overall_score }
-                { .time_to_process }
-            </div>
+            ...{ .column_logo }
         </csstag>*/
         position: relative;
         width: 100%; height: @overall_score_height;
         float:left; clear: left;
 
-        .overall_score {
-            /*<csstag tag="label">
-                <div ...>55%</div>
-            </csstag>*/
-            width: 100px;
-            float: right; clear: right;
-            text-align: center;
-            font-size: 30px; color: #555;
-            padding-top: 10px;
-            margin-right: 30px;
-            position: relative;
-
-            .overall_score_label {
-                /*<csstag tag="label,visualization">
-                    <div ...>Overall</div>
-                </csstag>*/
-                width: 100%;
-                text-align: center;
-                font-size: 10px;
-                color: #aaa;
-                float: right; clear: right;
-                margin-top: -6px;
-            }
-        }
-
-        .time_to_process {
-            /*<csstag tag="label,technical">
-                <div ...>33ms</div>
-            </csstag>*/
-            position: absolute;
-            left: 6px; bottom: 3px;
-            font-size: 10px; color: #eee;
-        }
-
         .column_logo {
+            -ctag-tag: "placeholder";
+            -ctag-example: "...{ .column_logo_img }";
+
             @column_logo_width: 179px * .8;
             @column_logo_height: 38px * .8;
 
             position: absolute;
             left: 30px;
             top: 26px;
-                /*@overall_score_height/2
-                    - @column_logo_height/2;*/
 
             .column_logo_img {
+                -ctag-tag: "logo,graphic";
+                -ctag-example: "...";
+
                 width: @column_logo_width;
                 height: @column_logo_height;
-                background-size: 50%;
+                // background-size: 50%;
+                background-size: contain;
+                background-image: url("_assets/logo_h_small@2x.png");
             }
         }
     }

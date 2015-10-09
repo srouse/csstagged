@@ -87,7 +87,8 @@ var RuleCSS = React.createClass({
             });
         }
 
-        var html = RuleUtil.findRuleExample( rule , this.props.css_info , true );
+        var html_obj = RuleUtil.findRuleExample( rule , this.props.css_info , true );
+        var html = html_obj.html;
         if ( RouteState.route.react == "react" ) {
             html = html.replace( /class=/gi , "className=");
         }

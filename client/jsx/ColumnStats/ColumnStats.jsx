@@ -26,27 +26,10 @@ var ColumnStats = React.createClass({
 
         return  <div className='columnStats'>
                     <div className="columnStats_graph">
-                        { /*<div className="overall_score">
-                            {
-                                Math.round(
-                                    scores.overall * 100
-                                )
-                            }%
-                            <div className="overall_score_label">
-                                Overall
-                            </div>
-                        </div>
-                        <div className="time_to_process">
-                            { totals.time_to_process }ms
-                        </div>*/ }
                         <div className="column_logo">
                             <a  href="http://www.csstagged.com"
                                 target="_csstagged">
-                                <img className="column_logo_img"
-                                    src={
-                                        this.props.css_info.install_base +
-                                        'client/_client/_assets/logo_h_small@2x.png'
-                                    } />
+                                <div className="column_logo_img"></div>
                             </a>
                         </div>
                     </div>

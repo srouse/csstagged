@@ -11,15 +11,16 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 
 1. add csstagged to your package.json and install
 2. after installing, view
-	/node_modules/csstagged/client/
+	/node_modules/csstagged/
 	on your server to preview how it should look
-3. create "csstagged" on your root and move move
-	/node_modules/csstagged/install/csstagged/index.html
-	to this folder
-4. (check for node_modules path excludes in .htaccess)
-5. add updates to your Gruntfile.js to include concat, less, and css_parse ( example is in install folder as well ). Examples are in
-	/node_modules/csstagged/install/
-	This requires Less to be concated into a single file before Less processed. The css_parse will create the file that csstagged uses. Make sure it is built into the "csstaged" folder.
+3. Move the file /node_modules/csstagged/install/csstagged.html to the folder where your CSS is loaded from. CSSTagged will be loading assets so it needs to have the same relative paths.
+4. Change the path within this file to the location of CSSTagged
+5. Create a folder "csstagged" on your root and redirect to the csstagged.html file in your destination folder. An example is in /node_modules/csstagged/install/csstagged (OPTIONAL)
+6. (check for node_modules path excludes in .htaccess)
+7. CSSTagged needs all of your Less files combined in order and then LESS compiled.
+	Add updates to your Gruntfile.js to include concat, less, and css_parse. Examples are in
+	/node_modules/csstagged/install/  
+8. css_parse your final single css file into the same folder as csstagged.html.
 
 ## Tags
 
@@ -32,8 +33,20 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 // a global rule will be injected into preview every time.
 -ctag-global: "true";
 
-// "..." auto injects class="[classname]"
--ctag-example: "<div ...>Label</div>";
+// "..." auto injects <div class="[classname]">[content]</div>
+// { .class_name } replaces with the template referred to by the class_name
+// this could be the just the name of the tag or the full selector
+-ctag-example: "...Label";
+// Replaces to <div class="[classname]">Label</div>
+
+-ctag-example: "<span ...>Label</div>";
+// Replaces to <span class="[classname]">Label</span>
+
+-ctag-example: "...{ .myLabel }";
+// Replaces to <div class="[classname]"><div class="myLabel">Label</div></div>
+
+-ctag-example: "<span class="a">Label</div>";
+// no replacement
 
 // any selector starting with these will be ignored
 -ctag-ignore: ".nano";
@@ -49,7 +62,7 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 	tags="a,b,c"
 	global="true"
 	ignore=".3rdparty,.other">
-	<div ...></div>
+	...
 </csstag>*/
 ```
 
@@ -58,20 +71,20 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 ```CSS
 .siteButton {
 	-ctag-tag: "button";
-	-ctag-example: "<div ...>Label</div>";
+	-ctag-example: "...Label";
 
 	color: #000;
 }
 
 .mySection {
 	-ctag-tag: "section";
-	-ctag-example: "<div ...>{ .myButton }</div>";
+	-ctag-example: "...{ .myButton }";
 
 	width: 50%; height: 100%;
 
 	.myButton {
 		-ctag-tag: "button";
-		-ctag-example: "<div ...>label</div>";
+		-ctag-example: "...label";
 
 		&:extends(
 			.siteButton
@@ -87,7 +100,7 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 .siteButton {
 	/*<csstag
 		tags="button">
-		<div ...>Label</div>
+		...Label
 	</csstag>*/
 
 	color: #000;
@@ -96,9 +109,7 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 .mySection {
 	/*<csstag
 		tags="section">
-		<div ...>
-			{ .myButton }
-		</div>
+		...{ .myButton }
 	</csstag>*/
 
 	width: 50%; height: 100%;
@@ -106,7 +117,7 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 	.myButton {
 		/*<csstag
 			tags="button">
-			<div ...>Label</div>
+			...Label
 		</csstag>*/
 
 		&:extends(

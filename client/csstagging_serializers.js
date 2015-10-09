@@ -1,5 +1,5 @@
 
-function _ruleAndChildToCSSString ( rule , pretty , img_prefix ) {
+function _ruleAndChildToCSSString ( rule , pretty ) {
     var css = [];
     var new_line = "\n";
     if ( !pretty ) {
@@ -8,7 +8,7 @@ function _ruleAndChildToCSSString ( rule , pretty , img_prefix ) {
 
     css.push(
         new_line,
-        this._ruleAndPseudosToCSSString( rule , pretty , img_prefix ),
+        this._ruleAndPseudosToCSSString( rule , pretty ),
         new_line
     );
 
@@ -16,7 +16,7 @@ function _ruleAndChildToCSSString ( rule , pretty , img_prefix ) {
     for ( var c=0; c<rule.children.length; c++ ) {
         child = rule.children[c];
         css.push(
-            _ruleAndChildToCSSString( child , pretty , img_prefix ),
+            _ruleAndChildToCSSString( child , pretty ),
             new_line
         );
     }
@@ -24,41 +24,41 @@ function _ruleAndChildToCSSString ( rule , pretty , img_prefix ) {
     return css.join("");
 }
 
-function _ruleAndPseudosToCSSString ( rule , pretty , img_prefix ) {
+function _ruleAndPseudosToCSSString ( rule , pretty ) {
     var new_line = "\n";
     if ( !pretty ) {
         new_line = " ";
     }
 
-    var css_str = ruleToCSSString( rule , pretty , img_prefix );
+    var css_str = ruleToCSSString( rule , pretty );
 
     // pseudos now...(recursive)
     if ( rule.pseudos ) {
         $.each( rule.pseudos , function ( i , pseudo ) {
-            css_str += new_line + ruleToCSSString( pseudo , pretty , img_prefix );
+            css_str += new_line + ruleToCSSString( pseudo , pretty );
         });
     }
 
     // states now...(recursive)
     if ( rule.states ) {
         $.each( rule.states , function ( i , state ) {
-            css_str += new_line + ruleToCSSString( state , pretty , img_prefix );
+            css_str += new_line + ruleToCSSString( state , pretty );
         });
     }
 
     return css_str;
 }
 
-function ruleToCSSString ( rule , pretty , img_prefix ) {
+function ruleToCSSString ( rule , pretty ) {
     var source;
     var css_str = [];
 
     if ( !rule || !rule.source || rule.source.length == 0 )
-        return "(no source found)";
+        return "";
 
     for ( var s=0; s<rule.source.length; s++ ) {
         source = rule.source[s];
-        css_str.push( _ruleToCSSString( source , pretty , img_prefix ) );
+        css_str.push( _ruleToCSSString( source , pretty ) );
     }
 
     var new_line = "\n";
@@ -68,7 +68,7 @@ function ruleToCSSString ( rule , pretty , img_prefix ) {
     return css_str.join(new_line+new_line);
 }
 
-    function _ruleToCSSString ( rule , pretty , img_prefix ) {
+    function _ruleToCSSString ( rule , pretty ) {
         var tab = "\t";
         var new_line = "\n";
         if ( !pretty ) {
@@ -120,14 +120,14 @@ function ruleToCSSString ( rule , pretty , img_prefix ) {
         css.push( "}" );
 
         var css_str = css.join("");
-        if ( img_prefix ) {
+        /*if ( img_prefix ) {
             css_str =   css_str.replace(
                             /url\(\"/g, "url(\"" + img_prefix
                         );
             css_str =   css_str.replace(
                             /url\(\'/g, "url(\'" + img_prefix
                         );
-        }
+        }*/
 
         return css_str;
     }

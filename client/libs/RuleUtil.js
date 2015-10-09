@@ -112,18 +112,17 @@ RuleUtil.replaceComps = function (
 
 RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
     var html = ["<div>no example</div>"];
+    var css = [];
 
     if (
         rule.metadata
         && rule.metadata.example
     ) {
-        // pull together css
-        var css = []
 
-        var img_prefix = css_info.url_prefix;
+        // var img_prefix = css_info.url_prefix;
 
         if ( !html_only ) {
-            if ( css_info.fonts ) {
+            /*if ( css_info.fonts ) {
                 var fonts = css_info.fonts;
                 var font;
                 for ( var f=0; f<fonts.length; f++ ) {
@@ -132,7 +131,7 @@ RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
                         "@import url('"+font+"');\n"
                     );
                 }
-            }
+            }*/
 
             var global_rules = css_info.global_rules;
             var global_rule;
@@ -140,13 +139,13 @@ RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
                 global_rule = global_rules[g];
                 css.push(
                     _ruleAndChildToCSSString(
-                        global_rule , true , img_prefix
+                        global_rule , true
                     )
                 );
             }
 
             css.push(
-                _ruleAndPseudosToCSSString( rule , true , img_prefix )
+                _ruleAndPseudosToCSSString( rule , true  )
             );
         }
 
@@ -189,7 +188,7 @@ RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
 
                 css.push(
                     _ruleAndPseudosToCSSString(
-                        sub_comp_rule , true , img_prefix
+                        sub_comp_rule , true
                     )
                 );
             };
@@ -205,9 +204,15 @@ RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
         }
 
         if ( !html_only ) {
-            html.push( "<style>" + css.join("") + "</style>" );
+            //html.push( "<style>" + css.join("") + "</style>" );
         }
     }
 
-    return html.join("");
+    var html_str = html.join("");
+    return {
+        html:html_str,
+        css:css,
+        all:html_str + "<style>" + css.join("") + "</style>"
+    }
+    //return html.join("");
 };

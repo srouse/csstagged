@@ -47,7 +47,22 @@ function processComponent ( tagged_rule , returnObj ) {
     // <TEMPLATE>
     if ( $.trim(comment_dom.html()) != "" ) {
         complete_tally++;
-        var html = comment_dom.html();
+        var html = $.trim( comment_dom.html() );
+
+        // replace "..."s
+        var clean_name = tagged_rule.name.replace(/\./,"");
+        console.log( clean_name , html );
+        if ( html.indexOf("...") == 0 ) {
+            var html_content = html.slice(3);
+            html = "<div class='"+clean_name+"'>"
+                                    + html_content +
+                                "</div>";
+        }else{
+            html =  html.replace(
+                    "...","class='"+clean_name+"'"
+                );
+        }
+
         var html_rebuilt = [];
         var tag_arr = html.split("{");
         var tag_section;

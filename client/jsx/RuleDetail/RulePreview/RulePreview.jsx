@@ -78,12 +78,20 @@ var RulePreview = React.createClass({
     render: function() {
         var rule = this.props.rule;
         var example = RuleUtil.findRuleExample( rule , this.props.css_info );
+        example = example.all;
 
         this.ele_border = false;
 
         var states = [],state,state_class;
 
-        if ( rule.states ) {
+        if ( rule.states && rule.states.length > 0 ) {
+
+            states.push(
+                <div className="rulePreview_navLabel">
+                    states
+                </div>
+            );
+
             for ( var s=0; s<rule.states.length; s++ ) {
                 state = rule.states[s];
                 state_class = "rulePreview_state";
@@ -111,9 +119,6 @@ var RulePreview = React.createClass({
                         <MagicFrame example={ example } rule={ rule } />
                     </div>
                     <div className="rulePreview_nav">
-                        <div className="rulePreview_navLabel">
-                            states
-                        </div>
                         { states }
 
                         <div className="rulePreview_toggleBGColor"
@@ -121,9 +126,6 @@ var RulePreview = React.createClass({
                         </div>
                         <div className="rulePreview_outline"
                             onClick={ this.outlineElement }>
-                        </div>
-                        <div className="rulePreview_html"
-                            onClick={ this.showHTML }>
                         </div>
                     </div>
                 </div>;
@@ -133,28 +135,13 @@ var RulePreview = React.createClass({
 
 var MagicFrame = React.createClass({
     render: function() {
-        return <iframe style={{border: 'none'}} className="rulePreview_iframe" />;
+        return <iframe style={{border: 'none'}}
+                        className="rulePreview_iframe" />;
     },
     componentDidMount: function() {
         var me = this;
-        RouteState.addDiffListener(
-    		"outline",
-    		function ( route , prev_route ) {
-                me.postProcessElement();
-    		},
-            "rule_magicFrame"
-    	);
-
-        RouteState.addDiffListener(
-    		"bg",
-    		function ( route , prev_route ) {
-                me.postProcessElement();
-    		},
-            "rule_magicFrame"
-    	);
-
-        RouteState.addDiffListener(
-    		"rulestate",
+        RouteState.addDiffListeners(
+    		["outline","bg","rulestate"],
     		function ( route , prev_route ) {
                 me.postProcessElement();
     		},
@@ -171,7 +158,16 @@ var MagicFrame = React.createClass({
     renderFrameContents: function() {
         var doc = this.getDOMNode().contentDocument;
         if( doc.readyState === 'complete' ) {
-            $(doc.body).html( this.props.example );
+            var content = this.props.example;
+            var ifrm = this.getDOMNode();
+            ifrm = (ifrm.contentWindow) ?
+                        ifrm.contentWindow :
+                            (ifrm.contentDocument.document) ?
+                                ifrm.contentDocument.document : ifrm.contentDocument;
+
+            ifrm.document.open();
+            ifrm.document.write(content);
+            ifrm.document.close();
         } else {
             setTimeout( this.renderFrameContents , 0);
         }
@@ -183,6 +179,15 @@ var MagicFrame = React.createClass({
         var rule = this.props.rule;
         var doc = this.getDOMNode().contentDocument;
         var rule_dom = $(doc).contents().find( rule.selector );
+
+        /*
+        var stylesheet = $(doc).contents().find( "#example_stylesheet" );
+        if ( stylesheet && stylesheet.length > 0 ) {
+            // con sole.log( stylesheet , stylesheet[0].style );
+            var sheet = stylesheet[0].style;
+            sheet.cssText = "body { background-color: #0f0; } body { background-image: url('_assets/CSSTagged_logo_vert.png'); background-repeat: repeat !important; }";
+        }
+        */
 
         if ( RouteState.route.outline == "outline" ) {
             this.prev_border = rule_dom.css("border");
@@ -203,10 +208,9 @@ var MagicFrame = React.createClass({
         var body = $(doc).contents().find( "body" );
         body.css("background-color", frame_bg );
 
-
         //need to remove previous state without refresh entire page...
         if (
-            RouteState.prev_route.rulestate 
+            RouteState.prev_route.rulestate
             && rule.states
             && rule.states.length > 0
         ) {
@@ -235,7 +239,6 @@ var MagicFrame = React.createClass({
                 }
             }
         }
-
 
         if ( RouteState.route.rulestate ) {
             var raw_selector =  rule.states[

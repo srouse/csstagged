@@ -48,7 +48,7 @@ module.exports = function(grunt) {
     configObj.css_parse = {
         dist: {
             files: {
-                'client/csstagged.json':
+                'client/_client/csstagged.json':
                 [
                     'client/_client/csscomp.css'
                 ]

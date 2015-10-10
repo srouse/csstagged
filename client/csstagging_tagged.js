@@ -1,9 +1,6 @@
 
 
 
-
-
-
 function processComponent ( tagged_rule , returnObj ) {
     var complete_tally = 0;
 
@@ -21,7 +18,7 @@ function processComponent ( tagged_rule , returnObj ) {
     returnObj.totals.depths_tagged[ tagged_rule.depth ]++;
 
     // <TAGS>
-    // shouldn't matta which you use...
+    // shouldn't matta which you use "tag" or "tags"...
     var tag = comment_dom.attr("tag");
     var tags = comment_dom.attr("tags");
     var tags_arr = [];
@@ -45,26 +42,23 @@ function processComponent ( tagged_rule , returnObj ) {
     // </TAGS>
 
     // <TEMPLATE>
-    if ( $.trim(comment_dom.html()) != "" ) {
-        complete_tally++;
-        var html = $.trim( comment_dom.html() );
+    var clean_name = tagged_rule.name.replace(/\./,"");
+    var clean_html = $.trim( comment_dom.html() );
 
-        // replace "..."s
-        var clean_name = tagged_rule.name.replace(/\./,"");
-        console.log( clean_name , html );
-        if ( html.indexOf("...") == 0 ) {
-            var html_content = html.slice(3);
-            html = "<div class='"+clean_name+"'>"
+    if ( clean_html != "" ) {
+        complete_tally++;
+        if ( clean_html.indexOf("...") == 0 ) {
+            var html_content = clean_html.slice(3);
+            clean_html = "<div class='"+clean_name+"'>"
                                     + html_content +
                                 "</div>";
         }else{
-            html =  html.replace(
+            clean_html =  clean_html.replace(
                     "...","class='"+clean_name+"'"
                 );
         }
-
         var html_rebuilt = [];
-        var tag_arr = html.split("{");
+        var tag_arr = clean_html.split("{");
         var tag_section;
         for ( var t=0; t<tag_arr.length; t++ ) {
             tag_section = tag_arr[t];

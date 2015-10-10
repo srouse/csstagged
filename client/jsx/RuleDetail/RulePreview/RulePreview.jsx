@@ -3,25 +3,57 @@ var RulePreview = React.createClass({
 
     componentDidMount: function() {
         var me = this;
-        RouteState.addDiffListener(
-    		"react",
+        RouteState.addDiffListeners(
+    		["rulestate","bg","outline"],
     		function ( route , prev_route ) {
-                me.forceUpdate();
+                //me.forceUpdate();
+                me.refreshDisplayedState();
     		},
             "rule_preview"
     	);
 
-        RouteState.addDiffListener(
-    		"rulestate",
-    		function ( route , prev_route ) {
-                //me.forceUpdate();
-    		},
-            "rule_preview"
-    	);
+        this.refreshDisplayedState();
     },
 
     componentWillUnmount: function(){
         RouteState.removeDiffListenersViaClusterId( "rule_preview" );
+    },
+
+    refreshDisplayedState: function () {
+        var state,state_name;
+        var rule = this.props.rule;
+
+        for ( var s=0; s<rule.states.length; s++ ) {
+            state = rule.states[s];
+            state_name = state.state_info.states_by_index.join(" ");
+            if ( RouteState.route.rulestate ) {
+
+                if ( s == RouteState.route.rulestate-1 ) {
+                    $( ".state_" + s ).addClass("selected");
+                    $( ".state_" + s ).html( state_name );
+                }else{
+                    $( ".state_" + s ).removeClass("selected");
+                    $( ".state_" + s ).html( s );
+                }
+            }else{
+                $( ".state_" + s ).removeClass("selected");
+                $( ".state_" + s ).html( s );
+            }
+        }
+
+        if ( RouteState.route.bg ) {
+            $( ".rulePreview_toggleBGColor" ).addClass("selected");
+        }else{
+            $( ".rulePreview_toggleBGColor" ).removeClass("selected");
+        }
+
+        if ( RouteState.route.outline == "outline" ) {
+            $( ".rulePreview_outline" ).addClass("selected");
+        }else{
+            $( ".rulePreview_outline" ).removeClass("selected");
+        }
+
+
     },
 
     toggleBGColor: function () {
@@ -73,6 +105,8 @@ var RulePreview = React.createClass({
         }else{
             $(".rulePreview_visibility").addClass("visible");
         }
+
+        this.refreshDisplayedState();
     },
 
     render: function() {
@@ -87,24 +121,20 @@ var RulePreview = React.createClass({
         if ( rule.states && rule.states.length > 0 ) {
 
             states.push(
-                <div className="rulePreview_navLabel">
+                <div className="rulePreview_navLabel"
+                    key={ "rulePreview_navLabel" }>
                     states
                 </div>
             );
 
             for ( var s=0; s<rule.states.length; s++ ) {
                 state = rule.states[s];
-                state_class = "rulePreview_state";
-                if ( RouteState.route.rulestate ) {
-                    if ( s == RouteState.route.rulestate-1 ) {
-                        state_class += " selected";
-                    }
-                }
+                state_class = "rulePreview_state state_" + s;
 
                 states.push(
                     <div className={ state_class }
                             title={ state.raw_selector }
-                            key={ state.raw_selector }
+                            key={ "rulePreview_state_" + state.raw_selector }
                             onClick={
                                 this.changeState.bind( this , s+1+"" )
                             }>
@@ -112,6 +142,12 @@ var RulePreview = React.createClass({
                     </div>
                 );
             }
+
+            states.push(
+                <div className="rulePreview_stateApplied"
+                    key={ "rulePreview_stateApplied" }>
+                </div>
+            );
         }
 
         return  <div className="rulePreview">
@@ -120,7 +156,6 @@ var RulePreview = React.createClass({
                     </div>
                     <div className="rulePreview_nav">
                         { states }
-
                         <div className="rulePreview_toggleBGColor"
                             onClick={ this.toggleBGColor }>
                         </div>
@@ -138,6 +173,7 @@ var MagicFrame = React.createClass({
         return <iframe style={{border: 'none'}}
                         className="rulePreview_iframe" />;
     },
+
     componentDidMount: function() {
         var me = this;
         RouteState.addDiffListeners(
@@ -176,25 +212,18 @@ var MagicFrame = React.createClass({
     },
 
     postProcessElement: function () {
+        if ( !this.isMounted() ) {
+            return;
+        }
+
         var rule = this.props.rule;
         var doc = this.getDOMNode().contentDocument;
         var rule_dom = $(doc).contents().find( rule.selector );
 
-        /*
-        var stylesheet = $(doc).contents().find( "#example_stylesheet" );
-        if ( stylesheet && stylesheet.length > 0 ) {
-            // con sole.log( stylesheet , stylesheet[0].style );
-            var sheet = stylesheet[0].style;
-            sheet.cssText = "body { background-color: #0f0; } body { background-image: url('_assets/CSSTagged_logo_vert.png'); background-repeat: repeat !important; }";
-        }
-        */
-
         if ( RouteState.route.outline == "outline" ) {
-            this.prev_border = rule_dom.css("border");
             rule_dom.css("border", "1px solid #f00" );
         }else{
-            var border = ( this.prev_border ) ? this.prev_border : "none";
-            rule_dom.css("border", border );
+            rule_dom.css( "border", "" );
         }
 
         // make sure it is always visible....

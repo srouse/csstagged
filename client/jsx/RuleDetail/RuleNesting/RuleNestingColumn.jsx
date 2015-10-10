@@ -35,7 +35,11 @@ var RuleNestingColumn = React.createClass({
         }
 
         RouteState.merge(
-            {rule:rule_uuid,detailTab:detailTab,rulestate:""}
+            {
+                rule:rule_uuid,
+                detailTab:detailTab,
+                rulestate:""
+            }
         );
     },
 
@@ -54,6 +58,7 @@ var RuleNestingColumn = React.createClass({
             child = rule.children[i];
             children.push(
                 <RuleNestingColumn {...this.props}
+                    key={ "ruleNestingColumn_" + child.uuid }
                     rule= { child } index={ this.props.index+1 } />
             );
         }
@@ -94,7 +99,6 @@ var RuleNestingColumn = React.createClass({
 
         if ( rule.uuid == RouteState.route.rule )
             extra_title_class += " selected";
-
 
         var name = rule.name;
         if ( rule.direct_child_selector ) {

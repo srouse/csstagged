@@ -20,10 +20,12 @@ var ExtendableDetails = React.createClass({
         RouteState.toggle(
             {
                 tree:parent.uuid,
-                rule:uuid
+                rule:uuid,
+                detailTab:"example"
             },{
                 tree:"",
-                rule:""
+                rule:"",
+                detailTab:""
             }
         );
     },

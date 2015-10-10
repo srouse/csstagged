@@ -47,7 +47,6 @@ function processRules ( css_dom ) {
             overall:0
         },
 
-
         selectors:[],
         names:[],
         rules:[],
@@ -86,7 +85,8 @@ function processRules ( css_dom ) {
     var selectors = flattenSelectors( rules );
 
 
-    //find ignore rules early...
+    // <IGNORE>
+    // find ignore rules early...
     var filtered_selectors = [];
     var selector_rule;
     var selector_rule_info,ignore_str;
@@ -101,10 +101,6 @@ function processRules ( css_dom ) {
             ignore_str = ignore_str.substring(1, ignore_str.length-1);
             ignored_rules = ignored_rules.concat( ignore_str.split(",") );
         }
-        //console.log( selector_rule.selector , selector_rule );
-        /*if ( !shouldBeIgnored( selector_rule.selector , returnObj ) ) {
-            filtered_selectors.push( selector_rule );
-        }*/
     }
 
     var filtered_selectors = [];
@@ -115,12 +111,14 @@ function processRules ( css_dom ) {
         }
     }
     selectors = filtered_selectors;
+    // </IGNORE>
 
     // spliting out into rules, states, pseudo
     var rules_states = flattenStates( selectors , returnObj );
     returnObj.states_hash = rules_states.states_hash;
     returnObj.pseudos_hash = rules_states.pseudos_hash;
 
+    // <RULES>
     var selector_rule;
     var selectors = rules_states.selectors;
     for ( var r=0; r<selectors.length; r++ ) {
@@ -128,6 +126,7 @@ function processRules ( css_dom ) {
         processSelectorRule( selector_rule , returnObj );
         processRule( selector_rule , returnObj );
     }
+    // </RULES>
 
     var states = rules_states.states;
     var state;

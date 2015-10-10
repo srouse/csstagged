@@ -70,35 +70,41 @@
 	}
 
 	.tagged_icon {
-		/*<csstag tag="visualization"
-	        extendable="false">
-			<div ...></div>
-		</csstag>*/
+		-ctag-tag: "visualization";
+		-ctag-example: "...";
+
 		&:extend(
 			.typeIcon
 			.type_icon
 		);
 		background-color: @csstagged_tagged_rule_color;
+
+		&.on {
+			width: 300px;
+		}
 	}
 
 	.tagged_incomplete_icon {
-		/*<csstag tag="visualization"
-	        extendable="false">
-			<div ...></div>
-		</csstag>*/
+		-ctag-tag: "visualization";
+		-ctag-example: "...";
+
 		&:extend(
 			.typeIcon
 			.type_icon
 		);
+
 		border: 1px solid @csstagged_tagged_rule_color;
 	    background-color: transparent;
+
+		&.wide {
+			width: 400px;
+		}
 	}
 
 	.rule_icon {
-		/*<csstag tag="visualization"
-	        extendable="false">
-			<div ...></div>
-		</csstag>*/
+		-ctag-tag: "visualization";
+		-ctag-example: "...";
+
 		&:extend(
 			.typeIcon
 			.type_icon
@@ -107,10 +113,9 @@
 	}
 
 	.dup_icon {
-		/*<csstag tag="visualization"
-	        extendable="false">
-			<div ...></div>
-		</csstag>*/
+		-ctag-tag: "visualization";
+		-ctag-example: "...";
+
 		&:extend(
 			.typeIcon
 			.type_icon

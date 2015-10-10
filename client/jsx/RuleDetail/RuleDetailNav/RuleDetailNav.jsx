@@ -44,7 +44,7 @@ var RuleDetailNav = React.createClass({
         if ( rule.direct_child_selector ) {
             name = "> " + name;
         }
-        
+
         return  <div className="ruleDetailNav">
                     <div className="ruleDetailNav_title">
                         <div className="ruleDetailNav_titleText">

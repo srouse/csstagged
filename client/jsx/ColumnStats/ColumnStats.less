@@ -14,7 +14,6 @@
             { .columnStats_graph }
             { .columnStats_content }
             { .columnStats_depthChart }
-
         </div>
     </csstag>*/
     &:extend( .column );
@@ -52,6 +51,7 @@
             background-color: #fff;
             z-index: 10;
             .hand();
+
             &:hover {
                 //background-color: #eee;
                 //border: 3px solid #eee;
@@ -75,7 +75,7 @@
                     border: 1px solid #eee;
                     z-index: 900;
                     &:hover {
-                        box-shadow: none;
+                        //box-shadow: none;
                     }
                 }
             }
@@ -130,10 +130,8 @@
 
 
             .tile_label {
-                /*<csstag
-                    tag="graph">
-                    <div ...>Rules of Dogs</div>
-                </csstag>*/
+                -ctag-tag: "graph";
+                -ctag-example: "...Rule of Dogs{ .columnStats_typeBox }";
                 position: absolute;
                 left: 0px;
                 width: 100%;
@@ -143,12 +141,12 @@
                 margin-bottom: -(( @tile_circle_diameter/2 ) + 4px );
 
                 .columnStats_typeBox {
-                    position: absolute;
-                    // top: 18px; left: 50%; margin-left: -10px;
+                    -ctag-tag: "box";
+                    -ctag-example: "...{ .tagged_incomplete_icon }";
 
+                    position: absolute;
                     top: 0px; left: 28px;
                     width: 20px; height: 18px;
-
                 }
             }
         }
@@ -171,12 +169,10 @@
     }
 
     .columnStats_depthChart {
-        /*<csstag
-            tag="container">
-            <div ...></div>
-        </csstag>*/
+        -ctag-tag: "container";
+        -ctag-example: "...";
+
         .calc( height , 30% , -@overall_score_height/2 );
-        //width: 100%;
         .calc( width , 100% , -60px );
         float: left; clear: left;
         padding: 10px 30px;
@@ -191,8 +187,9 @@
         body.s_statDetails_depth & {
             border: 1px solid #eee;
             z-index: 900;
+
             &:hover {
-                box-shadow: none;
+                //box-shadow: none;
             }
         }
     }

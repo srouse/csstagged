@@ -6,6 +6,17 @@ var RuleOverview = React.createClass({
         RouteState.merge({rule:rule_uuid});
     },
 
+    viewRuleDetail: function ( uuid ) {
+        // want the tree not the rule....
+        var parent = findTopMostParent( uuid , this.props.css_info );
+        RouteState.toggle(
+            {
+                tree:parent.uuid,
+                rule:uuid
+            }
+        );
+    },
+
     viewRuleDetailViaSelector: function ( selector ) {
         var rule = this.props.css_info.selector_hash[selector];
         if ( rule ) {
@@ -28,6 +39,7 @@ var RuleOverview = React.createClass({
                 var child = rule.children[r];
                 children.push(
                     <div className="ruleOverview_subName"
+                        key={ "ruleoverview_" + child.uuid }
                         onClick={
                             this.gotoRule.bind( this , child.uuid )
                         }>
@@ -46,6 +58,7 @@ var RuleOverview = React.createClass({
             if ( parent ) {
                 parents.unshift(
                     <div className="ruleOverview_subName"
+                        key={ "ruleoverview_parent_" + parent.uuid }
                         onClick={
                             this.gotoRule.bind( this , parent.uuid )
                         }>
@@ -58,6 +71,7 @@ var RuleOverview = React.createClass({
         }
         parents.push(
             <div className="ruleOverview_subName"
+                key={ "ruleoverview_rule_" + rule.uuid }
                 onClick={
                     this.gotoRule.bind( this , rule.uuid )
                 }>
@@ -88,6 +102,7 @@ var RuleOverview = React.createClass({
             for ( var r=0; r<rule.states.length; r++ ) {
                 states.push(
                     <div className="ruleOverview_stateSubName"
+                        key={ "ruleoverview_state_" + rule.states[r].uuid }
                         title={ rule.states[r].selector }>
                         { rule.states[r].selector }
                     </div>
@@ -104,6 +119,7 @@ var RuleOverview = React.createClass({
                 if ( relationship ) {
                     relationships.push(
                         <div className="ruleOverview_subName"
+                            key={ "ruleoverview_relation_" + relationship.uuid }
                             onClick={
                                 this.viewRuleDetail.bind( this , relationship.uuid )
                             } title={ relationship.selector }>
@@ -124,6 +140,7 @@ var RuleOverview = React.createClass({
                     unique_selectors[child.selector] = true;
                     duplicates.push(
                         <div className="ruleOverview_subName"
+                            key={ "ruleoverview_dup_" + child.uuid }
                             onClick={
                                 this.viewRuleDetailViaSelector.bind(
                                     this , child.selector

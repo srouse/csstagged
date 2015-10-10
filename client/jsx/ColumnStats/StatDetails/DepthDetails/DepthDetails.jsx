@@ -21,10 +21,12 @@ var DepthDetails = React.createClass({
         RouteState.toggle(
             {
                 tree:parent.uuid,
-                rule:rule.uuid
+                rule:rule.uuid,
+                detailTab:"example"
             },{
                 tree:"",
-                rule:""
+                rule:"",
+                detailTab:""
             }
         );
     },

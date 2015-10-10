@@ -21,10 +21,12 @@ var DuplicateDetails = React.createClass({
         RouteState.toggle(
             {
                 tree:parent.uuid,
-                rule:rule.uuid
+                rule:rule.uuid,
+                detailTab:"example"
             },{
                 tree:"",
-                rule:""
+                rule:"",
+                detailTab:""
             }
         );
     },
@@ -52,7 +54,8 @@ var DuplicateDetails = React.createClass({
         var rules = this.props.css_info.duplicates;
         var rows = [];
         rows.push(
-            <div className="statDetails_sectionHeader">
+            <div className="statDetails_sectionHeader"
+                key={ "dupDetails_header" }>
                 Duplicate Names
             </div>
         );
@@ -61,6 +64,7 @@ var DuplicateDetails = React.createClass({
             if ( rule ) {
                 rows.push(
                     <div className="statDetails_row"
+                        key={ "dupDetails_" + rule.uuid }
                         onClick={
                             me.viewRuleDetail.bind( me , rule.selector )
                         }>

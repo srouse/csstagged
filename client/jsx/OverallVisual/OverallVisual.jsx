@@ -12,12 +12,14 @@ var OverallVisual = React.createClass({
         var rules_percent_dom = [];
         if ( rules_percent > 3 ) {
             rules_percent_dom.push (
-                <span className="rules_total">
+                <span className="rules_total"
+                    key={ "rules_total" }>
                     { totals.rules }
                 </span>
             );
             rules_percent_dom.push (
-                <span className="rules_percent">
+                <span className="rules_percent"
+                    key={ "rules_percent" }>
                     { rules_percent }%
                 </span>
             );

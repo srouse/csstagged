@@ -64,7 +64,7 @@ var RuleCSS = React.createClass({
             $.each( rule.states , function ( index , state ) {
                 state_code.push(
                     <textarea className="ruleDetail_textarea"
-                        readOnly spellcheck="false"
+                        readOnly spellCheck="false"
                         key={ "state_" + index }
                         value={ ruleToCSSString( state , true ) }>
                     </textarea>
@@ -79,7 +79,7 @@ var RuleCSS = React.createClass({
             $.each( rule.pseudos , function ( index , pseudo ) {
                 pseudo_code.push(
                     <textarea className="ruleDetail_textarea"
-                        readOnly spellcheck="false"
+                        readOnly spellCheck="false"
                         key={ "pseudo_" + index }
                         value={ ruleToCSSString( pseudo , true ) }>
                     </textarea>
@@ -101,12 +101,12 @@ var RuleCSS = React.createClass({
                                 onClick={ this.toReact }>React</div>
                         </div>
                         <textarea className="ruleDetail_textarea"
-                            spellcheck="false"
+                            spellCheck="false"
                             readOnly value={ vkbeautify.xml( html ) }>
                         </textarea>
                         <div className="ruleDetail_title">CSS</div>
                         <textarea className="ruleDetail_textarea"
-                            spellcheck="false"
+                            spellCheck="false"
                             readOnly value={ ruleToCSSString( rule , true ) }>
                         </textarea>
                         { pseudo_header }

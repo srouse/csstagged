@@ -41,7 +41,6 @@ function _checkIfStateOrPseudo ( rule ) {
     // .dog:hover .cat
     // They get added to the rule that they are a variation of...
     // (both of them)
-
     var selector_arr = rule.selector.split(" ");
     var selector;
     var hash_count,colon_count,dot_count;
@@ -49,8 +48,11 @@ function _checkIfStateOrPseudo ( rule ) {
     //for ( var i=0; i<selector_arr.length; i++ ){
     // need to go backwards to give precedence to pseudos
     // TODO: loop through entirely to look for pseudos first...
+
+
     for ( var i=selector_arr.length-1; i>=0; i-- ){
         selector = selector_arr[i];
+
         hash_count = selector.split("#").length - 1;
         colon_count = selector.split(":").length - 1;
         dot_count = selector.split(".").length - 1;
@@ -60,29 +62,35 @@ function _checkIfStateOrPseudo ( rule ) {
 
         if ( colon_count > 0 ) // .dot:hover
         {
+            // con sole.log( "pseudo" );
             return "pseudo";
             break;
         }
 
         if ( dot_count > 1 ) { // .dot.cat
+            // con sole.log( "state" );
             return "state";
             break;
         }
         if ( hash_count == 1 // #dog.cat
             && dot_count > 0
         ) {
+            // con sole.log( "state" );
             return "state";
             break;
         }
         if ( first_dot > 0 ) { // p.dog
+            // con sole.log( "state" );
             return "state";
             break;
         }
         if ( first_hash > 0 ) { // p#dog
+            // con sole.log( "state" );
             return "state";
             break;
         }
     }
+    // con sole.log( "rule" );
     return "rule";
 }
 
@@ -103,39 +111,6 @@ function processState ( state , returnObj ) {
         rule = createNewRule ( selector , returnObj );
     }
     rule.states.push( state );
-
-    /*$.each( state.state_info.rules_by_index ,
-        function ( index , focused_rule ) {
-            if (
-                focused_rule != "body" &&
-                focused_rule != "html"
-            ) {
-                focused_state = state.state_info.states_by_index[ index ];
-                rule_cumulative.push( focused_rule );
-                if ( focused_state.length > 0 ) {
-                    rule_cumulative_str = rule_cumulative.join(" ");
-
-                    if ( test(state.state_info.rule_selector) )
-                        console.log( rule_cumulative_str );
-
-                    rule = returnObj.selector_hash[ rule_cumulative_str ];
-                    if ( !rule ) {
-                        rule = createNewRule ( rule_cumulative_str , returnObj );
-
-                        if ( test(state.state_info.rule_selector) )
-                            console.log( "CREATED: " , rule );
-
-                    }else{
-
-                        if ( test(state.state_info.rule_selector) )
-                            console.log( "FOUND: " , rule );
-
-                    }
-                    rule.states.push( state );
-                }
-            }
-        }
-    );*/
 }
 
 
@@ -146,23 +121,12 @@ function processPseudo ( pseudo , returnObj ) {
     pseudo.pseudo_info = _getRuleAndStateInfo( pseudo );
     returnObj.pseudos.push( pseudo );
 
-    // now add the state to the right rule...
-    var rule_cumulative = [],rule_cumulative_str;
-    var focused_pseudo, rule;
-    $.each( pseudo.pseudo_info.rules_by_index ,
-        function ( index , focused_rule ) {
-            focused_pseudo = pseudo.pseudo_info.states_by_index[ index ];
-            rule_cumulative.push( focused_rule );
-            if ( focused_pseudo.length > 0 ) {
-                rule_cumulative_str = rule_cumulative.join(" ");
-                rule = returnObj.selector_hash[ rule_cumulative_str ];
-                if ( !rule ) {
-                    rule = createNewRule ( rule_cumulative_str , returnObj );
-                }
-                rule.pseudos.push( pseudo );
-            }
-        }
-    );
+    var selector = pseudo.pseudo_info.rule_processed_selector;
+    var rule = returnObj.selector_hash[ selector ];
+    if ( !rule ) {
+        rule = createNewRule ( selector , returnObj );
+    }
+    rule.pseudos.push( pseudo );
 }
 
     function _getRuleAndStateInfo ( state )

@@ -42,6 +42,7 @@ RuleUtil.replaceComps = function (
                 }else{
                     if ( css_info.selector_hash[sub_rule_name] ) {
                         sub_rule = css_info.selector_hash[sub_rule_name];
+
                         if (    sub_rule.metadata
                                 && sub_rule.metadata.example )
                         {
@@ -54,14 +55,14 @@ RuleUtil.replaceComps = function (
                             $( sub_rule_html ).replaceWith(
                                 "<div>error '"
                                 + sub_rule_name
-                                + "' [3]...('>' are filtered out of selectors)</div>"
+                                + "' [3] not found</div>"
                             );
                         }
                     }else{
                         $( sub_rule_html ).replaceWith(
                             "<div>error '"
                             + sub_rule_name
-                            + "' [1]...('>' are filtered out of selectors)</div>"
+                            + "' [1] not found</div>"
                         );
                     }
                 }
@@ -81,14 +82,14 @@ RuleUtil.replaceComps = function (
                         $( sub_rule_html ).replaceWith(
                             "<div>error '"
                             + sub_rule_name
-                            + "' [4]...('>' are filtered out of selectors)</div>"
+                            + "' [4] not found</div>"
                         );
                     }
                 }else{
                     $(sub_rule_html).replaceWith(
                         "<div>error template '"
                         + sub_rule_name
-                        + "' [2]...('>' are filtered out of selectors)</div>"
+                        + "' [2] not found</div>"
                     );
                 }
             }

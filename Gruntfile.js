@@ -72,7 +72,7 @@ module.exports = function(grunt) {
         'concat:csscomp',
         'less:csscomp',
         'react',
-        'css_parse'
+        //'css_parse'
     ] );
 
 }

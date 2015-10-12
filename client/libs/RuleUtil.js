@@ -119,21 +119,7 @@ RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
         rule.metadata
         && rule.metadata.example
     ) {
-
-        // var img_prefix = css_info.url_prefix;
-
         if ( !html_only ) {
-            /*if ( css_info.fonts ) {
-                var fonts = css_info.fonts;
-                var font;
-                for ( var f=0; f<fonts.length; f++ ) {
-                    font = fonts[f];
-                    css.push(
-                        "@import url('"+font+"');\n"
-                    );
-                }
-            }*/
-
             var global_rules = css_info.global_rules;
             var global_rule;
             for ( var g=0; g<global_rules.length; g++ ) {
@@ -149,7 +135,6 @@ RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
                 _ruleAndPseudosToCSSString( rule , true  )
             );
         }
-
 
         // create container classes
         var selector_arr = rule.selector.split(" ");

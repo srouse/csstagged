@@ -27,7 +27,6 @@ var RulePreview = React.createClass({
             state = rule.states[s];
             state_name = state.state_info.states_by_index.join(" ");
             if ( RouteState.route.rulestate ) {
-
                 if ( s == RouteState.route.rulestate-1 ) {
                     $( ".state_" + s ).addClass("selected");
                     $( ".state_" + s ).html( state_name );
@@ -52,7 +51,6 @@ var RulePreview = React.createClass({
         }else{
             $( ".rulePreview_outline" ).removeClass("selected");
         }
-
 
     },
 

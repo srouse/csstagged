@@ -77,7 +77,15 @@ function ruleToCSSString ( rule , pretty ) {
         }
 
         var all_selectors = rule.selectors.join( "," + new_line );
-        var selector = all_selectors;//rule.selector;
+
+        // Writting all the selectors makes cascade issues...
+        // "rule.selector" was commented out however, so there
+        // may be a reason not to go with just selector...not sure.
+        // var selector = all_selectors;//rule.selector;
+        var selector = rule.selector;
+        // cons ole.log( all_selectors );
+        // cons ole.log( rule.selector );
+        // cons ole.log( "=====" );
 
         if ( !selector ) {
             return "";

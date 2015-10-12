@@ -1,0 +1,2094 @@
+@font-face {
+  font-family: Muli;
+  src: url('_assets/muli/Muli.ttf');
+  font-weight: normal;
+  
+  /*<csstag
+		tag="fonts"
+		global="true">
+	</csstag>*/
+}
+@font-face {
+  font-family: Muli;
+  src: url('_assets/muli/Muli-Bold.ttf');
+  font-weight: bold;
+}
+@font-face {
+  font-family: Muli;
+  src: url('_assets/muli/Muli-Light.ttf');
+  font-weight: light;
+}
+@font-face {
+  font-family: Muli;
+  src: url('_assets/muli/Muli-ExtraLight.ttf');
+  font-weight: extralight;
+}
+@font-face {
+  font-family: Muli;
+  src: url('_assets/muli/Muli-Italic.ttf');
+  font-style: italic;
+}
+html {
+  -ctag-tag: "html";
+  -ctag-global: "true";
+  -ctag-example: "<div ...>{ .dog }{ .cat }</div>";
+  -ctag-ignore: ".nano";
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  color: #777;
+  font-family: 'Muli', sans-serif;
+  font-weight: light;
+}
+html * {
+  box-sizing: border-box;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+html body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+html .list_bottom_padding {
+  height: 20px;
+  clear: both;
+}
+.expandoBack,
+.expandoClose {
+  width: 30px;
+  height: 100%;
+  float: left;
+  background-image: url('_assets/back_arrow.png');
+  transition: width 0.3s, background-size 0.3s;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.expandoBack:hover,
+.expandoClose:hover {
+  width: 70px;
+  background-color: #eee;
+}
+.expandoClose {
+  /*<csstag tag="buttony">
+        <div ...></div>
+    </csstag>*/
+  background-image: url('_assets/close_arrow.png');
+}
+.expandoClose:hover {
+  background-image: url('_assets/close_arrow_dark.png');
+}
+.column,
+.columnComps,
+.columnStats,
+.columnType {
+  /*<csstag tag="section">
+        <div ...>
+            { .column_Header }
+            { .column_List }
+            { .column_footer }
+        </div>
+    </csstag>*/
+  width: 33.33333%;
+  height: 100%;
+  border-right: 1px solid #eee;
+  position: relative;
+  float: left;
+  background-color: #fff;
+}
+.column .column_Header,
+.columnComps .column_Header,
+.columnType .column_Header {
+  /*<csstag tag="header">
+            <div ...>
+                Header Title
+            </div>
+        </csstag>*/
+  width: 100%;
+  height: 60px;
+  padding: 20px 30px;
+  font-size: 18px;
+  float: left;
+  clear: left;
+}
+.column .column_Content,
+.column .column_List,
+.columnComps .column_Content,
+.columnStats .columnStats_content,
+.columnType .column_Content,
+.columnComps .column_List,
+.columnType .column_List {
+  /*<csstag tag="list">
+            <div ...></div>
+        </csstag>*/
+  float: left;
+  clear: left;
+  position: relative;
+  width: 100%;
+  height: calc(100% + -60px);
+}
+.column .column_List,
+.columnComps .column_List,
+.columnType .column_List {
+  /*<csstag tag="list">
+            <div class="column_List">
+                { .column_List_Row }
+                { .column_List_Row }
+                { .column_List_Row }
+                { .column_List_Row }
+            </div>
+        </csstag>*/
+  overflow: auto;
+  overflow-x: hidden;
+  padding: 0px 0px;
+}
+.column .column_List .column_ListBody,
+.columnComps .column_List .column_ListBody,
+.columnType .column_List .column_ListBody {
+  /*<csstag tag="list">
+                <div ...>
+                </div>
+            </csstag>*/
+}
+.column .column_List .column_ListBody.nano .nano-pane,
+.columnComps .column_List .column_ListBody.nano .nano-pane,
+.columnType .column_List .column_ListBody.nano .nano-pane {
+  background: none;
+  margin: 0px 0px;
+  margin-right: 2px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+}
+.column .column_List .column_ListBody.nano .nano-slider,
+.columnComps .column_List .column_ListBody.nano .nano-slider,
+.columnType .column_List .column_ListBody.nano .nano-slider {
+  background: #ddd;
+}
+.column .column_List .column_ListBody.no_header,
+.columnComps .column_List .column_ListBody.no_header,
+.columnType .column_List .column_ListBody.no_header {
+  height: 100%;
+  transition: height .1s;
+}
+.column .column_List .column_List_Row,
+.columnComps .column_List .column_List_Row,
+.columnType .column_List .column_List_Row {
+  /*<csstag tag="list_row">
+                <div ...>
+                    { .column_rowTitle }
+                <div>
+            </csstag>*/
+  float: left;
+  clear: left;
+  height: 40px;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0px 30px;
+  width: 100%;
+}
+.column .column_List .column_List_Row:hover,
+.columnComps .column_List .column_List_Row:hover,
+.columnType .column_List .column_List_Row:hover {
+  background-color: #eee;
+}
+.column .column_List .column_List_Row .column_rowTitle,
+.columnComps .column_List .column_List_Row .column_rowTitle,
+.columnType .column_List .column_List_Row .column_rowTitle {
+  /*<csstag tag="title">
+                    <div ...>
+                        Column Title
+                        { .column_typeBox }
+                    </div>
+                </csstag>*/
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 8px;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+  overflow: hidden;
+}
+.column .column_List .column_List_Row .column_rowTitle .column_typeBox,
+.columnComps .column_List .column_List_Row .column_rowTitle .column_typeBox,
+.columnType .column_List .column_List_Row .column_rowTitle .column_typeBox {
+  /*<csstag tag="container">
+                        <div ...>
+                            { .typeIcon }
+                        </div>
+                    </csstag>*/
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 15px;
+  height: 39px;
+}
+.column .column_List .column_List_Row .column_rowTitle .column_rowTotal,
+.columnComps .column_List .column_List_Row .column_rowTitle .column_rowTotal,
+.columnType .column_List .column_List_Row .column_rowTitle .column_rowTotal {
+  /*<csstag tag="row_item,cell">
+                        <div ...>33</div>
+                    </div>*/
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding-top: 12px;
+  padding-right: 12px;
+  font-size: 12px;
+  color: #999;
+  width: 30px;
+  height: 39px;
+  text-align: right;
+}
+.column .column_footer,
+.columnComps .column_footer,
+.columnType .column_footer {
+  /*<csstag tag="visualization,footer">
+            <div ...></div>
+        </csstag>*/
+  float: left;
+  clear: left;
+  width: 100%;
+  height: 0px;
+  background-color: #fff;
+  border-top: 1px solid #eee;
+}
+.typeIcon {
+  /*<csstag tag="visualization">
+		<div ...>
+			{ .tagged_incomplete_icon }
+			{ .extendedIcon }
+		</div>
+	</csstag>*/
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -8px;
+  margin-left: -8px;
+}
+.typeIcon .extendedIcon {
+  /*<csstag tag="visualization">
+			<div ...>
+				{ .extendedIcon_content }
+			</div>
+		</csstag>*/
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  overflow: hidden;
+}
+.typeIcon .extendedIcon .extendedIcon_content {
+  /*<csstag tag="visualization">
+				<div ...></div>
+			</csstag>*/
+  width: 100%;
+  height: 200%;
+  border-radius: 50%;
+  position: absolute;
+  top: -100%;
+  left: 0px;
+  border: 3px solid #111;
+}
+.typeIcon .extendeeIcon {
+  /*<csstag tag="visualization">
+			<div ...>
+				{ .extendeeIcon_content }
+			</div>
+		</csstag>*/
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  overflow: hidden;
+}
+.typeIcon .extendeeIcon .extendeeIcon_content {
+  /*<csstag tag="visualization">
+				<div ...></div>
+			</csstag>*/
+  width: 100%;
+  height: 200%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 3px solid #ccc;
+}
+.typeIcon .type_icon,
+.typeIcon .tagged_icon,
+.typeIcon .tagged_incomplete_icon,
+.typeIcon .rule_icon,
+.typeIcon .dup_icon {
+  /*<csstag tag="visualization">
+			<div ...></div>
+		</csstag>*/
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  background-color: #000;
+}
+.typeIcon .tagged_icon {
+  -ctag-tag: "visualization";
+  -ctag-example: "...";
+  background-color: #79e1da;
+}
+.typeIcon .tagged_icon.on {
+  width: 300px;
+}
+.typeIcon .tagged_incomplete_icon {
+  -ctag-tag: "visualization";
+  -ctag-example: "...";
+  border: 1px solid #79e1da;
+  background-color: transparent;
+}
+.typeIcon .tagged_incomplete_icon.wide {
+  width: 400px;
+}
+.typeIcon .rule_icon {
+  -ctag-tag: "visualization";
+  -ctag-example: "...";
+  background-color: #ffe29b;
+}
+.typeIcon .dup_icon {
+  -ctag-tag: "visualization";
+  -ctag-example: "...";
+  background-color: #ff8990;
+}
+/*
+Variables
+*/
+/*
+Mixin's
+*/
+.statDetails,
+.completeDetails,
+.depthDetails,
+.duplicateDetails,
+.extendableDetails,
+.taggedDetails {
+  /*<csstag tag="page">
+        <div ...>
+            { .statDetails_columnList }
+            { .statDetails_columnExplanation }
+        </div>
+    </csstag>*/
+  width: 66.66666%;
+  height: calc(100% + -90px);
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #555;
+  z-index: 1000;
+  color: #ddd;
+}
+.statDetails .statDetails_column,
+.statDetails .statDetails_columnList,
+.statDetails .statDetails_columnExplanation,
+.completeDetails .statDetails_column,
+.depthDetails .statDetails_column,
+.duplicateDetails .statDetails_column,
+.extendableDetails .statDetails_column,
+.taggedDetails .statDetails_column,
+.completeDetails .statDetails_columnList,
+.completeDetails .statDetails_columnExplanation,
+.depthDetails .statDetails_columnList,
+.depthDetails .statDetails_columnExplanation,
+.duplicateDetails .statDetails_columnList,
+.duplicateDetails .statDetails_columnExplanation,
+.extendableDetails .statDetails_columnList,
+.extendableDetails .statDetails_columnExplanation,
+.taggedDetails .statDetails_columnList,
+.taggedDetails .statDetails_columnExplanation {
+  /*<csstag tag="column">
+            <div ...></div>
+        </csstag>*/
+  width: 50%;
+  height: 100%;
+  padding: 14px 0px;
+  float: left;
+}
+.statDetails .statDetails_columnList,
+.completeDetails .statDetails_columnList,
+.depthDetails .statDetails_columnList,
+.duplicateDetails .statDetails_columnList,
+.extendableDetails .statDetails_columnList,
+.taggedDetails .statDetails_columnList {
+  /*<csstag tag="column">
+            <div ...>
+                { .statDetails_sectionHeader }
+                { .statDetails_row }
+                { .statDetails_row }
+                { .statDetails_row }
+            </div>
+        </csstag>*/
+}
+.statDetails .statDetails_columnList.nano .nano-content,
+.completeDetails .statDetails_columnList.nano .nano-content,
+.depthDetails .statDetails_columnList.nano .nano-content,
+.duplicateDetails .statDetails_columnList.nano .nano-content,
+.extendableDetails .statDetails_columnList.nano .nano-content,
+.taggedDetails .statDetails_columnList.nano .nano-content {
+  padding: 20px;
+}
+.statDetails .statDetails_columnList.nano .nano-pane,
+.completeDetails .statDetails_columnList.nano .nano-pane,
+.depthDetails .statDetails_columnList.nano .nano-pane,
+.duplicateDetails .statDetails_columnList.nano .nano-pane,
+.extendableDetails .statDetails_columnList.nano .nano-pane,
+.taggedDetails .statDetails_columnList.nano .nano-pane {
+  background: none;
+  margin: 10px 0px;
+  margin-right: 4px;
+}
+.statDetails .statDetails_columnList.nano .nano-slider,
+.completeDetails .statDetails_columnList.nano .nano-slider,
+.depthDetails .statDetails_columnList.nano .nano-slider,
+.duplicateDetails .statDetails_columnList.nano .nano-slider,
+.extendableDetails .statDetails_columnList.nano .nano-slider,
+.taggedDetails .statDetails_columnList.nano .nano-slider {
+  background: #777;
+}
+.statDetails .statDetails_columnList .statDetails_row,
+.statDetails .statDetails_columnList .statDetails_sectionHeader,
+.completeDetails .statDetails_columnList .statDetails_row,
+.depthDetails .statDetails_columnList .statDetails_row,
+.duplicateDetails .statDetails_columnList .statDetails_row,
+.extendableDetails .statDetails_columnList .statDetails_row,
+.taggedDetails .statDetails_columnList .statDetails_row,
+.completeDetails .statDetails_columnList .statDetails_sectionHeader,
+.depthDetails .statDetails_columnList .statDetails_sectionHeader,
+.duplicateDetails .statDetails_columnList .statDetails_sectionHeader,
+.extendableDetails .statDetails_columnList .statDetails_sectionHeader,
+.taggedDetails .statDetails_columnList .statDetails_sectionHeader {
+  /*<csstag tag="row">
+                <div ...>
+                    rule item
+                    { .statDetails_typeIcon }
+                </div>
+            </csstag>*/
+  width: 100%;
+  height: 34px;
+  padding: 0px 30px;
+  padding-top: 4px;
+  position: relative;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.statDetails .statDetails_columnList .statDetails_row:hover,
+.completeDetails .statDetails_columnList .statDetails_row:hover,
+.depthDetails .statDetails_columnList .statDetails_row:hover,
+.duplicateDetails .statDetails_columnList .statDetails_row:hover,
+.extendableDetails .statDetails_columnList .statDetails_row:hover,
+.taggedDetails .statDetails_columnList .statDetails_row:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.statDetails .statDetails_columnList .statDetails_row .statDetails_typeIcon,
+.completeDetails .statDetails_columnList .statDetails_row .statDetails_typeIcon,
+.depthDetails .statDetails_columnList .statDetails_row .statDetails_typeIcon,
+.duplicateDetails .statDetails_columnList .statDetails_row .statDetails_typeIcon,
+.extendableDetails .statDetails_columnList .statDetails_row .statDetails_typeIcon,
+.taggedDetails .statDetails_columnList .statDetails_row .statDetails_typeIcon {
+  /*<csstag tag="icon_positioner">
+                    <div ...>
+                        { .typeIcon }
+                    </div>
+                </csstag>*/
+  position: absolute;
+  right: 40px;
+  top: 0px;
+  height: 100%;
+  width: 6px;
+}
+.statDetails .statDetails_columnList .statDetails_sectionHeader,
+.completeDetails .statDetails_columnList .statDetails_sectionHeader,
+.depthDetails .statDetails_columnList .statDetails_sectionHeader,
+.duplicateDetails .statDetails_columnList .statDetails_sectionHeader,
+.extendableDetails .statDetails_columnList .statDetails_sectionHeader,
+.taggedDetails .statDetails_columnList .statDetails_sectionHeader {
+  /*<csstag tag="header">
+                <div ...>
+                    rule item
+                    { .statDetails_typeIcon }
+                </div>
+            </csstag>*/
+  font-size: 12px;
+  text-align: left;
+  font-style: italic;
+  font-weight: light;
+  padding: 0px 0px;
+  padding-top: 6px;
+  border-bottom: 1px solid #777;
+  width: calc(100% + -60px);
+  margin: 0px 30px;
+}
+.statDetails .statDetails_columnExplanation,
+.completeDetails .statDetails_columnExplanation,
+.depthDetails .statDetails_columnExplanation,
+.duplicateDetails .statDetails_columnExplanation,
+.extendableDetails .statDetails_columnExplanation,
+.taggedDetails .statDetails_columnExplanation {
+  /*<csstag tag="column">
+            <div ...>
+                { .statDetails_divider }
+                { .statDetails_explanation }
+            </div>
+        </csstag>*/
+}
+.statDetails .statDetails_columnExplanation .statDetails_divider,
+.completeDetails .statDetails_columnExplanation .statDetails_divider,
+.depthDetails .statDetails_columnExplanation .statDetails_divider,
+.duplicateDetails .statDetails_columnExplanation .statDetails_divider,
+.extendableDetails .statDetails_columnExplanation .statDetails_divider,
+.taggedDetails .statDetails_columnExplanation .statDetails_divider {
+  /*<csstag tag="divider">
+                <div ...></div>
+            </csstag>*/
+  height: calc(100% + -60px);
+  width: 1px;
+  background-color: #555;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+}
+.statDetails .statDetails_columnExplanation .statDetails_explanation,
+.completeDetails .statDetails_columnExplanation .statDetails_explanation,
+.depthDetails .statDetails_columnExplanation .statDetails_explanation,
+.duplicateDetails .statDetails_columnExplanation .statDetails_explanation,
+.extendableDetails .statDetails_columnExplanation .statDetails_explanation,
+.taggedDetails .statDetails_columnExplanation .statDetails_explanation {
+  /*<csstag tag="column">
+                <div ...>
+                    { .statDetails_h1 }
+                    { .statDetails_p }
+                </div>
+            </csstag>*/
+}
+.statDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_h1,
+.completeDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_h1,
+.depthDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_h1,
+.duplicateDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_h1,
+.extendableDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_h1,
+.taggedDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_h1 {
+  /*<csstag tag="h1">
+                    <div ...>Title</div>
+                </csstag>*/
+  font-weight: normal;
+  font-size: 20px;
+  padding: 0px;
+  margin: 0px;
+  margin: 0px 30px;
+  margin-bottom: 20px;
+  padding-top: 2px;
+}
+.statDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_p,
+.completeDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_p,
+.depthDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_p,
+.duplicateDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_p,
+.extendableDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_p,
+.taggedDetails .statDetails_columnExplanation .statDetails_explanation .statDetails_p {
+  /*<csstag tag="p">
+                    <div ...>Some text that describes what's going on.</div>
+                </csstag>*/
+  font-size: 13px;
+  margin: 0px 30px;
+  margin-bottom: 20px;
+}
+.statDetails .statDetails_close,
+.completeDetails .statDetails_close,
+.depthDetails .statDetails_close,
+.duplicateDetails .statDetails_close,
+.extendableDetails .statDetails_close,
+.taggedDetails .statDetails_close {
+  /*<csstag tag="button,close">
+            <div ...></div>
+        </csstag>*/
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background-image: url("_assets/close_light.png");
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.statDetails .statDetails_close:hover,
+.completeDetails .statDetails_close:hover,
+.depthDetails .statDetails_close:hover,
+.duplicateDetails .statDetails_close:hover,
+.extendableDetails .statDetails_close:hover,
+.taggedDetails .statDetails_close:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.cssComp {
+  /*<csstag tag="app"
+		description="The root app">
+        <div class="cssComp">
+			<cssComp_columns />
+        </div>
+    </div>*/
+  height: 100%;
+}
+.cssComp .cssComp_columns {
+  /*<csstag tag="section,column"
+			description="Defines the core idea of
+				columns">
+	        <div class="cssComp_columns"></div>
+	    </div>*/
+  position: relative;
+  z-index: 200;
+  height: calc(100% + -90px);
+}
+.columnComps {
+  /*<csstag tag="section">
+        <div ...>
+            { .column_Header }
+            { .column_List }
+            { .column_footer }
+        </div>
+    </csstag>*/
+}
+.columnStats {
+  /*<csstag
+        tag="section,column"
+        extend="column">
+        <div ...>
+            { .columnStats_graph }
+            { .columnStats_content }
+            { .columnStats_depthChart }
+        </div>
+    </csstag>*/
+}
+.columnStats .columnStats_content {
+  /*<csstag
+            tag="section,content">
+            <div ...>
+                { .columnStats_tile }
+                { .columnStats_tile }
+                { .columnStats_tile }
+                { .columnStats_tile }
+            </div>
+        </csstag>*/
+  height: calc(70% + -40px);
+  float: left;
+  clear: left;
+  padding: 20px 30px;
+}
+.columnStats .columnStats_content .columnStats_tile,
+.columnStats .columnStats_content .extendable_tile {
+  /*<csstag
+                tag="section,tile">
+                <div ...>
+                    { .tile_graph }
+                    { .tile_label }
+                </div>
+            </csstag>*/
+  width: 50%;
+  height: 50%;
+  float: left;
+  position: relative;
+  background-color: #fff;
+  z-index: 10;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.columnStats .columnStats_content .columnStats_tile:hover,
+.columnStats .columnStats_content .extendable_tile:hover {
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+.columnStats .columnStats_content .columnStats_tile.tagged_rules,
+.columnStats .columnStats_content .extendable_tile.tagged_rules {
+  /*<csstag tag="tile"></csstag>*/
+}
+body.s_statDetails_tagged .columnStats .columnStats_content .columnStats_tile.tagged_rules,
+body.s_statDetails_tagged .columnStats .columnStats_content .extendable_tile.tagged_rules {
+  border: 1px solid #eee;
+  z-index: 900;
+}
+body.s_statDetails_tagged .columnStats .columnStats_content .columnStats_tile.tagged_rules:hover,
+body.s_statDetails_tagged .columnStats .columnStats_content .extendable_tile.tagged_rules:hover {
+  box-shadow: none;
+}
+.columnStats .columnStats_content .columnStats_tile.complete_tags,
+.columnStats .columnStats_content .extendable_tile.complete_tags {
+  /*<csstag tag="tile"></csstag>*/
+}
+body.s_statDetails_complete .columnStats .columnStats_content .columnStats_tile.complete_tags,
+body.s_statDetails_complete .columnStats .columnStats_content .extendable_tile.complete_tags {
+  border: 1px solid #eee;
+  z-index: 900;
+}
+.columnStats .columnStats_content .columnStats_tile.duplicates,
+.columnStats .columnStats_content .extendable_tile.duplicates {
+  /*<csstag tag="tile"></csstag>*/
+}
+body.s_statDetails_duplicates .columnStats .columnStats_content .columnStats_tile.duplicates,
+body.s_statDetails_duplicates .columnStats .columnStats_content .extendable_tile.duplicates {
+  border: 1px solid #eee;
+  z-index: 900;
+}
+body.s_statDetails_duplicates .columnStats .columnStats_content .columnStats_tile.duplicates:hover,
+body.s_statDetails_duplicates .columnStats .columnStats_content .extendable_tile.duplicates:hover {
+  box-shadow: none;
+}
+.columnStats .columnStats_content .columnStats_tile .tile_graph,
+.columnStats .columnStats_content .extendable_tile .tile_graph {
+  /*<csstag
+                    tag="graph">
+                    <div ...>
+                        { .tile_circle }
+                    </div>
+                </csstag>*/
+  width: 100%;
+  height: calc(100% + -28px);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 30px;
+  text-align: center;
+}
+.columnStats .columnStats_content .columnStats_tile .tile_graph .tile_circle,
+.columnStats .columnStats_content .extendable_tile .tile_graph .tile_circle {
+  /*<csstag
+                        tag="graph">
+                        <div ...>43%</div>
+                    </csstag>*/
+  position: absolute;
+  top: calc(50% + -42px);
+  left: calc(50% + -42px);
+  width: 84px;
+  height: 84px;
+  transition: all .3s;
+}
+.columnStats .columnStats_content .columnStats_tile .tile_graph .tile_circle.go,
+.columnStats .columnStats_content .extendable_tile .tile_graph .tile_circle.go {
+  font-size: 38px;
+}
+body.s_go .columnStats .columnStats_content .columnStats_tile .tile_graph .tile_circle,
+body.s_go .columnStats .columnStats_content .extendable_tile .tile_graph .tile_circle {
+  color: #0f0;
+}
+.columnStats .columnStats_content .columnStats_tile .tile_label,
+.columnStats .columnStats_content .extendable_tile .tile_label {
+  -ctag-tag: "graph";
+  -ctag-example: "...Rule of Dogs{ .columnStats_typeBox }";
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+  bottom: 50%;
+  margin-bottom: -46px;
+}
+.columnStats .columnStats_content .columnStats_tile .tile_label .columnStats_typeBox,
+.columnStats .columnStats_content .extendable_tile .tile_label .columnStats_typeBox {
+  -ctag-tag: "box";
+  -ctag-example: "...{ .tagged_incomplete_icon }";
+  position: absolute;
+  top: 0px;
+  left: 28px;
+  width: 20px;
+  height: 18px;
+}
+body.s_statDetails_extendable .columnStats .columnStats_content .extendable_tile {
+  border: 1px solid #eee;
+  z-index: 900;
+}
+body.s_statDetails_extendable .columnStats .columnStats_content .extendable_tile:hover {
+  box-shadow: none;
+}
+.columnStats .columnStats_depthChart {
+  -ctag-tag: "container";
+  -ctag-example: "...";
+  height: calc(30% + -30px);
+  width: calc(100% + -60px);
+  float: left;
+  clear: left;
+  padding: 10px 30px;
+  margin: 0px 30px;
+  border: 1px solid #fff;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.columnStats .columnStats_depthChart:hover {
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
+}
+body.s_statDetails_depth .columnStats .columnStats_depthChart {
+  border: 1px solid #eee;
+  z-index: 900;
+}
+.columnStats .columnStats_graph {
+  /*<csstag
+            tags="section,footer">
+            ...{ .column_logo }
+        </csstag>*/
+  position: relative;
+  width: 100%;
+  height: 60px;
+  float: left;
+  clear: left;
+}
+.columnStats .columnStats_graph .column_logo {
+  -ctag-tag: "placeholder";
+  -ctag-example: "...{ .column_logo_img }";
+  position: absolute;
+  left: 30px;
+  top: 26px;
+}
+.columnStats .columnStats_graph .column_logo .column_logo_img {
+  -ctag-tag: "logo,graphic";
+  -ctag-example: "...";
+  width: 143.2px;
+  height: 30.4px;
+  background-size: contain;
+  background-image: url("_assets/logo_h_small@2x.png");
+}
+.depthChart {
+  /*<csstag tag="visualization">
+        <div ...>
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_title }
+        </div>
+    </csstag>*/
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.depthChart .depthChart_title {
+  /*<csstag tag="label">
+            <div ...>
+                chart of bars...
+            </div>
+        </csstag>*/
+  width: 100%;
+  font-size: 10px;
+  color: #999;
+  text-align: center;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+.depthChart .depthChart_Column {
+  /*<csstag tag="visualization">
+            <div ...>
+                { .depthChart_Bar }
+            </div>
+        </csstag>*/
+  width: 14.28571429%;
+  height: 100%;
+  float: left;
+  position: relative;
+}
+.depthChart .depthChart_Column .depthChart_Bar {
+  /*<csstag tag="visualization">
+                <div ...>
+                    { .depthChart_RulesBar }
+                    { .depthChart_CompsBar }
+                </div>
+            </csstag>*/
+  width: calc(100% + -10px);
+  height: calc(100% + -40px);
+  margin: 0px auto;
+  margin-top: 20px;
+  margin-bottom: 2px;
+  position: relative;
+}
+.depthChart .depthChart_Column .depthChart_Bar .depthChart_CompsBar,
+.depthChart .depthChart_Column .depthChart_Bar .depthChart_RulesBar {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+.depthChart .depthChart_Column .depthChart_Bar .depthChart_CompsBar {
+  /*<csstag tag="visualization,bar">
+                    <div ... style='height: 50%;'></div>
+                </csstag>*/
+  background-color: #79e1da;
+}
+.depthChart .depthChart_Column .depthChart_Bar .depthChart_RulesBar {
+  /*<csstag tag="visualization,bar">
+                    <div ... style='height: 100%;'>
+                        { .depthChart_label }
+                    </div>
+                </csstag>*/
+  background-color: #ffe29b;
+}
+.depthChart .depthChart_Column .depthChart_Bar .depthChart_RulesBar .depthChart_label {
+  /*<csstag tag="label">
+                        <div ...>44</div>
+                    </csstag>*/
+  position: absolute;
+  top: -18px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+}
+.completeDetails {
+  /*<csstag tag="page">
+        <div ...></div>
+    </csstag>*/
+}
+.depthDetails {
+  /*<csstag tag="page">
+        <div ...></div>
+    </csstag>*/
+}
+.duplicateDetails {
+  /*<csstag tag="page">
+        <div ...></div>
+    </csstag>*/
+}
+.duplicateDetails .statDetails_column {
+  height: 100px;
+}
+.extendableDetails {
+  /*<csstag tag="page">
+        <div ...></div>
+    </csstag>*/
+}
+.taggedDetails {
+  /*<csstag tag="page">
+        <div ...>
+            { .statDetails_columnList }
+            { .statDetails_columnExplanation }
+       </div>
+    </csstag>*/
+}
+.taggedDetails .statDetails_column {
+  height: 100px;
+}
+.dog,
+.cat {
+  /*<csstag tag="example">
+        <div ...></div>
+    </csstag>*/
+  width: 10px;
+}
+.dog .tail,
+.cat .tail {
+  color: pink;
+}
+.dog .tail > .fur,
+.cat .tail > .fur {
+  height: 10px;
+}
+.dog .tail > .fur .hair,
+.cat .tail > .fur .hair {
+  color: purple;
+}
+.dog .tail > .fur .hair > .flea,
+.cat .tail > .fur .hair > .flea {
+  text-decoration-style: dashed;
+}
+.dog .tail > .fur .hair > .flea .flea_eye,
+.cat .tail > .fur .hair > .flea .flea_eye {
+  height: 1000px;
+}
+.dog .tail > .fur .hair > .flea .flea_eye .poop,
+.cat .tail > .fur .hair > .flea .flea_eye .poop {
+  color: #f00;
+}
+.cat {
+  /*<csstag tag="example">
+        <div ...>
+            { .spit }
+        </div>
+    </csstag>*/
+  width: 11px;
+  /*.fur {
+        color: pink;
+    }*/
+}
+.cat .spit {
+  /*<csstag tag="example">
+            <div ...>THERE</div>
+        </csstag>*/
+  color: yellow;
+}
+.sloth {
+  /*<csstag tag="example">
+        <div ...>
+            { .sloth .spit }
+        </div>
+    </csstag>*/
+}
+.sloth > .spit {
+  /*<csstag tag="example">
+            <div ...>HI</div>
+        </csstag>*/
+  color: brown;
+}
+.overallVisual {
+  /*<csstag tag="visualization"
+                dependencies="html">
+        <div ...>
+            { .cssp_OverallVisual_taggedRules }
+        </div>
+    </csstag>*/
+  width: 100%;
+  height: 90px;
+  border-top: 1px solid #d9d9d9;
+  padding-left: 30px;
+  padding-top: 30px;
+  position: relative;
+  z-index: 200;
+}
+.overallVisual .cssp_OverallVisual_taggedRules {
+  /*<csstag tag="section">
+            <div ...>
+                { .overallVisual_taggedBar }
+                { .overallVisual_rulesBar }
+            </div>
+        </csstag>*/
+  width: calc(100% + -30px);
+  position: relative;
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_bar,
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_taggedBar,
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_rulesBar {
+  /*<csstag tag="visualization">
+                <div ... style="width: 54%;">
+                    { .overallBar_total }
+                    { .overallBar_percent }
+                    { .label }
+                </div>
+            </csstag>*/
+  height: 30px;
+  float: left;
+  padding-top: 2px;
+  position: relative;
+  z-index: 200;
+  color: #333;
+  background-color: #ddd;
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_bar .overallBar_total,
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_taggedBar .tagged_total,
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_rulesBar .rules_total {
+  /*<csstag tag="label">
+                    <div ...>33</div>
+                </csstag>*/
+  font-size: 16px;
+  padding-right: 12px;
+  float: right;
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_bar .overallBar_percent,
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_taggedBar .tagged_percent,
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_rulesBar .rules_percent {
+  /*<csstag tag="label">
+                    <div ...>44%</div>
+                </csstag>*/
+  font-size: 12px;
+  padding-left: 10px;
+  padding-top: 4px;
+  padding-right: 10px;
+  float: right;
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_taggedBar {
+  /*<csstag tag="visualization">
+                <div ... style="width: 54%;">
+                    { .tagged_total }
+                    { .tagged_percent }
+                    { .label }
+                </div>
+            </csstag>*/
+  background-color: #79e1da;
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_taggedBar .tagged_total {
+  /*<csstag tag="label">
+                    <div ...>44</div>
+                </csstag>*/
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_taggedBar .tagged_percent {
+  /*<csstag tag="label">
+                    <div ...>22%</div>
+                </csstag>*/
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_taggedBar .label {
+  /*<csstag tag="label">
+                    <div ...>tagged</div>
+                </csstag>*/
+  position: absolute;
+  right: 0px;
+  bottom: -15px;
+  padding-right: 3px;
+  padding-top: 0px;
+  height: 14px;
+  color: #bbb;
+  font-size: 12px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_rulesBar {
+  /*<csstag tag="visualization">
+                <div ... style="width: 46%;">
+                    { .rules_total }
+                    { .rules_percent }
+                    { .label }
+                </div>
+            </csstag>*/
+  background-color: #ffe29b;
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_rulesBar .rules_total {
+  /*<csstag tag="label">
+                    <div ...>122</div>
+                </csstag>*/
+  float: left;
+  padding-left: 12px;
+  padding-right: 0px;
+}
+.overallVisual .cssp_OverallVisual_taggedRules .overallVisual_rulesBar .rules_percent {
+  /*<csstag tag="label">
+                    <div ...>23%</div>
+                </csstag>*/
+  float: left;
+}
+.ruleCSS {
+  /*<csstag tag="page">
+        <div ... style="display: block;">
+            { .ruleDetail_code }
+        </div>
+    </csstag>*/
+  z-index: 100;
+  /*@media ( max-width: @screen-lg-min ) {
+        .calc( width , 100% , 100px );
+    }*/
+}
+.ruleCSS .ruleDetail_textarea {
+  /*<csstag tag="content">
+            <textarea ...>
+                <hi>there</hi>
+            </textarea>
+        </csstag>*/
+  width: 100%;
+  height: 300px;
+  background-color: #000;
+  color: #eee;
+  padding: 20px;
+  font-family: 'Muli', sans-serif;
+  font-weight: extralight;
+  border: 0px;
+  resize: none;
+}
+.ruleCSS .ruleDetail_code {
+  /*<csstag tag="content">
+            <div ...>
+                { .ruleDetail_title }
+                { .ruleDetail_pre }
+            </div>
+        </csstag>*/
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  overflow: auto;
+  padding: 30px 30px;
+}
+.ruleCSS .ruleDetail_code .ruleDetail_title {
+  /*<csstag tag="code">
+                <div ...>
+                    Pseudo Selectors
+                    { .ruleDetail_titleButton }
+                </div>
+            </csstag>*/
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  font-size: 18px;
+  color: #333;
+  padding-top: 20px;
+  clear: both;
+  position: relative;
+}
+.ruleCSS .ruleDetail_code .ruleDetail_title .ruleDetail_titleButton {
+  /*<csstag tag="button">
+                    <div ...>React</div>
+                </csstag>*/
+  position: absolute;
+  right: 10px;
+  bottom: 0px;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ruleCSS .ruleDetail_code .ruleDetail_pre {
+  /*<csstag tag="code">
+<pre ...>
+a [
+    color: #f00;
+]
+</pre>
+            </csstag>*/
+  width: 100%;
+  font-family: "Muli", sans-serif;
+  float: left;
+  white-space: pre-wrap;
+  /* CSS 3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+}
+.ruleDetail {
+  /*<csstag tag="page,modal">
+        <div ...>
+            { .ruleDetail_header }
+            { .ruleCSS }
+            { .ruleDetailNav }
+        </div>
+    </csstag>*/
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1100;
+  overflow: hidden;
+  background-color: #fff;
+  display: none;
+}
+body.s_tree .ruleDetail {
+  display: block;
+}
+body.s_tag .ruleDetail {
+  display: block;
+}
+.ruleDetail_content,
+.ruleCSS,
+.ruleOverview,
+.rulePreview {
+  /*<csstag tag="content">
+        <div ...></div>
+    </csstag>*/
+  width: calc(100% + -300px);
+  height: calc(100% + -70px);
+  position: absolute;
+  top: 70px;
+  right: 0px;
+  background-color: #fff;
+}
+.ruleDetail_header {
+  /*<csstag tag="header">
+        <div ...>
+            { .ruleDetail_back }
+            { .ruleDetail_title }
+            { .ruleDetail_headerNav }
+        </div>
+    </csstag>*/
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px solid #eee;
+}
+.ruleDetail_header .ruleDetail_title {
+  /*<csstag tag="container">
+            <div ...>
+                { .ruleDetail_titleText }
+                { .ruleDetail_iconBox }
+            </div>
+        </csstag>*/
+  width: 300px;
+  height: 100%;
+  position: relative;
+  float: left;
+  transition: width .3s;
+  /*@media ( max-width: @screen-lg-min ) {
+            width: 120px;
+        }*/
+}
+.ruleDetail_header .ruleDetail_title .ruleDetail_close {
+  /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+  width: 70px;
+  height: 100%;
+  float: left;
+  background-image: url('_assets/close_arrow.png');
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: width .3s;
+  /*@media ( max-width: @screen-lg-min ) {
+                width: 60px;
+            }*/
+}
+.ruleDetail_header .ruleDetail_title .ruleDetail_close:hover {
+  background-color: #eee;
+  background-image: url('_assets/close_arrow_dark.png');
+}
+.ruleDetail_header .ruleDetail_title .ruleDetail_showTree {
+  /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+  width: 70px;
+  height: 100%;
+  float: right;
+  background-image: url('_assets/show_tree.png');
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: none;
+  transition: width .3s;
+  /*@media ( max-width: @screen-lg-min ) {
+                width: 60px;
+            }*/
+}
+.ruleDetail_header .ruleDetail_title .ruleDetail_showTree:hover {
+  background-color: #eee;
+  background-image: url('_assets/show_tree_dark.png');
+}
+body.s_detailTab .ruleDetail_header .ruleDetail_title .ruleDetail_showTree {
+  display: block;
+}
+.ruleDetail_header .ruleDetail_title .ruleDetail_titleText {
+  /*<csstag tag="title">
+                <div ...>
+                    A Title
+                </div>
+            </csstag>*/
+  float: left;
+  padding: 16px 0px;
+  padding-left: 0px;
+  height: 100%;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ruleDetail_header .ruleDetail_title .ruleDetail_titleText:hover {
+  background-color: #eee;
+}
+.ruleDetail_header .ruleDetail_title .ruleDetail_iconBox {
+  /*<csstag tag="container,nav_item">
+                <div ...>
+                    <div class='rule_icon'></div>
+                </div>
+            </csstag>*/
+  width: 50px;
+  height: 100%;
+  position: relative;
+  float: left;
+}
+.ruleDetail_header .ruleDetail_headerNav {
+  /*<csstag tag="nav">
+            <div ...>
+                { .ruleDetail_item_css }
+                { .ruleDetail_item_overview }
+                { .ruleDetail_item_example }
+                { .ruleDetail_back }
+            </div>
+        </csstag>*/
+  float: right;
+  clear: right;
+  width: 410px;
+  height: 100%;
+  background-color: #fff;
+  position: relative;
+  display: none;
+}
+body.s_detailTab .ruleDetail_header .ruleDetail_headerNav {
+  display: block;
+}
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item,
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_overview,
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_css,
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_example {
+  /*<csstag tag="nav_item">
+                <div ...>
+                    link_title
+                </div>
+            </csstag>*/
+  color: #cccccc;
+  height: 100%;
+  padding-top: 24px;
+  width: calc(33.3333% + -23.33333333px);
+  float: right;
+  text-align: center;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item:hover,
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_overview:hover,
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_css:hover,
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_example:hover {
+  color: #000000;
+  border-bottom: 3px solid #ccc;
+}
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_overview {
+  /*<csstag tag="nav_item">
+                <div ...>
+                    overview
+                </div>
+            </csstag>*/
+}
+body.s_detailTab_overview .ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_overview {
+  color: #000000;
+  border-bottom: 3px solid #555;
+}
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_css {
+  /*<csstag tag="nav_item">
+                <div ...>
+                    overview
+                </div>
+            </csstag>*/
+}
+body.s_detailTab_code .ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_css {
+  color: #000000;
+  border-bottom: 3px solid #555;
+}
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_example {
+  /*<csstag tag="nav_item">
+                <div ...>
+                    example
+                </div>
+            </csstag>*/
+}
+body.s_detailTab_example .ruleDetail_header .ruleDetail_headerNav .ruleDetail_item_example {
+  color: #000000;
+  border-bottom: 3px solid #555;
+}
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_back {
+  /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+  width: 70px;
+  height: 100%;
+  background-image: url("_assets/close.png");
+  background-color: #fff;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-right: 0px;
+  float: right;
+  transition: all .2s;
+}
+.ruleDetail_header .ruleDetail_headerNav .ruleDetail_back:hover {
+  background-color: #eee;
+}
+.ruleDetailNav {
+  /*<csstag tag="navigation">
+        <div ...>
+            { .ruleDetailNav_title }
+        </div>
+    </csstag>*/
+  height: 69px;
+  border-left: 1px solid #eee;
+  float: left;
+  position: absolute;
+  top: 0px;
+  left: 299px;
+  transition: left .3s;
+  z-index: 200;
+  background-color: #fff;
+  display: none;
+  /*@media ( max-width: @screen-lg-min ) {
+        left: 119px;
+    }*/
+}
+body.s_detailTab .ruleDetailNav {
+  display: block;
+}
+.ruleDetailNav .ruleDetailNav_title {
+  /*<csstag tag="title">
+            <div ...>rule_name</div>
+        </csstag>*/
+  width: 100%;
+  float: left;
+  height: 70px;
+  padding-left: 0px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.ruleDetailNav .ruleDetailNav_title .ruleDetailNav_back {
+  width: 40px;
+  height: 100%;
+  float: left;
+  background-image: url('_assets/back_arrow.png');
+  transition: width .3s;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ruleDetailNav .ruleDetailNav_title .ruleDetailNav_back:hover {
+  width: 60px;
+  background-color: #eee;
+}
+.ruleDetailNav .ruleDetailNav_title .ruleDetailNav_titleText {
+  padding-top: 16px;
+  font-size: 22px;
+  color: #333;
+  float: left;
+  margin-left: 20px;
+}
+.ruleDetailNav .ruleDetailNav_title .ruleDetailNav_typeIcon {
+  float: left;
+  width: 16px;
+  height: 100%;
+  position: relative;
+  margin-left: 20px;
+}
+.ruleDetailNav .ruleDetailNav_title .ruleDetailNav_typeIcon:hover {
+  background-color: #eee;
+}
+.ruleNesting {
+  /*<csstag tag="page">
+    </csstag>*/
+  width: 100%;
+  height: calc(100% + -70px);
+  float: left;
+  background-color: #fff;
+  padding: 20px;
+  overflow: auto;
+  position: relative;
+  z-index: 200;
+  transition: width .3s;
+  border-right: 1px solid #eee;
+  display: block;
+  /*@media ( max-width: @screen-lg-min ) {
+        body.s_detailTab_example &,
+        body.s_detailTab_css & {
+            width: 120px;
+            padding: 10px;
+        }
+    }*/
+}
+body.s_detailTab .ruleNesting {
+  width: 300px;
+}
+.ruleNesting .ruleNesting_noChildren {
+  /*<csstag tag="text">
+            <div ...>no children</div>
+        </csstag>*/
+  padding-left: 20px;
+  padding-top: 6px;
+  font-size: 14px;
+}
+.ruleNesting .ruleNestingColumn {
+  /*<csstag
+        tag="column,recursive">
+
+    </csstag>*/
+  width: calc(50vw + -165px);
+  float: left;
+  font-size: 12px;
+  position: relative;
+  transition: width 0.3s;
+  /*@media ( max-width: @screen-lg-min ) {
+        body.s_detailTab_example &,
+        body.s_detailTab_css &
+        {
+            width: 40px;
+
+            &.first_one {
+                width: 20px;
+            }
+
+            .ruleNesting_titleText {
+                display: none;
+            }
+            .ruleNestingColumn_title,
+            .ruleNestingColumn_children {
+                width: 20px;
+                transition: width ( -@transitionOffset + @transitionBase );
+            }
+            .ruleNestingColumn_stackedLine,
+            .ruleNestingColumn_line {
+                left: 20px;
+
+                &.first_one {
+                    left: 0px;
+                }
+            }
+            .ruleNestingColumn_lineCover {
+                left: 20px;
+            }
+        }
+    }*/
+}
+.ruleNesting .ruleNestingColumn.no_children {
+  width: calc(25vw + -82.5px);
+}
+.ruleNesting .ruleNestingColumn.no_children .ruleNestingColumn_children {
+  display: none;
+}
+.ruleNesting .ruleNestingColumn.first_one {
+  width: calc(25vw + -82.5px);
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn {
+  width: calc(100% + 0px);
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn.first_one {
+  width: calc(100% + -30px);
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn .ruleNestingColumn_title {
+  width: calc(100% + 0px);
+  transition: width 0.25s;
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn .ruleNestingColumn_children {
+  width: calc(100% + -20px);
+  clear: left;
+  transition: width 0.25s;
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn .ruleNestingColumn_children.first_one {
+  width: calc(100% + 0px);
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn .ruleNestingColumn_stackedLine {
+  left: 20px;
+  top: 30px;
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn .ruleNestingColumn_stackedLine.first_one {
+  left: 0px;
+  top: 0px;
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn .ruleNestingColumn_stackedLine {
+  display: block;
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn .ruleNestingColumn_line {
+  display: none;
+}
+body.s_detailTab .ruleNesting .ruleNestingColumn .ruleNestingColumn_lineCover {
+  display: none;
+}
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_stackedLine,
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_line {
+  /*<csstag tag="line, graphic">
+            <div ... style="height: 100px;"></div>
+        </csstag>*/
+  width: 1px;
+  position: absolute;
+  left: calc(25vw + -82.5px);
+  top: 0px;
+  background-color: #eee;
+  transition: left 0.3s;
+}
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_stackedLine.first_one,
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_line.first_one {
+  left: -1px;
+}
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_stackedLine {
+  display: none;
+}
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_lineCover {
+  width: 5px;
+  height: 6px;
+  background-color: #fff;
+  position: absolute;
+  left: calc(25vw + -82.5px);
+  top: 0px;
+}
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_title {
+  /*<csstag tag="title">
+            <div ...>rule_name</div>
+        </csstag>*/
+  width: calc(25vw + -82.5px);
+  float: left;
+  clear: left;
+  height: 30px;
+  border-bottom: 1px solid #eee;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: width 0.35s;
+  color: #999;
+}
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_title:hover {
+  background-color: #ddd;
+  color: #222;
+}
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_title.selected {
+  background-color: #eee;
+  color: #000;
+}
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_title .ruleNesting_typeIcon {
+  right: 4px;
+  top: 0px;
+  width: 20px;
+  height: 30px;
+  position: absolute;
+  left: auto;
+}
+.ruleNesting .ruleNestingColumn .ruleNestingColumn_children {
+  /*<csstag tag="list">
+        </csstag>*/
+  width: calc(25vw + -82.5px);
+  float: right;
+  clear: right;
+  transition: width 0.35s;
+}
+.ruleOverview {
+  /*<csstag tag="page">
+        <div ... style="display: block;"></div>
+    </csstag>*/
+  z-index: 100;
+  /*@media ( max-width: @screen-lg-min ) {
+        .calc( width , 100% , -100px );
+    }*/
+}
+body.s_detailTab_overview .ruleOverview {
+  display: block;
+}
+.ruleOverview .ruleOverview_context {
+  /*<csstag
+            tag="row">
+        </csstag>*/
+  padding: 30px;
+  height: calc(100% + -30px);
+  width: 100%;
+  float: left;
+  overflow: auto;
+}
+.ruleOverview .ruleOverview_context .ruleOverview_subName,
+.ruleOverview .ruleOverview_context .ruleOverview_stateSubName,
+.ruleOverview .ruleOverview_context .ruleOverview_subTitle {
+  /*<csstag
+                tag="text">
+            </csstag>*/
+  float: left;
+  clear: left;
+  height: 30px;
+  width: 100%;
+  padding-top: 8px;
+  font-size: 16px;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ruleOverview .ruleOverview_context .ruleOverview_subName:hover {
+  background-color: #eee;
+}
+.ruleOverview .ruleOverview_context .ruleOverview_stateSubName {
+  cursor: default;
+}
+.ruleOverview .ruleOverview_context .ruleOverview_stateSubName:hover {
+  background-color: none;
+}
+.ruleOverview .ruleOverview_context .ruleOverview_subTitle {
+  /*<csstag
+                tag="title,text">
+            </csstag>*/
+  margin-top: 8px;
+  padding-top: 0px;
+  font-size: 16px;
+  color: #999;
+  padding-left: 0px;
+  border-bottom: 1px solid #eee;
+}
+.rulePreview {
+  /*<csstag tags="page,rulePreview">
+        <div ...>
+            { .rulePreview_stage }
+            { .rulePreview_nav }
+        </div>
+    </csstag>*/
+  z-index: 300;
+  /*@media ( max-width: @screen-lg-min ) {
+        .calc( width , 100% , -120px );
+    }*/
+}
+.rulePreview .rulePreview_stage {
+  /*<csstag tags="page,rulePreview">
+            <div ...>
+                { .rulePreview_iframe }
+            </div>
+        </csstag>*/
+  width: 100%;
+  height: calc(100% + -40px);
+  background-color: #fff;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+.rulePreview .rulePreview_stage .rulePreview_iframe {
+  /*<csstag tags="page,rulePreview">
+                <iframe style="border:none;" ...></iframe>
+            </csstag>*/
+  width: 100%;
+  height: 100%;
+  background-color: #eee;
+}
+.rulePreview .rulePreview_nav {
+  -ctag-tag: "navigation";
+  -ctag-example: "...{ .rulePreview_navLabel }{ .rulePreview_state }{ .rulePreview_stateApplied }{ .rulePreview_toggleBGColor }{ .rulePreview_outline }";
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  background-color: #fff;
+  border-top: 1px solid #eee;
+  left: 0px;
+  bottom: 0px;
+  z-index: 1000;
+  /*@media ( max-width: @screen-lg-min ) {
+            width: 119px; left: -120px;
+        }*/
+}
+.rulePreview .rulePreview_nav .rulePreview_navLabel {
+  -ctag-tag: "label";
+  -ctag-example: "...states";
+  height: 40px;
+  float: left;
+  text-align: center;
+  font-size: 12px;
+  padding: 10px 10px;
+}
+.rulePreview .rulePreview_nav .rulePreview_navItem,
+.rulePreview .rulePreview_nav .rulePreview_state,
+.rulePreview .rulePreview_nav .rulePreview_toggleBGColor,
+.rulePreview .rulePreview_nav .rulePreview_outline,
+.rulePreview .rulePreview_nav .rulePreview_html {
+  -ctag-tag: "button";
+  -ctag-example: "...";
+  width: 40px;
+  height: 100%;
+  margin-right: 1px;
+  margin-top: 0px;
+  cursor: pointer;
+  cursor: hand;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  float: right;
+  text-align: center;
+  font-size: 12px;
+  padding-top: 10px;
+}
+.rulePreview .rulePreview_nav .rulePreview_navItem:hover,
+.rulePreview .rulePreview_nav .rulePreview_state:hover,
+.rulePreview .rulePreview_nav .rulePreview_toggleBGColor:hover,
+.rulePreview .rulePreview_nav .rulePreview_outline:hover,
+.rulePreview .rulePreview_nav .rulePreview_html:hover {
+  background-color: #eee;
+}
+.rulePreview .rulePreview_nav .rulePreview_state {
+  -ctag-tag: "button";
+  -ctag-example: "...1";
+  float: left;
+  min-width: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: auto;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.rulePreview .rulePreview_nav .rulePreview_state.selected {
+  background-color: #777;
+  color: #fff;
+}
+.rulePreview .rulePreview_nav .rulePreview_stateApplied {
+  -ctag-tag: "label";
+  -ctag-example: "....myAppliedState";
+  padding: 10px;
+  font-size: 12px;
+  float: left;
+}
+.rulePreview .rulePreview_nav .rulePreview_toggleBGColor {
+  -ctag-tag: "button";
+  -ctag-example: "...";
+  margin-right: 10px;
+  background-color: #fff;
+  background-image: url("_assets/bg_color_icon.png");
+}
+.rulePreview .rulePreview_nav .rulePreview_toggleBGColor:hover {
+  background-image: url("_assets/bg_color_icon_dark.png");
+}
+.rulePreview .rulePreview_nav .rulePreview_toggleBGColor.selected {
+  background-color: #777;
+  background-image: url("_assets/bg_color_icon_dark.png");
+}
+.rulePreview .rulePreview_nav .rulePreview_toggleBGColor.selected:hover {
+  background-color: #aaa;
+}
+.rulePreview .rulePreview_nav .rulePreview_outline {
+  -ctag-tag: "button";
+  -ctag-example: "...";
+  background-image: url("_assets/outline_icon.png");
+}
+.rulePreview .rulePreview_nav .rulePreview_outline:hover {
+  background-image: url("_assets/outline_icon_dark.png");
+}
+.rulePreview .rulePreview_nav .rulePreview_outline.selected {
+  background-color: #777;
+  background-image: url("_assets/outline_icon_dark.png");
+}
+.rulePreview .rulePreview_nav .rulePreview_outline.selected:hover {
+  background-color: #aaa;
+}
+.rulePreview .rulePreview_nav .rulePreview_html {
+  -ctag-tag: "button";
+  -ctag-example: "...";
+  background-color: #fff;
+  background-image: url("_assets/html_icon.png");
+}
+.rulePreview .rulePreview_nav .rulePreview_html:hover {
+  background-image: url("_assets/html_icon_dark.png");
+}
+/** initial setup **/
+.nano {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.nano > .nano-content {
+  position: absolute;
+  overflow: scroll;
+  overflow-x: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.nano > .nano-content:focus {
+  outline: thin dotted;
+}
+.nano > .nano-content::-webkit-scrollbar {
+  display: none;
+}
+.has-scrollbar > .nano-content::-webkit-scrollbar {
+  display: block;
+}
+.nano > .nano-pane {
+  background: rgba(0, 0, 0, 0.25);
+  position: absolute;
+  width: 10px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  visibility: hidden\9;
+  /* Target only IE7 and IE8 with this hack */
+  opacity: .01;
+  -webkit-transition: .2s;
+  -moz-transition: .2s;
+  -o-transition: .2s;
+  transition: .2s;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.nano > .nano-pane > .nano-slider {
+  background: #444;
+  background: rgba(0, 0, 0, 0.5);
+  position: relative;
+  margin: 0 1px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.nano:hover > .nano-pane,
+.nano-pane.active,
+.nano-pane.flashed {
+  visibility: visible\9;
+  /* Target only IE7 and IE8 with this hack */
+  opacity: 0.99;
+}

@@ -1,0 +1,2313 @@
+
+@font-face {
+    /*<csstag
+		tag="fonts"
+		global="true">
+	</csstag>*/
+    font-family: Muli;
+    src: url('_assets/muli/Muli.ttf');
+    font-weight: normal;
+}
+@font-face {
+    font-family: Muli;
+    src: url('_assets/muli/Muli-Bold.ttf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: Muli;
+    src: url('_assets/muli/Muli-Light.ttf');
+    font-weight: light;
+}
+@font-face {
+    font-family: Muli;
+    src: url('_assets/muli/Muli-ExtraLight.ttf');
+    font-weight: extralight;
+}
+@font-face {
+    font-family: Muli;
+    src: url('_assets/muli/Muli-Italic.ttf');
+    font-style: italic;
+}
+
+html {
+    -ctag-tag: "html";
+    -ctag-global: "true";
+    -ctag-example: "<div ...>{ .dog }{ .cat }</div>";
+    -ctag-ignore: ".nano";
+
+    width: 100%; height: 100%;
+    margin: 0px; padding: 0px;
+    color: #777;
+    font-family: 'Muli', sans-serif;
+	font-weight: light;
+
+
+    * {
+        box-sizing: border-box;
+		background-position: center;
+		background-repeat: no-repeat;
+    }
+
+    body {
+        width: 100%; height: 100%;
+        margin: 0px; padding: 0px;
+    }
+
+    .list_bottom_padding {
+        height: 20px;
+        clear: both;
+    }
+
+}
+
+.expandoBack {
+    width: 30px; height: 100%;
+    float: left;
+    background-image: url('_assets/back_arrow.png');
+    transition: width .3s, background-size .3s;
+    .hand();
+
+    &:hover {
+        width: 70px;
+        background-color: #eee;
+    }
+}
+
+.expandoClose {
+    /*<csstag tag="buttony">
+        <div ...></div>
+    </csstag>*/
+    &:extend(
+        .expandoBack all
+    );
+    background-image: url('_assets/close_arrow.png');
+
+    &:hover {
+        background-image: url('_assets/close_arrow_dark.png');
+    }
+}
+
+
+// @import (reference) "../shared.less";
+
+
+@column_header_height: 60px;
+@column_footer_height: 0px;//60px;
+
+.column {
+    /*<csstag tag="section">
+        <div ...>
+            { .column_Header }
+            { .column_List }
+            { .column_footer }
+        </div>
+    </csstag>*/
+    width: 33.33333%;
+    height: 100%;
+    border-right: 1px solid #eee;
+    position: relative;
+    float: left;
+    background-color: #fff;
+
+    .column_Header {
+        /*<csstag tag="header">
+            <div ...>
+                Header Title
+            </div>
+        </csstag>*/
+        width: 100%;
+        height: @column_header_height;
+        padding: 20px 30px;
+        font-size: 18px;
+        float: left; clear: left;
+    }
+
+    .column_Content {
+        /*<csstag tag="list">
+            <div ...></div>
+        </csstag>*/
+        float: left; clear: left;
+        position: relative;
+        width: 100%;
+        .calc( height , 100% ,
+            -@column_header_height +
+            -@column_footer_height
+        );
+    }
+
+    .column_List {
+        /*<csstag tag="list">
+            <div class="column_List">
+                { .column_List_Row }
+                { .column_List_Row }
+                { .column_List_Row }
+                { .column_List_Row }
+            </div>
+        </csstag>*/
+        &:extend(
+            .column
+            .column_Content
+        );
+        overflow: auto; overflow-x: hidden;
+        padding: 0px 0px;
+
+        .column_ListBody {
+            /*<csstag tag="list">
+                <div ...>
+                </div>
+            </csstag>*/
+            // Considered states...
+            &.nano .nano-content {
+                // padding: 0px 20px;
+            }
+            &.nano .nano-pane   {
+                background: none;
+                margin: 0px 0px;
+                margin-right: 2px;
+                margin-bottom: 6px;
+                border-radius: 50%;
+            }
+            &.nano .nano-slider { background: #ddd; }
+
+            &.no_header {
+                height: 100%;
+                transition: height .1s;
+            }
+        }
+
+        .column_List_Row {
+            /*<csstag tag="list_row">
+                <div ...>
+                    { .column_rowTitle }
+                <div>
+            </csstag>*/
+            float: left; clear: left;
+            height: 40px;
+            .hand();
+            padding: 0px 30px;
+            width: 100%;
+
+            &:hover {
+                background-color: #eee;
+            }
+
+            .column_rowTitle {
+                /*<csstag tag="title">
+                    <div ...>
+                        Column Title
+                        { .column_typeBox }
+                    </div>
+                </csstag>*/
+                position: relative;
+                width: 100%;
+                height: 100%;
+                padding-top: 8px;
+                font-size: 14px;
+                border-bottom: 1px solid #eee;
+                overflow: hidden;
+
+                .column_typeBox {
+                    /*<csstag tag="container">
+                        <div ...>
+                            { .typeIcon }
+                        </div>
+                    </csstag>*/
+                    position: absolute;
+                    right: 0px; top: 0px;
+                    width: 15px; height: 39px;
+                }
+
+                .column_rowTotal {
+                    /*<csstag tag="row_item,cell">
+                        <div ...>33</div>
+                    </div>*/
+                    position: absolute;
+                    right: 0px; top: 0px;
+                    padding-top: 12px;
+                    padding-right: 12px;
+                    font-size: 12px;
+                    color: #999;
+                    width: 30px; height: 39px;
+                    text-align: right;
+                }
+            }
+
+
+        }
+    }
+
+    .column_footer {
+        /*<csstag tag="visualization,footer">
+            <div ...></div>
+        </csstag>*/
+        float: left; clear: left;
+        width: 100%;
+        height: @column_footer_height;
+        background-color: #fff;
+        border-top: 1px solid #eee;
+    }
+}
+
+
+.typeIcon {
+	/*<csstag tag="visualization">
+		<div ...>
+			{ .tagged_incomplete_icon }
+			{ .extendedIcon }
+		</div>
+	</csstag>*/
+	width: 16px; height: 16px;
+	position: absolute;
+	left: 50%; top: 50%;
+	margin-top: -8px;
+	margin-left: -8px;
+
+	.extendedIcon {
+		/*<csstag tag="visualization">
+			<div ...>
+				{ .extendedIcon_content }
+			</div>
+		</csstag>*/
+		width: 100%; height: 50%;
+		position: absolute;
+		left: 0px; top: 50%;
+		overflow: hidden;
+
+		.extendedIcon_content {
+			/*<csstag tag="visualization">
+				<div ...></div>
+			</csstag>*/
+			width: 100%; height: 200%;
+			border-radius: 50%;
+			position: absolute;
+			top: -100%; left: 0px;
+			border: 3px solid #111;
+		}
+	}
+
+	.extendeeIcon {
+		/*<csstag tag="visualization">
+			<div ...>
+				{ .extendeeIcon_content }
+			</div>
+		</csstag>*/
+		width: 100%; height: 50%;
+		position: absolute;
+		left: 0px; top: 0px;
+		overflow: hidden;
+
+		.extendeeIcon_content {
+			/*<csstag tag="visualization">
+				<div ...></div>
+			</csstag>*/
+			width: 100%; height: 200%;
+			border-radius: 50%;
+			position: absolute;
+			top: 0px; left: 0px;
+			border: 3px solid #ccc;
+		}
+	}
+
+	.type_icon {
+		/*<csstag tag="visualization">
+			<div ...></div>
+		</csstag>*/
+		width: 6px; height: 6px;
+		border-radius: 50%;
+		position: absolute;
+		left: 5px; top: 5px;
+	    background-color: #000;
+	}
+
+	.tagged_icon {
+		-ctag-tag: "visualization";
+		-ctag-example: "...";
+
+		&:extend(
+			.typeIcon
+			.type_icon
+		);
+		background-color: @csstagged_tagged_rule_color;
+
+		&.on {
+			width: 300px;
+		}
+	}
+
+	.tagged_incomplete_icon {
+		-ctag-tag: "visualization";
+		-ctag-example: "...";
+
+		&:extend(
+			.typeIcon
+			.type_icon
+		);
+
+		border: 1px solid @csstagged_tagged_rule_color;
+	    background-color: transparent;
+
+		&.wide {
+			width: 400px;
+		}
+	}
+
+	.rule_icon {
+		-ctag-tag: "visualization";
+		-ctag-example: "...";
+
+		&:extend(
+			.typeIcon
+			.type_icon
+		);
+		background-color: @csstagged_simple_rule_color;
+	}
+
+	.dup_icon {
+		-ctag-tag: "visualization";
+		-ctag-example: "...";
+
+		&:extend(
+			.typeIcon
+			.type_icon
+		);
+		background-color: @csstagged_duplicate_color;
+	}
+}
+
+
+/*
+Variables
+*/
+@csstagged_tagged_rule_color : #79E1DA;
+@csstagged_simple_rule_color : #FFE29B;
+@csstagged_duplicate_color : #FF8990;
+
+/*
+Mixin's
+*/
+.calc ( @prop , @percent: 100%  , @diff: 0px ) {
+	@{prop} : calc( @percent ~'+' @diff );
+}
+.hand() {
+	cursor: pointer;
+	cursor: hand;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.unhand() {
+	cursor: default;
+}
+
+
+//PHI (yeah, that's not really phi)
+@phi: 61.803398%;
+@phi_rec: 161.8033%;
+@phi_inv: 100 - ( @phi );
+
+@phi-phi: @phi * .618033;
+@phi-phinv: @phi * .381967;
+
+@phi-phi-phi: @phi * .618033 * .618033;
+@phi-phi-phinv: @phi * .618033 * .381967;
+
+@phi-phinv-phi: @phi * .381967 * .618033;
+@phi-phinv-phinv: @phi * .381967 * .381967;
+
+@phinv-phi: @phi_inv * .618033;
+@phinv-phinv: @phi_inv * .381967;
+
+@phinv-phi-phi: @phi_inv * .618033 * .618033;
+@phinv-phi-phinv: @phi_inv * .618033 * .381967;
+
+@phinv-phinv-phi: @phi_inv * .381967 * .618033;
+@phinv-phinv-phinv: @phi_inv * .381967 * .381967;
+
+
+//FROM BOOTSTRAP
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Extra small screen / phone
+//** Deprecated `@screen-xs` as of v3.0.1
+@screen-xs:                  480px;
+
+// Small screen / tablet
+@screen-sm-min:              768px;
+
+// Medium screen / desktop
+@screen-md-min:              992px;
+
+// Large screen / wide desktop
+@screen-lg-min:              1200px;
+
+
+// So media queries don't overlap when required, provide a maximum
+@screen-xs-max:              (@screen-sm-min - 1);
+@screen-sm-max:              (@screen-md-min - 1);
+@screen-md-max:              (@screen-lg-min - 1);
+
+
+// @import (reference) "../../Shared/shared.less";
+
+.statDetails {
+    /*<csstag tag="page">
+        <div ...>
+            { .statDetails_columnList }
+            { .statDetails_columnExplanation }
+        </div>
+    </csstag>*/
+    width: 66.66666%;
+    .calc( height , 100% , -90px );
+    position: absolute;
+    top: 0px;//110px;
+    right: 0px;
+    background-color: #555;//rgba( 0,0,0,.9);
+    z-index: 1000;
+    color: #ddd;
+
+    .statDetails_column {
+        /*<csstag tag="column">
+            <div ...></div>
+        </csstag>*/
+        width: 50%; height: 100%;
+        padding: 14px 0px;
+        float: left;
+    }
+
+    .statDetails_columnList {
+        /*<csstag tag="column">
+            <div ...>
+                { .statDetails_sectionHeader }
+                { .statDetails_row }
+                { .statDetails_row }
+                { .statDetails_row }
+            </div>
+        </csstag>*/
+        &:extend(
+            .statDetails
+            .statDetails_column
+        );
+
+        // Considered states...
+        &.nano .nano-content { padding: 20px; }
+        &.nano .nano-pane   {
+            background: none;
+            margin: 10px 0px;
+            margin-right: 4px;
+        }
+        &.nano .nano-slider { background: #777; }
+
+        .statDetails_row {
+            /*<csstag tag="row">
+                <div ...>
+                    rule item
+                    { .statDetails_typeIcon }
+                </div>
+            </csstag>*/
+            width: 100%; height: 34px;
+            padding: 0px 30px;
+            padding-top: 4px;
+            position: relative;
+            .hand();
+
+            &:hover {
+                background-color: rgba( 0,0,0,.5);
+            }
+
+            .statDetails_typeIcon {
+                /*<csstag tag="icon_positioner">
+                    <div ...>
+                        { .typeIcon }
+                    </div>
+                </csstag>*/
+                position: absolute;
+                right: 40px; top: 0px;
+                height: 100%; width: 6px;
+            }
+        }
+
+        .statDetails_sectionHeader {
+            /*<csstag tag="header">
+                <div ...>
+                    rule item
+                    { .statDetails_typeIcon }
+                </div>
+            </csstag>*/
+            &:extend(
+                .statDetails
+                .statDetails_columnList
+                .statDetails_row
+            );
+            font-size: 12px;
+            text-align: left;
+            font-style: italic;
+            font-weight: light;
+            padding: 0px 0px;
+            padding-top: 6px;
+            border-bottom: 1px solid #777;
+            .calc( width , 100% , -60px );
+            margin: 0px 30px;
+            // margin-top: 20px;
+        }
+    }
+
+    .statDetails_columnExplanation {
+        /*<csstag tag="column">
+            <div ...>
+                { .statDetails_divider }
+                { .statDetails_explanation }
+            </div>
+        </csstag>*/
+        &:extend(
+            .statDetails
+            .statDetails_column
+        );
+
+        .statDetails_divider {
+            /*<csstag tag="divider">
+                <div ...></div>
+            </csstag>*/
+            .calc( height , 100% , -60px );
+            width: 1px;
+            background-color: #555;
+            position: absolute;
+            top: 30px; left: 50%;
+        }
+
+        .statDetails_explanation {
+            /*<csstag tag="column">
+                <div ...>
+                    { .statDetails_h1 }
+                    { .statDetails_p }
+                </div>
+            </csstag>*/
+
+            .statDetails_h1 {
+                /*<csstag tag="h1">
+                    <div ...>Title</div>
+                </csstag>*/
+                font-weight: normal;
+                font-size: 20px;
+                padding: 0px;
+                margin: 0px;
+                margin: 0px 30px;
+                margin-bottom: 20px;
+                padding-top: 2px;
+            }
+
+
+            .statDetails_p {
+                /*<csstag tag="p">
+                    <div ...>Some text that describes what's going on.</div>
+                </csstag>*/
+                font-size: 13px;
+                margin: 0px 30px;
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .statDetails_close {
+        /*<csstag tag="button,close">
+            <div ...></div>
+        </csstag>*/
+        width: 60px; height: 60px;
+        position: absolute;
+        right: 0px; top: 0px;
+        background-image: url("_assets/close_light.png");
+        .hand();
+        &:hover {
+            background-color: rgba( 0,0,0,.5);
+        }
+    }
+}
+
+
+// @import (reference) "../Shared/shared.less";
+
+.cssComp {
+	/*<csstag tag="app"
+		description="The root app">
+        <div class="cssComp">
+			<cssComp_columns />
+        </div>
+    </div>*/
+    height: 100%;
+
+    .cssComp_columns {
+		/*<csstag tag="section,column"
+			description="Defines the core idea of
+				columns">
+	        <div class="cssComp_columns"></div>
+	    </div>*/
+		position: relative;
+		z-index: 200;
+        .calc( height , 100% , -90px );
+    }
+}
+
+
+// @import (reference) "../Shared/shared.less";
+// @import (reference) "../Shared/Column/Column.less";
+
+
+.columnComps {
+    /*<csstag tag="section">
+        <div ...>
+            { .column_Header }
+            { .column_List }
+            { .column_footer }
+        </div>
+    </csstag>*/
+    &:extend( .column all );
+}
+
+
+// @import (reference) "../Shared/shared.less";
+// @import (reference) "../Shared/DepthChart/DepthChart.less";
+// @import (reference) "../Shared/Column/Column.less";
+
+@overall_score_height: 60px;
+@tile_circle_diameter : 84px;
+
+.columnStats {
+    /*<csstag
+        tag="section,column"
+        extend="column">
+        <div ...>
+            { .columnStats_graph }
+            { .columnStats_content }
+            { .columnStats_depthChart }
+        </div>
+    </csstag>*/
+    &:extend( .column );
+
+    .columnStats_content {
+        /*<csstag
+            tag="section,content">
+            <div ...>
+                { .columnStats_tile }
+                { .columnStats_tile }
+                { .columnStats_tile }
+                { .columnStats_tile }
+            </div>
+        </csstag>*/
+        &:extend(
+            .column
+            .column_Content
+        );
+        .calc( height ,
+            70% , -( @overall_score_height/2 + 10px ) );
+        float: left; clear: left;
+        padding: 20px 30px;
+
+        .columnStats_tile {
+            /*<csstag
+                tag="section,tile">
+                <div ...>
+                    { .tile_graph }
+                    { .tile_label }
+                </div>
+            </csstag>*/
+            width: 50%; height: 50%;
+            float: left;
+            position: relative;
+            background-color: #fff;
+            z-index: 10;
+            .hand();
+
+            &:hover {
+                //background-color: #eee;
+                //border: 3px solid #eee;
+                box-shadow: 0px 0px 6px rgba(  0,0,0,.1 );
+                z-index: 1000;
+            }
+
+            &.tagged_rules {
+                /*<csstag tag="tile"></csstag>*/
+                body.s_statDetails_tagged & {
+                    border: 1px solid #eee;
+                    z-index: 900;
+                    &:hover {
+                        box-shadow: none;
+                    }
+                }
+            }
+            &.complete_tags {
+                /*<csstag tag="tile"></csstag>*/
+                body.s_statDetails_complete & {
+                    border: 1px solid #eee;
+                    z-index: 900;
+                    &:hover {
+                        //box-shadow: none;
+                    }
+                }
+            }
+
+            &.duplicates {
+                /*<csstag tag="tile"></csstag>*/
+                body.s_statDetails_duplicates & {
+                    border: 1px solid #eee;
+                    z-index: 900;
+                    &:hover {
+                        box-shadow: none;
+                    }
+                }
+            }
+
+            .tile_graph {
+                /*<csstag
+                    tag="graph">
+                    <div ...>
+                        { .tile_circle }
+                    </div>
+                </csstag>*/
+                width: 100%;
+                .calc( height , 100% , -28px );
+                position: absolute;
+                top: 0px; left: 0px;
+                font-size: 30px;
+                text-align: center;
+
+                .tile_circle {
+                    /*<csstag
+                        tag="graph">
+                        <div ...>43%</div>
+                    </csstag>*/
+                    position: absolute;
+                    .calc( top , 50% , -@tile_circle_diameter/2 );
+                    .calc( left , 50% , -@tile_circle_diameter/2 );
+                    width: @tile_circle_diameter;
+                    height: @tile_circle_diameter;
+                    transition: all .3s;
+
+                    &.go {
+                        font-size: 38px;
+                    }
+
+                    body.s_go & {
+                        color: #0f0;
+                    }
+                }
+            }
+
+
+
+            .tile_label {
+                -ctag-tag: "graph";
+                -ctag-example: "...Rule of Dogs{ .columnStats_typeBox }";
+                position: absolute;
+                left: 0px;
+                width: 100%;
+                text-align: center;
+                font-size: 10px;
+                bottom: 50%;
+                margin-bottom: -(( @tile_circle_diameter/2 ) + 4px );
+
+                .columnStats_typeBox {
+                    -ctag-tag: "box";
+                    -ctag-example: "...{ .tagged_incomplete_icon }";
+
+                    position: absolute;
+                    top: 0px; left: 28px;
+                    width: 20px; height: 18px;
+                }
+            }
+        }
+
+        .extendable_tile {
+            &:extend(
+                .columnStats
+                .columnStats_content
+                .columnStats_tile all
+            );
+
+            body.s_statDetails_extendable & {
+                border: 1px solid #eee;
+                z-index: 900;
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+
+    .columnStats_depthChart {
+        -ctag-tag: "container";
+        -ctag-example: "...";
+
+        .calc( height , 30% , -@overall_score_height/2 );
+        .calc( width , 100% , -60px );
+        float: left; clear: left;
+        padding: 10px 30px;
+        margin: 0px 30px;
+        border: 1px solid #fff;
+        .hand();
+
+        &:hover {
+            box-shadow: 0px 0px 6px rgba(  0,0,0,.1 );
+        }
+
+        body.s_statDetails_depth & {
+            border: 1px solid #eee;
+            z-index: 900;
+
+            &:hover {
+                //box-shadow: none;
+            }
+        }
+    }
+
+    .columnStats_graph {
+        /*<csstag
+            tags="section,footer">
+            ...{ .column_logo }
+        </csstag>*/
+        position: relative;
+        width: 100%; height: @overall_score_height;
+        float:left; clear: left;
+
+        .column_logo {
+            -ctag-tag: "placeholder";
+            -ctag-example: "...{ .column_logo_img }";
+
+            @column_logo_width: 179px * .8;
+            @column_logo_height: 38px * .8;
+
+            position: absolute;
+            left: 30px;
+            top: 26px;
+
+            .column_logo_img {
+                -ctag-tag: "logo,graphic";
+                -ctag-example: "...";
+
+                width: @column_logo_width;
+                height: @column_logo_height;
+                // background-size: 50%;
+                background-size: contain;
+                background-image: url("_assets/logo_h_small@2x.png");
+            }
+        }
+    }
+}
+
+
+// @import (reference) "../shared.less";
+// // @import (reference) "../../ColumnStats/ColumnStats.less";
+
+.depthChart {
+    /*<csstag tag="visualization">
+        <div ...>
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_Column }
+            { .depthChart_title }
+        </div>
+    </csstag>*/
+    width: 100%; height: 100%;
+    position: relative;
+
+    .depthChart_title {
+        /*<csstag tag="label">
+            <div ...>
+                chart of bars...
+            </div>
+        </csstag>*/
+        width: 100%;
+        font-size: 10px;
+        color: #999;
+        text-align: center;
+        position: absolute;
+        bottom: 0px; left: 0px;
+    }
+
+    .depthChart_Column {
+        /*<csstag tag="visualization">
+            <div ...>
+                { .depthChart_Bar }
+            </div>
+        </csstag>*/
+        width: 100% / 7; height: 100%;
+        float: left;
+        position: relative;
+
+        .depthChart_Bar {
+            /*<csstag tag="visualization">
+                <div ...>
+                    { .depthChart_RulesBar }
+                    { .depthChart_CompsBar }
+                </div>
+            </csstag>*/
+            .calc( width , 100% , -10px );
+            .calc( height , 100% , -40px );
+            margin: 0px auto;
+            margin-top: 20px;
+            margin-bottom: 2px;
+            position: relative;
+
+            .depthChart_CompsBar,
+            .depthChart_RulesBar
+            {
+                width: 100%;
+                position: absolute;
+                bottom: 0px; left: 0px;
+            }
+
+            .depthChart_CompsBar {
+                /*<csstag tag="visualization,bar">
+                    <div ... style='height: 50%;'></div>
+                </csstag>*/
+                background-color: @csstagged_tagged_rule_color;
+            }
+
+            .depthChart_RulesBar {
+                /*<csstag tag="visualization,bar">
+                    <div ... style='height: 100%;'>
+                        { .depthChart_label }
+                    </div>
+                </csstag>*/
+                background-color: @csstagged_simple_rule_color;
+
+                .depthChart_label {
+                    /*<csstag tag="label">
+                        <div ...>44</div>
+                    </csstag>*/
+                    position: absolute;
+                    top: -18px; left: 0px;
+                    width: 100%;
+                    text-align: center;
+                    font-size: 10px;
+                }
+            }
+
+        }
+    }
+
+}
+
+
+
+// @import (reference) "../../../Shared/shared.less";
+// @import (reference) "../../Shared/StatDetailsShared.less";
+
+.completeDetails {
+    /*<csstag tag="page">
+        <div ...></div>
+    </csstag>*/
+    &:extend(
+        .statDetails all
+    );
+
+}
+
+
+// @import (reference) "../../../Shared/shared.less";
+// @import (reference) "../../Shared/StatDetailsShared.less";
+
+.depthDetails {
+    /*<csstag tag="page">
+        <div ...></div>
+    </csstag>*/
+    &:extend(
+        .statDetails all
+    );
+
+}
+
+
+// @import (reference) "../../../Shared/shared.less";
+// @import (reference) "../../Shared/StatDetailsShared.less";
+
+.duplicateDetails {
+    /*<csstag tag="page">
+        <div ...></div>
+    </csstag>*/
+    &:extend(
+        .statDetails all
+    );
+
+    .statDetails_column {
+        height: 100px;
+    }
+}
+
+
+// @import (reference) "../../../Shared/shared.less";
+// @import (reference) "../../Shared/StatDetailsShared.less";
+
+.extendableDetails {
+    /*<csstag tag="page">
+        <div ...></div>
+    </csstag>*/
+    &:extend(
+        .statDetails all
+    );
+}
+
+
+// @import (reference) "../../../Shared/shared.less";
+// @import (reference) "../../Shared/StatDetailsShared.less";
+
+.taggedDetails {
+    /*<csstag tag="page">
+        <div ...>
+            { .statDetails_columnList }
+            { .statDetails_columnExplanation }
+       </div>
+    </csstag>*/
+    &:extend(
+        .statDetails all
+    );
+
+    .statDetails_column {
+        height: 100px;
+    }
+}
+
+
+// @import (reference) "../Shared/shared.less";
+// @import (reference) "../Shared/Column/Column.less";
+
+.columnType {
+    &:extend( .column all );
+
+}
+
+
+// @import (reference) "../../Shared/shared.less";
+// @import (reference) "../../Shared/Column/Column.less";
+
+.dog {
+    /*<csstag tag="example">
+        <div ...></div>
+    </csstag>*/
+    width: 10px;
+    .tail {
+        color: pink;
+        > .fur {
+            height: 10px;
+            .hair {
+                color: purple;
+                > .flea {
+                    text-decoration-style: dashed;
+                    .flea_eye {
+                        height: 1000px;
+                        .poop {
+                            color: #f00;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.cat {
+    /*<csstag tag="example">
+        <div ...>
+            { .spit }
+        </div>
+    </csstag>*/
+
+    &:extend(
+        .dog all
+    );
+    width: 11px;
+
+    /*.fur {
+        color: pink;
+    }*/
+
+    .spit {
+        /*<csstag tag="example">
+            <div ...>THERE</div>
+        </csstag>*/
+        color: yellow;
+    }
+}
+
+.sloth {
+    /*<csstag tag="example">
+        <div ...>
+            { .sloth .spit }
+        </div>
+    </csstag>*/
+
+    > .spit {
+        /*<csstag tag="example">
+            <div ...>HI</div>
+        </csstag>*/
+        color: brown;
+    }
+}
+
+
+// @import (reference) "../Shared/shared.less";
+
+.overallVisual {
+    /*<csstag tag="visualization"
+                dependencies="html">
+        <div ...>
+            { .cssp_OverallVisual_taggedRules }
+        </div>
+    </csstag>*/
+    width: 100%;
+    height: 90px;
+    border-top: 1px solid #d9d9d9;
+    padding-left: 30px; padding-top: 30px;
+    position: relative;
+    z-index: 200;
+
+    .cssp_OverallVisual_taggedRules {
+        /*<csstag tag="section">
+            <div ...>
+                { .overallVisual_taggedBar }
+                { .overallVisual_rulesBar }
+            </div>
+        </csstag>*/
+        .calc( width , 100% , -30px );
+        position: relative;
+
+        .overallVisual_bar {
+            /*<csstag tag="visualization">
+                <div ... style="width: 54%;">
+                    { .overallBar_total }
+                    { .overallBar_percent }
+                    { .label }
+                </div>
+            </csstag>*/
+            height: 30px; float: left;
+            padding-top: 2px;
+            position: relative;
+            z-index: 200;
+            color: #333;
+            background-color: #ddd;
+
+            .overallBar_total {
+                /*<csstag tag="label">
+                    <div ...>33</div>
+                </csstag>*/
+                font-size: 16px;
+                padding-right: 12px;
+                float: right;
+            }
+            .overallBar_percent {
+                /*<csstag tag="label">
+                    <div ...>44%</div>
+                </csstag>*/
+                font-size: 12px;
+                padding-left: 10px;
+                padding-top: 4px;
+                padding-right: 10px;
+                float: right;
+            }
+        }
+
+        .overallVisual_taggedBar {
+            /*<csstag tag="visualization">
+                <div ... style="width: 54%;">
+                    { .tagged_total }
+                    { .tagged_percent }
+                    { .label }
+                </div>
+            </csstag>*/
+            &:extend(
+                .overallVisual
+                .cssp_OverallVisual_taggedRules
+                .overallVisual_bar
+            );
+            background-color: @csstagged_tagged_rule_color;
+
+            .tagged_total {
+                /*<csstag tag="label">
+                    <div ...>44</div>
+                </csstag>*/
+                &:extend(
+                    .overallVisual
+                    .cssp_OverallVisual_taggedRules
+                    .overallVisual_bar
+                    .overallBar_total
+                );
+            }
+            .tagged_percent {
+                /*<csstag tag="label">
+                    <div ...>22%</div>
+                </csstag>*/
+                &:extend(
+                    .overallVisual
+                    .cssp_OverallVisual_taggedRules
+                    .overallVisual_bar
+                    .overallBar_percent
+                );
+            }
+
+            .label {
+                /*<csstag tag="label">
+                    <div ...>tagged</div>
+                </csstag>*/
+                position:absolute;
+                right: 0px; bottom: -15px;
+                padding-right: 3px;
+                padding-top: 0px;
+                height: 14px;
+                color: #bbb;
+                font-size: 12px;
+                background-color: #fff;
+                border-right: 1px solid #ddd;
+            }
+        }
+
+        .overallVisual_rulesBar {
+            /*<csstag tag="visualization">
+                <div ... style="width: 46%;">
+                    { .rules_total }
+                    { .rules_percent }
+                    { .label }
+                </div>
+            </csstag>*/
+            &:extend(
+                .overallVisual
+                .cssp_OverallVisual_taggedRules
+                .overallVisual_bar
+            );
+            background-color: @csstagged_simple_rule_color;
+
+            .rules_total {
+                /*<csstag tag="label">
+                    <div ...>122</div>
+                </csstag>*/
+                &:extend(
+                    .overallVisual
+                    .cssp_OverallVisual_taggedRules
+                    .overallVisual_bar
+                    .overallBar_total
+                );
+                float: left;
+                padding-left: 12px;
+                padding-right: 0px;
+            }
+            .rules_percent {
+                /*<csstag tag="label">
+                    <div ...>23%</div>
+                </csstag>*/
+                &:extend(
+                    .overallVisual
+                    .cssp_OverallVisual_taggedRules
+                    .overallVisual_bar
+                    .overallBar_percent
+                );
+                float: left;
+            }
+        }
+    }
+
+
+
+}
+
+
+// @import (reference) "../../Shared/shared.less";
+// @import (reference) "../RuleDetail.less";
+
+.ruleCSS {
+    /*<csstag tag="page">
+        <div ... style="display: block;">
+            { .ruleDetail_code }
+        </div>
+    </csstag>*/
+    &:extend(
+        .ruleDetail_content
+    );
+    z-index: 100;
+
+    /*@media ( max-width: @screen-lg-min ) {
+        .calc( width , 100% , 100px );
+    }*/
+
+    .ruleDetail_textarea {
+        /*<csstag tag="content">
+            <textarea ...>
+                <hi>there</hi>
+            </textarea>
+        </csstag>*/
+        width: 100%;
+        height: 300px;
+        background-color: #000;
+        color: #eee;
+        padding: 20px;
+        font-family: 'Muli', sans-serif;
+    	font-weight: extralight;
+        border: 0px;
+        resize: none;
+    }
+
+    .ruleDetail_code {
+        /*<csstag tag="content">
+            <div ...>
+                { .ruleDetail_title }
+                { .ruleDetail_pre }
+            </div>
+        </csstag>*/
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        overflow: auto;
+        padding: 30px 30px;
+
+        .ruleDetail_title {
+            /*<csstag tag="code">
+                <div ...>
+                    Pseudo Selectors
+                    { .ruleDetail_titleButton }
+                </div>
+            </csstag>*/
+            width: 100%;
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+            color: #333;
+            padding-top: 20px;
+            clear: both;
+            position: relative;
+
+            .ruleDetail_titleButton {
+                /*<csstag tag="button">
+                    <div ...>React</div>
+                </csstag>*/
+                position: absolute;
+                right: 10px;
+                bottom: 0px;
+                .hand();
+            }
+        }
+
+        .ruleDetail_pre {
+            /*<csstag tag="code">
+<pre ...>
+a [
+    color: #f00;
+]
+</pre>
+            </csstag>*/
+            width: 100%;
+            font-family: "Muli", sans-serif;
+            float: left;
+            white-space: pre-wrap;       /* CSS 3 */
+            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        }
+    }
+}
+
+
+// @import (reference) "../Shared/shared.less";
+
+.ruleDetail {
+    /*<csstag tag="page,modal">
+        <div ...>
+            { .ruleDetail_header }
+            { .ruleCSS }
+            { .ruleDetailNav }
+        </div>
+    </csstag>*/
+    width: 100vw; height: 100vh;
+    position: absolute;
+    top: 0px; left: 0px;
+    z-index: 1100;
+    overflow: hidden;
+    background-color: #fff;
+    display: none;
+
+    body.s_tree & {
+        display: block;
+    }
+    body.s_tag & {
+        display: block;
+    }
+}
+
+.ruleDetail_content {
+    /*<csstag tag="content">
+        <div ...></div>
+    </csstag>*/
+    // width: @phi;
+    .calc( width , 100% , -300px );
+    .calc( height , 100% , -70px );
+    position: absolute;
+    top: 70px; right: 0px;
+    background-color: #fff;
+}
+
+.ruleDetail_header {
+    /*<csstag tag="header">
+        <div ...>
+            { .ruleDetail_back }
+            { .ruleDetail_title }
+            { .ruleDetail_headerNav }
+        </div>
+    </csstag>*/
+    width: 100%; height: 70px;
+    border-bottom: 1px solid #eee;
+
+
+
+    .ruleDetail_title {
+        /*<csstag tag="container">
+            <div ...>
+                { .ruleDetail_titleText }
+                { .ruleDetail_iconBox }
+            </div>
+        </csstag>*/
+        width: 300px;
+        height: 100%;
+        position: relative;
+        float: left;
+        transition: width .3s;
+
+        /*@media ( max-width: @screen-lg-min ) {
+            width: 120px;
+        }*/
+
+        .ruleDetail_close {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            width: 70px; height: 100%;
+            float: left;
+            background-image: url('_assets/close_arrow.png');
+            .hand();
+            transition: width .3s;
+
+            &:hover {
+                background-color: #eee;
+                background-image: url('_assets/close_arrow_dark.png');
+            }
+
+            /*@media ( max-width: @screen-lg-min ) {
+                width: 60px;
+            }*/
+        }
+
+        .ruleDetail_showTree {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            width: 70px; height: 100%;
+            float: right;
+            background-image: url('_assets/show_tree.png');
+            .hand();
+            display: none;
+            transition: width .3s;
+
+            &:hover {
+                background-color: #eee;
+                background-image: url('_assets/show_tree_dark.png');
+            }
+
+            body.s_detailTab & {
+                display: block;
+            }
+
+            /*@media ( max-width: @screen-lg-min ) {
+                width: 60px;
+            }*/
+        }
+
+        .ruleDetail_titleText {
+            /*<csstag tag="title">
+                <div ...>
+                    A Title
+                </div>
+            </csstag>*/
+            float: left;
+            padding: 16px 0px;
+            padding-left: 0px;
+            height: 100%;
+            font-size: 14px;
+            color: #555;
+            .hand();
+
+            &:hover {
+                background-color: #eee;
+            }
+        }
+
+        .ruleDetail_iconBox {
+            /*<csstag tag="container,nav_item">
+                <div ...>
+                    <div class='rule_icon'></div>
+                </div>
+            </csstag>*/
+            width: 50px; height: 100%;
+            position: relative; float: left;
+        }
+    }
+
+    .ruleDetail_headerNav {
+        /*<csstag tag="nav">
+            <div ...>
+                { .ruleDetail_item_css }
+                { .ruleDetail_item_overview }
+                { .ruleDetail_item_example }
+                { .ruleDetail_back }
+            </div>
+        </csstag>*/
+        float: right; clear: right;
+        width: 410px; height: 100%;
+        background-color: #fff;
+        position: relative;
+        display: none;
+
+        body.s_detailTab & {
+            display: block;
+        }
+
+        @item_color: #ccc;
+        @item_selected: #000;
+        .ruleDetail_item {
+            /*<csstag tag="nav_item">
+                <div ...>
+                    link_title
+                </div>
+            </csstag>*/
+            color: @item_color; height: 100%;
+            padding-top: 24px;
+            .calc( width , 33.3333% , -70px/3 );
+            float: right; text-align: center;
+            .hand();
+
+            &:hover {
+                color: @item_selected;
+                border-bottom: 3px solid #ccc;
+            }
+        }
+        .ruleDetail_item_overview {
+            /*<csstag tag="nav_item">
+                <div ...>
+                    overview
+                </div>
+            </csstag>*/
+            &:extend(
+                .ruleDetail_header
+                .ruleDetail_headerNav
+                .ruleDetail_item all
+            );
+            body.s_detailTab_overview & {
+                color: @item_selected;
+                border-bottom: 3px solid #555;
+            }
+        }
+        .ruleDetail_item_css {
+            /*<csstag tag="nav_item">
+                <div ...>
+                    overview
+                </div>
+            </csstag>*/
+            &:extend(
+                .ruleDetail_header
+                .ruleDetail_headerNav
+                .ruleDetail_item all
+            );
+
+            body.s_detailTab_code & {
+                color: @item_selected;
+                border-bottom: 3px solid #555;
+            }
+        }
+        .ruleDetail_item_example {
+            /*<csstag tag="nav_item">
+                <div ...>
+                    example
+                </div>
+            </csstag>*/
+            &:extend(
+                .ruleDetail_header
+                .ruleDetail_headerNav
+                .ruleDetail_item all
+            );
+            body.s_detailTab_example & {
+                color: @item_selected;
+                border-bottom: 3px solid #555;
+            }
+        }
+
+        .ruleDetail_back {
+            /*<csstag tag="button">
+                <div ...></div>
+            </csstag>*/
+            width: 70px; height: 100%;
+            background-image: url("_assets/close.png");
+            background-color: #fff;
+            .hand();
+            margin-right: 0px;
+            float: right;
+            transition: all .2s;
+
+            &:hover {
+                background-color: #eee;
+            }
+        }
+    }
+}
+
+
+// @import (reference) "../../Shared/shared.less";
+
+.ruleDetailNav {
+    /*<csstag tag="navigation">
+        <div ...>
+            { .ruleDetailNav_title }
+        </div>
+    </csstag>*/
+    height: 69px;
+    border-left: 1px solid #eee;
+    float: left;
+    position: absolute;
+    top: 0px;
+    left: 299px;
+    transition: left .3s;
+    z-index: 200;
+    background-color: #fff;
+    display: none;
+
+    body.s_detailTab & {
+        display: block;
+    }
+
+    /*@media ( max-width: @screen-lg-min ) {
+        left: 119px;
+    }*/
+
+    .ruleDetailNav_title {
+        /*<csstag tag="title">
+            <div ...>rule_name</div>
+        </csstag>*/
+        width: 100%;
+        float: left;
+        height: 70px;
+
+        padding-left: 0px;
+        padding-right: 10px;
+        margin-bottom: 10px;
+        position: relative;
+        overflow: hidden;
+
+        .ruleDetailNav_back {
+            width: 40px; height: 100%;
+            float: left;
+            background-image: url('_assets/back_arrow.png');
+            transition: width .3s;
+            .hand();
+
+            &:hover {
+                width: 60px;
+                background-color: #eee;
+            }
+        }
+
+        .ruleDetailNav_titleText {
+            padding-top: 16px;
+            font-size: 22px;
+            color: #333;
+            float: left;
+            margin-left: 20px;
+        }
+
+        .ruleDetailNav_typeIcon {
+            float: left;
+            width: 16px; height: 100%;
+            position: relative;
+            margin-left: 20px;
+
+            &:hover {
+                background-color: #eee;
+            }
+        }
+    }
+}
+
+
+// @import (reference) "../../Shared/shared.less";
+// @import (reference) "../RuleDetail.less";
+
+.ruleNesting {
+    /*<csstag tag="page">
+    </csstag>*/
+
+    // .calc( width , 100% , -290px );
+    width: 100%;
+    .calc( height , 100% , -70px );
+    float: left;
+    background-color: #fff;
+    padding: 20px;
+    overflow: auto;
+    position: relative;
+    z-index: 200;
+    transition: width .3s;
+    border-right: 1px solid #eee;
+    display: block;
+
+    body.s_detailTab & {
+        width: 300px; // @phi_inv;
+    }
+
+    /*@media ( max-width: @screen-lg-min ) {
+        body.s_detailTab_example &,
+        body.s_detailTab_css & {
+            width: 120px;
+            padding: 10px;
+        }
+    }*/
+
+    .ruleNesting_noChildren {
+        /*<csstag tag="text">
+            <div ...>no children</div>
+        </csstag>*/
+        padding-left: 20px;
+        padding-top: 6px;
+        font-size: 14px;
+    }
+}
+
+
+// @import (reference) "../../Shared/shared.less";
+// @import (reference) "../RuleDetail.less";
+
+@columnOffset: 330px;
+
+@transitionBase: 0.3s;
+@transitionOffset: 0.05s;
+
+.doubleColumnWidth () {
+    //.calc( width , 40vw , -40px/5 * 2 );
+    .calc( width , 50vw , -@columnOffset/2 );
+}
+.columnWidth () {
+    //.calc( width , 20vw , -20px/5 * 2 );
+    .calc( width , 25vw , -@columnOffset/4 );
+}
+.columnWidthLeft () {
+    //.calc( left , 20vw , -20px/5 * 2 );
+    .calc( left , 25vw , -@columnOffset/4 );
+}
+
+.ruleNesting .ruleNestingColumn {
+    /*<csstag
+        tag="column,recursive">
+
+    </csstag>*/
+    .doubleColumnWidth();
+    float: left;
+    font-size: 12px;
+    position: relative;
+    transition: width ( @transitionBase );
+
+    &.no_children {
+        .columnWidth();
+
+        .ruleNestingColumn_children {
+            display: none;
+        }
+    }
+
+    &.first_one {
+        .columnWidth();
+    }
+
+    body.s_detailTab &
+    {
+        // width: 40px;
+        .calc( width , 100% , 0px );
+
+        &.first_one {
+            // width: 20px;
+            .calc( width , 100% , -30px );
+        }
+
+        .ruleNesting_titleText {
+            // display: none;
+        }
+        .ruleNestingColumn_title {
+            // width: 20px;
+            .calc( width , 100% , 0px );
+            transition: width ( -@transitionOffset + @transitionBase );
+        }
+        .ruleNestingColumn_children {
+            // width: 20px;
+            .calc( width , 100% , -20px );
+            clear: left;
+            transition: width ( -@transitionOffset + @transitionBase );
+
+            &.first_one {
+                .calc( width , 100% , -0px );
+            }
+        }
+        .ruleNestingColumn_stackedLine {
+            left: 20px; top: 30px;
+            //.calc( left , 100% , -20px );
+
+            &.first_one {
+                left: 0px;
+                top: 0px;
+            }
+        }
+
+        .ruleNestingColumn_stackedLine {
+            display: block;
+        }
+        .ruleNestingColumn_line {
+            display: none;
+        }
+
+        .ruleNestingColumn_lineCover {
+            display: none;
+        }
+    }
+
+    /*@media ( max-width: @screen-lg-min ) {
+        body.s_detailTab_example &,
+        body.s_detailTab_css &
+        {
+            width: 40px;
+
+            &.first_one {
+                width: 20px;
+            }
+
+            .ruleNesting_titleText {
+                display: none;
+            }
+            .ruleNestingColumn_title,
+            .ruleNestingColumn_children {
+                width: 20px;
+                transition: width ( -@transitionOffset + @transitionBase );
+            }
+            .ruleNestingColumn_stackedLine,
+            .ruleNestingColumn_line {
+                left: 20px;
+
+                &.first_one {
+                    left: 0px;
+                }
+            }
+            .ruleNestingColumn_lineCover {
+                left: 20px;
+            }
+        }
+    }*/
+
+
+    .ruleNestingColumn_stackedLine,
+    .ruleNestingColumn_line {
+        /*<csstag tag="line, graphic">
+            <div ... style="height: 100px;"></div>
+        </csstag>*/
+        width: 1px;
+        position: absolute;
+        .columnWidthLeft();
+        // top: 6px;
+        top: 0px;
+        background-color: #eee;
+        transition: left ( @transitionBase );
+
+        &.first_one {
+            left: -1px;
+        }
+    }
+
+    .ruleNestingColumn_stackedLine {
+        display: none;
+    }
+
+    .ruleNestingColumn_lineCover {
+        width: 5px; height: 6px;
+        background-color: #fff;
+        position: absolute;
+        .columnWidthLeft();
+        top: 0px;
+    }
+
+    .ruleNestingColumn_title {
+        /*<csstag tag="title">
+            <div ...>rule_name</div>
+        </csstag>*/
+        .columnWidth();
+        float: left; clear: left;
+        height: 30px;
+        border-bottom: 1px solid #eee;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        position: relative;
+        overflow: hidden;
+        .hand();
+        transition: width ( @transitionOffset + @transitionBase );
+        color: #999;
+
+        &:hover {
+            background-color: #ddd;
+            color: #222;
+        }
+
+        &.selected {
+            background-color: #eee;
+            color: #000;
+        }
+
+        .ruleNesting_titleText {
+
+        }
+
+        .ruleNesting_typeIcon {
+            right: 4px; top: 0px;
+            width: 20px; height: 30px;
+            position: absolute;
+            // background-color: #fff;
+            left: auto;
+            &:hover {
+                // background-color: #eee;
+            }
+        }
+    }
+    .ruleNestingColumn_children {
+        /*<csstag tag="list">
+        </csstag>*/
+        .columnWidth();
+        float: right; clear: right;
+        transition: width ( @transitionOffset + @transitionBase );
+    }
+}
+
+
+.ruleOverview {
+    /*<csstag tag="page">
+        <div ... style="display: block;"></div>
+    </csstag>*/
+    &:extend(
+        .ruleDetail_content
+    );
+    z-index: 100;
+
+    body.s_detailTab_overview & {
+        display: block;
+    }
+
+    /*@media ( max-width: @screen-lg-min ) {
+        .calc( width , 100% , -100px );
+    }*/
+
+    .ruleOverview_context {
+        /*<csstag
+            tag="row">
+        </csstag>*/
+        padding: 30px;
+        .calc( height , 100% , -30px );
+        width: 100%;
+        float: left;
+        overflow: auto;
+
+        .ruleOverview_subName {
+            /*<csstag
+                tag="text">
+            </csstag>*/
+            float: left; clear: left;
+            height: 30px; width: 100%;
+            padding-top: 8px;
+            font-size: 16px;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            .hand();
+            &:hover {
+                background-color: #eee;
+            }
+        }
+
+        .ruleOverview_stateSubName {
+            &:extend(
+                .ruleOverview
+                .ruleOverview_context
+                .ruleOverview_subName
+            );
+
+            .unhand();
+            &:hover {
+                background-color: none;
+            }
+        }
+
+        .ruleOverview_subTitle {
+            /*<csstag
+                tag="title,text">
+            </csstag>*/
+            &:extend(
+                .ruleOverview
+                .ruleOverview_context
+                .ruleOverview_subName
+            );
+
+            // border-bottom: 1px solid #eee;
+            margin-top: 8px;
+            padding-top: 0px;
+            font-size: 16px;
+            color: #999;
+            padding-left: 0px;
+            border-bottom: 1px solid #eee;
+        }
+
+    }
+}
+
+
+// @import (reference) "../../Shared/shared.less";
+// @import (reference) "../RuleDetail.less";
+
+.rulePreview {
+    /*<csstag tags="page,rulePreview">
+        <div ...>
+            { .rulePreview_stage }
+            { .rulePreview_nav }
+        </div>
+    </csstag>*/
+    &:extend(
+        .ruleDetail_content
+    );
+    z-index: 300;
+
+    /*@media ( max-width: @screen-lg-min ) {
+        .calc( width , 100% , -120px );
+    }*/
+
+    .rulePreview_stage {
+        /*<csstag tags="page,rulePreview">
+            <div ...>
+                { .rulePreview_iframe }
+            </div>
+        </csstag>*/
+        width: 100%;
+        .calc( height , 100% , -40px );
+        background-color: #fff;
+        position: absolute;
+        left: 0px; top: 0px;
+
+        .rulePreview_iframe {
+            /*<csstag tags="page,rulePreview">
+                <iframe style="border:none;" ...></iframe>
+            </csstag>*/
+            width: 100%; height: 100%;
+            background-color: #eee;
+        }
+    }
+
+    .rulePreview_nav {
+        -ctag-tag: "navigation";
+        -ctag-example: "...{ .rulePreview_navLabel }{ .rulePreview_state }{ .rulePreview_stateApplied }{ .rulePreview_toggleBGColor }{ .rulePreview_outline }";
+
+        position: absolute;
+        width: 100%; height: 40px;
+        background-color: #fff;
+        border-top: 1px solid #eee;
+        left: 0px; bottom: 0px;
+        z-index: 1000;
+
+        /*@media ( max-width: @screen-lg-min ) {
+            width: 119px; left: -120px;
+        }*/
+
+        .rulePreview_navLabel {
+            -ctag-tag: "label";
+            -ctag-example: "...states";
+
+            height: 40px;
+            float: left;
+            text-align: center;
+            font-size: 12px;
+            padding: 10px 10px;
+        }
+
+        .rulePreview_navItem {
+            -ctag-tag: "button";
+            -ctag-example: "...";
+
+            width: 40px; height: 100%;
+            margin-right: 1px;
+            margin-top: 0px;
+            .hand();
+            float: right;
+            text-align: center;
+            font-size: 12px;
+            padding-top: 10px;
+
+            &:hover {
+                background-color: #eee;
+            }
+        }
+
+        .rulePreview_state {
+            -ctag-tag: "button";
+            -ctag-example: "...1";
+
+            &:extend(
+                .rulePreview
+                .rulePreview_nav
+                .rulePreview_navItem all
+            );
+            float: left;
+            min-width: 40px;
+            //max-width: 100px;
+            overflow: hidden;
+            white-space: nowrap;
+            width: auto;
+            padding-left: 8px;
+            padding-right: 8px;
+
+            &.selected {
+                background-color: #777;
+                color: #fff;
+            }
+        }
+
+        .rulePreview_stateApplied {
+            -ctag-tag: "label";
+            -ctag-example: "....myAppliedState";
+
+            padding: 10px;
+            font-size: 12px;
+            float: left;
+        }
+
+        .rulePreview_toggleBGColor {
+            -ctag-tag: "button";
+            -ctag-example: "...";
+
+            &:extend(
+                .rulePreview
+                .rulePreview_nav
+                .rulePreview_navItem all
+            );
+            margin-right: 10px;
+            background-color: #fff;
+            background-image: url("_assets/bg_color_icon.png");
+            &:hover {
+                background-image: url("_assets/bg_color_icon_dark.png");
+            }
+
+            &.selected {
+                background-color: #777;
+                background-image: url("_assets/bg_color_icon_dark.png");
+
+                &:hover {
+                    background-color: #aaa;
+                }
+            }
+        }
+
+        .rulePreview_outline {
+            -ctag-tag: "button";
+            -ctag-example: "...";
+
+            &:extend(
+                .rulePreview
+                .rulePreview_nav
+                .rulePreview_navItem all
+            );
+            background-image: url("_assets/outline_icon.png");
+            &:hover {
+                background-image: url("_assets/outline_icon_dark.png");
+            }
+
+            &.selected {
+                background-color: #777;
+                background-image: url("_assets/outline_icon_dark.png");
+
+                &:hover {
+                    background-color: #aaa;
+                }
+            }
+        }
+
+        .rulePreview_html {
+            -ctag-tag: "button";
+            -ctag-example: "...";
+
+            &:extend(
+                .rulePreview
+                .rulePreview_nav
+                .rulePreview_navItem all
+            );
+            background-color: #fff;
+            background-image: url("_assets/html_icon.png");
+            &:hover {
+                background-image: url("_assets/html_icon_dark.png");
+            }
+        }
+    }
+
+}
+
+/** initial setup **/
+.nano {
+  position : relative;
+  width    : 100%;
+  height   : 100%;
+  overflow : hidden;
+}
+.nano > .nano-content {
+  position      : absolute;
+  overflow      : scroll;
+  overflow-x    : hidden;
+  top           : 0;
+  right         : 0;
+  bottom        : 0;
+  left          : 0;
+}
+.nano > .nano-content:focus {
+  outline: thin dotted;
+}
+.nano > .nano-content::-webkit-scrollbar {
+  display: none;
+}
+.has-scrollbar > .nano-content::-webkit-scrollbar {
+  display: block;
+}
+.nano > .nano-pane {
+  background : rgba(0,0,0,.25);
+  position   : absolute;
+  width      : 10px;
+  right      : 0;
+  top        : 0;
+  bottom     : 0;
+  visibility : hidden\9; /* Target only IE7 and IE8 with this hack */
+  opacity    : .01;
+  -webkit-transition    : .2s;
+  -moz-transition       : .2s;
+  -o-transition         : .2s;
+  transition            : .2s;
+  -moz-border-radius    : 5px;
+  -webkit-border-radius : 5px;
+  border-radius         : 5px;
+}
+.nano > .nano-pane > .nano-slider {
+  background: #444;
+  background: rgba(0,0,0,.5);
+  position              : relative;
+  margin                : 0 1px;
+  -moz-border-radius    : 3px;
+  -webkit-border-radius : 3px;
+  border-radius         : 3px;
+}
+.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {
+  visibility : visible\9; /* Target only IE7 and IE8 with this hack */
+  opacity    : 0.99;
+}

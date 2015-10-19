@@ -97,7 +97,7 @@ var RuleDetail = React.createClass({
     render: function() {
 
         if ( this.state.tag ) {
-            var rules_by_tag = this.props.css_info.types_hash[this.state.tag];
+            var rules_by_tag = this.props.css_info.tags_hash[this.state.tag];
             var tree_rule = {
                 name:this.state.tag + " (tag)",
                 children:rules_by_tag,
@@ -180,7 +180,10 @@ var RuleDetail = React.createClass({
                         </div>
                     </div>
 
-                    { content }
+                    <div className="ruleDetail_contentContainer">
+                        { content }
+                    </div>
+
 
                     <RuleNesting
                         css_info={ this.props.css_info }

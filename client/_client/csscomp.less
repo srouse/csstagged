@@ -1,9 +1,49 @@
 
+
+
+
+
+
+
+.ctag-tag( @tags ) {
+    -ctag-tags: @tags;
+}
+.ctag-tags( @tags ) {
+    .ctag-tag( @tags );
+}
+.ctag-use-on-all-examples() {
+    -ctag-global: "true";
+}
+.ctag-ignore( @ignore ) {
+    -ctag-ignore: @ignore;
+}
+
+.ctag-example( @example ) when ( isstring( @example ) ) {
+    -ctag-example: @example;
+}
+
+.ctag-description ( @description ) when ( isstring( @description ) ) {
+    -ctag-description: @description;
+}
+
+
+.ctag(
+    @tags ,
+    @example : false ,
+    @description : false
+) {
+    .ctag-tags( @tags );
+    .ctag-example( @example );
+    .ctag-description ( @description );
+}
+
+
+
 @font-face {
-    /*<csstag
-		tag="fonts"
-		global="true">
-	</csstag>*/
+    -ctag-tag: "fonts";
+    -ctag-example: "<div></div>";
+    -ctag-global: "true";
+
     font-family: Muli;
     src: url('_assets/muli/Muli.ttf');
     font-weight: normal;
@@ -29,6 +69,7 @@
     font-style: italic;
 }
 
+
 html {
     -ctag-tag: "html";
     -ctag-global: "true";
@@ -40,7 +81,6 @@ html {
     color: #777;
     font-family: 'Muli', sans-serif;
 	font-weight: light;
-
 
     * {
         box-sizing: border-box;
@@ -65,7 +105,7 @@ html {
     float: left;
     background-image: url('_assets/back_arrow.png');
     transition: width .3s, background-size .3s;
-    .hand();
+    &:extend( .hand );
 
     &:hover {
         width: 70px;
@@ -90,9 +130,8 @@ html {
 
 // @import (reference) "../shared.less";
 
-
 @column_header_height: 60px;
-@column_footer_height: 0px;//60px;
+@column_footer_height: 0px;
 
 .column {
     /*<csstag tag="section">
@@ -183,7 +222,7 @@ html {
             </csstag>*/
             float: left; clear: left;
             height: 40px;
-            .hand();
+            &:extend( .hand );
             padding: 0px 30px;
             width: 100%;
 
@@ -246,6 +285,74 @@ html {
         background-color: #fff;
         border-top: 1px solid #eee;
     }
+}
+
+
+
+.hand {
+	.ctag(
+		"global,property",
+		"...Label",
+		"Gives any element a hand rollover...and turns off text selection"
+	);
+	cursor: pointer;
+	cursor: hand;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.handover {
+	.ctag(
+		"global,property",
+		"...Label",
+		"Gives any element a hand rollover with a background color rollover"
+	);
+	._handover();
+}
+
+
+.unhand {
+	.ctag(
+		"global,property",
+		"...Label",
+		"Counteracts the effects of 'hand'"
+	);
+	cursor: default;
+}
+
+.label {
+	font-size: @font-size;
+	color: #555;
+}
+
+
+.clearfix {
+	clear: both;
+}
+
+
+
+
+/*
+Mixin's
+*/
+.calc ( @prop , @percent: 100%  , @diff: 0px ) {
+	@{prop} : calc( @percent ~'+' @diff );
+}
+
+.center ( @prop , @container , @child ) {
+    @{prop}: ( @container/2 - @child/2 );
+}
+
+._handover ( @bg-color: #eee ) {
+	&:extend( .hand );
+	&:hover {
+		background-color: @bg-color;
+	}
 }
 
 
@@ -327,7 +434,7 @@ html {
 			.typeIcon
 			.type_icon
 		);
-		background-color: @csstagged_tagged_rule_color;
+		background-color: @csstagged-tagged-rule-color;
 
 		&.on {
 			width: 300px;
@@ -343,7 +450,7 @@ html {
 			.type_icon
 		);
 
-		border: 1px solid @csstagged_tagged_rule_color;
+		border: 1px solid @csstagged-tagged-rule-color;
 	    background-color: transparent;
 
 		&.wide {
@@ -359,7 +466,7 @@ html {
 			.typeIcon
 			.type_icon
 		);
-		background-color: @csstagged_simple_rule_color;
+		background-color: @csstagged-simple-rule-color;
 	}
 
 	.dup_icon {
@@ -370,44 +477,52 @@ html {
 			.typeIcon
 			.type_icon
 		);
-		background-color: @csstagged_duplicate_color;
+		background-color: @csstagged-error-color;
 	}
 }
 
 
-/*
-Variables
+
+/* -ctag-title:
+		Circle Colors
 */
-@csstagged_tagged_rule_color : #79E1DA;
-@csstagged_simple_rule_color : #FFE29B;
-@csstagged_duplicate_color : #FF8990;
-
-/*
-Mixin's
+/* -ctag-description:
+		Some colors...
 */
-.calc ( @prop , @percent: 100%  , @diff: 0px ) {
-	@{prop} : calc( @percent ~'+' @diff );
-}
-.hand() {
-	cursor: pointer;
-	cursor: hand;
-	-webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.unhand() {
-	cursor: default;
-}
+@csstagged-tagged-rule-color : #79E1DA;
+@csstagged-simple-rule-color : #FFE29B;
+@csstagged-error-color : #FF8990;
 
 
-//PHI (yeah, that's not really phi)
+/* -ctag-title:
+		Grey Colors
+*/
+/* -ctag-description:
+		Variations of greys
+*/
+
+@grey-color-xxdk : #000;
+@grey-color-xdk : #333;
+@grey-color-dk : #555;
+@grey-color : #777;
+@grey-color-lt : #999;
+@grey-color-xlt : #ccc;
+@grey-color-xxlt : #eee;
+
+
+
+/* -ctag-title:
+		Phi Layout
+*/
+/* -ctag-description:
+
+*/
+@phi-num: 1.618033;
+@phi-num-inv: .618033;
+
 @phi: 61.803398%;
-@phi_rec: 161.8033%;
-@phi_inv: 100 - ( @phi );
+@phi-rec: 161.8033%;
+@phi-inv: 100 - ( @phi );
 
 @phi-phi: @phi * .618033;
 @phi-phinv: @phi * .381967;
@@ -418,23 +533,24 @@ Mixin's
 @phi-phinv-phi: @phi * .381967 * .618033;
 @phi-phinv-phinv: @phi * .381967 * .381967;
 
-@phinv-phi: @phi_inv * .618033;
-@phinv-phinv: @phi_inv * .381967;
+@phinv-phi: @phi-inv * .618033;
+@phinv-phinv: @phi-inv * .381967;
 
-@phinv-phi-phi: @phi_inv * .618033 * .618033;
-@phinv-phi-phinv: @phi_inv * .618033 * .381967;
+@phinv-phi-phi: @phi-inv * .618033 * .618033;
+@phinv-phi-phinv: @phi-inv * .618033 * .381967;
 
-@phinv-phinv-phi: @phi_inv * .381967 * .618033;
-@phinv-phinv-phinv: @phi_inv * .381967 * .381967;
+@phinv-phinv-phi: @phi-inv * .381967 * .618033;
+@phinv-phinv-phinv: @phi-inv * .381967 * .381967;
 
 
-//FROM BOOTSTRAP
-//== Media queries breakpoints
-//
-//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
 
+/* -ctag-title:
+		Media Breakpoints (Based on Bootstrap)
+*/
+/* -ctag-description:
+
+*/
 // Extra small screen / phone
-//** Deprecated `@screen-xs` as of v3.0.1
 @screen-xs:                  480px;
 
 // Small screen / tablet
@@ -446,11 +562,102 @@ Mixin's
 // Large screen / wide desktop
 @screen-lg-min:              1200px;
 
-
 // So media queries don't overlap when required, provide a maximum
 @screen-xs-max:              (@screen-sm-min - 1);
 @screen-sm-max:              (@screen-md-min - 1);
 @screen-md-max:              (@screen-lg-min - 1);
+
+
+
+
+/* -ctag-title:
+		Vertical Layout
+*/
+/* -ctag-description:
+		Vertical layout (rows)
+*/
+@row-xxlg: @row-xlg*@phi-num;
+@row-xlg: @row-lg*@phi-num;
+@row-lg: @row*@phi-num;
+@row-md-lg: @row*1.2;
+@row: 42px; @row-medium: @row;
+@row-md-sm: @row*.8;
+@row-sm: @row*@phi-num-inv;
+@row-xsm: @row-sm*@phi-num-inv;
+@row-xxsm: @row-xsm*@phi-num-inv;
+
+@row-shmoe: 22222220029px;
+
+@row-2: @row*2;
+@row-3: @row*3;
+@row-4: @row*4;
+@row-5: @row*5;
+@row-6: @row*6;
+
+
+
+
+/* -ctag-title:
+		Horizontal Padding
+*/
+/* -ctag-description:
+		Defines how the padding should be used.
+*/
+@padding-xlg: 40px;
+@padding-lg: 30px;
+@padding: 20px;
+@padding-sm: 10px;
+@padding-xsm: 4px;
+
+
+/* -ctag-title:
+		Vertical Padding
+*/
+/* -ctag-description:
+		Defines how the padding should be used in vertical space.
+*/
+@vpadding-xlg: 20px;
+@vpadding-lg: 15px;
+@vpadding: 10px;
+@vpadding-sm: 8px;
+@vpadding-xsm: 6px;
+
+
+/* -ctag-title:
+		Borders
+*/
+/* -ctag-description:
+
+*/
+@border-bottom: 1px solid @grey-color-xxlt;
+@border-bottom-dk: 1px solid @grey-color-xlt;
+
+
+/* -ctag-title:
+		Font Sizing
+*/
+/* -ctag-description:
+
+*/
+@font-size-xxlg: 22px;
+@font-size-xlg: 18px;
+@font-size-lg: 16px;
+@font-size: 14px;
+@font-size-sm: 12px;
+@font-size-xsm: 10px;
+@font-size-xxsm: 10px;
+
+/* -ctag-description:
+	Imported font has a more unpredictable height, so define them explicitly.
+	This will help center valign stuff.
+*/
+@font-size-height-xxlg: 38px;
+@font-size-height-xlg: 34px;
+@font-size-height-lg: 28px;
+@font-size-height: 24px;
+@font-size-height-sm: 20px;
+@font-size-height-xsm: 18px;
+@font-size-height-xxsm: 18px;
 
 
 // @import (reference) "../../Shared/shared.less";
@@ -462,6 +669,7 @@ Mixin's
             { .statDetails_columnExplanation }
         </div>
     </csstag>*/
+
     width: 66.66666%;
     .calc( height , 100% , -90px );
     position: absolute;
@@ -471,11 +679,22 @@ Mixin's
     z-index: 1000;
     color: #ddd;
 
+    test: row;
+    test: 2px;
+    test2: @row;
+    test3: @row + ( @row-2 * 2 );
+    test4: ( @row + ( @row-2 * 2px ) );
+    .calc( test5 , 100% , -@row );
+
+
     .statDetails_column {
         /*<csstag tag="column">
             <div ...></div>
         </csstag>*/
-        width: 50%; height: 100%;
+        -ctag-tag: "sdfsadasdf";
+
+        height: @row-shmoe * 2;
+        width: 50%; heightly: 100%;
         padding: 14px 0px;
         float: left;
     }
@@ -514,7 +733,7 @@ Mixin's
             padding: 0px 30px;
             padding-top: 4px;
             position: relative;
-            .hand();
+            &:extend( .hand );
 
             &:hover {
                 background-color: rgba( 0,0,0,.5);
@@ -621,7 +840,7 @@ Mixin's
         position: absolute;
         right: 0px; top: 0px;
         background-image: url("_assets/close_light.png");
-        .hand();
+        &:extend( .hand );
         &:hover {
             background-color: rgba( 0,0,0,.5);
         }
@@ -629,27 +848,93 @@ Mixin's
 }
 
 
-// @import (reference) "../Shared/shared.less";
+
+
+
+.styleGuideList {
+    -ctag-tags: container,list;
+    -ctag-example: "...{ .styleGuideNav_listRow }{ .styleGuideNav_listRow }";
+
+    width: 100%;
+
+    .styleGuideNav_listRow {
+        -ctag-tags: app,row,container;
+        -ctag-example: "...{ .styleGuideNav_rowLabel }{ .styleGuideNav_rowLabelRight }";
+        &:extend( .handover all );
+
+        .calc(
+            width,
+            100% , -@padding*2
+        );
+        border-bottom: @border-bottom;
+        margin-left: @padding;
+        height: @row;
+
+        .styleGuideNav_rowLabel {
+            -ctag-tag: label;
+            -ctag-example: ...left label;
+
+            &:extend( .label );
+            width: 80%;
+            font-size: @font-size;
+            .center ( padding-top , @row , @font-size-height );
+            float: left; clear: left;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .styleGuideNav_rowLabelRight {
+            -ctag-tag: label;
+            -ctag-example: ...right label;
+            &:extend( .label );
+
+            color: #999;
+            font-size: @font-size;
+            .center ( padding-top , @row , @font-size-height );
+
+            float: right; clear: right;
+        }
+    }
+}
+
+
 
 .cssComp {
-	/*<csstag tag="app"
-		description="The root app">
-        <div class="cssComp">
-			<cssComp_columns />
-        </div>
-    </div>*/
+    /* -ctag:
+            "app,container",
+            "...Example",
+            "hello, there \"dog\" here",
+
+    */
     height: 100%;
 
     .cssComp_columns {
-		/*<csstag tag="section,column"
-			description="Defines the core idea of
-				columns">
-	        <div class="cssComp_columns"></div>
-	    </div>*/
+        /* -ctag:
+                "app,container",
+                "...Example",
+                "hello, there \"dog\"
+                here"
+        */
 		position: relative;
 		z-index: 200;
         .calc( height , 100% , -90px );
     }
+
+    .cssComp_col2 {
+        /* -ctag:
+                "app,container",
+                "...",
+                "Example of an extended class",
+                ".cssComp_columns"
+        */
+
+        // extend it
+        &:extend(
+            .cssComp
+            .cssComp_columns
+        );
+    }
+
 }
 
 
@@ -677,27 +962,19 @@ Mixin's
 @tile_circle_diameter : 84px;
 
 .columnStats {
-    /*<csstag
-        tag="section,column"
-        extend="column">
-        <div ...>
-            { .columnStats_graph }
-            { .columnStats_content }
-            { .columnStats_depthChart }
-        </div>
-    </csstag>*/
+    /* -ctag:
+            "section,column",
+            "<div ...>
+                { .columnStats_graph }
+                { .columnStats_content }
+                { .columnStats_depthChart }
+            </div>"
+    */
     &:extend( .column );
 
     .columnStats_content {
-        /*<csstag
-            tag="section,content">
-            <div ...>
-                { .columnStats_tile }
-                { .columnStats_tile }
-                { .columnStats_tile }
-                { .columnStats_tile }
-            </div>
-        </csstag>*/
+        -ctag-tags: section,content;
+        -ctag-example: "...{ .columnStats_tile }{ .columnStats_tile }{ .columnStats_tile }{ .columnStats_tile }";
         &:extend(
             .column
             .column_Content
@@ -708,19 +985,15 @@ Mixin's
         padding: 20px 30px;
 
         .columnStats_tile {
-            /*<csstag
-                tag="section,tile">
-                <div ...>
-                    { .tile_graph }
-                    { .tile_label }
-                </div>
-            </csstag>*/
+            -ctag-tags: section,tile;
+            -ctag-example: "...{ .tile_graph }{ .tile_label }";
+            &:extend( .hand );
+
             width: 50%; height: 50%;
             float: left;
             position: relative;
             background-color: #fff;
             z-index: 10;
-            .hand();
 
             &:hover {
                 //background-color: #eee;
@@ -762,12 +1035,9 @@ Mixin's
             }
 
             .tile_graph {
-                /*<csstag
-                    tag="graph">
-                    <div ...>
-                        { .tile_circle }
-                    </div>
-                </csstag>*/
+                -ctag-tag: graph;
+                -ctag-example: "...{ .tile_circle }";
+
                 width: 100%;
                 .calc( height , 100% , -28px );
                 position: absolute;
@@ -776,10 +1046,11 @@ Mixin's
                 text-align: center;
 
                 .tile_circle {
-                    /*<csstag
-                        tag="graph">
-                        <div ...>43%</div>
-                    </csstag>*/
+                    /* -ctag:
+                            "graph,unique",
+                            "<div ...>43%</div>",
+                    */
+
                     position: absolute;
                     .calc( top , 50% , -@tile_circle_diameter/2 );
                     .calc( left , 50% , -@tile_circle_diameter/2 );
@@ -802,6 +1073,7 @@ Mixin's
             .tile_label {
                 -ctag-tag: "graph";
                 -ctag-example: "...Rule of Dogs{ .columnStats_typeBox }";
+
                 position: absolute;
                 left: 0px;
                 width: 100%;
@@ -822,6 +1094,11 @@ Mixin's
         }
 
         .extendable_tile {
+            .ctag(
+                "application,section",
+                "...{ .tile_graph }{ .tile_label }",
+                "Exentions of columnStats_tile"
+            );
             &:extend(
                 .columnStats
                 .columnStats_content
@@ -848,7 +1125,7 @@ Mixin's
         padding: 10px 30px;
         margin: 0px 30px;
         border: 1px solid #fff;
-        .hand();
+        &:extend( .hand );
 
         &:hover {
             box-shadow: 0px 0px 6px rgba(  0,0,0,.1 );
@@ -968,7 +1245,7 @@ Mixin's
                 /*<csstag tag="visualization,bar">
                     <div ... style='height: 50%;'></div>
                 </csstag>*/
-                background-color: @csstagged_tagged_rule_color;
+                background-color: @csstagged-tagged-rule-color;
             }
 
             .depthChart_RulesBar {
@@ -977,7 +1254,7 @@ Mixin's
                         { .depthChart_label }
                     </div>
                 </csstag>*/
-                background-color: @csstagged_simple_rule_color;
+                background-color: @csstagged-simple-rule-color;
 
                 .depthChart_label {
                     /*<csstag tag="label">
@@ -1226,7 +1503,7 @@ Mixin's
                 .cssp_OverallVisual_taggedRules
                 .overallVisual_bar
             );
-            background-color: @csstagged_tagged_rule_color;
+            background-color: @csstagged-tagged-rule-color;
 
             .tagged_total {
                 /*<csstag tag="label">
@@ -1280,7 +1557,7 @@ Mixin's
                 .cssp_OverallVisual_taggedRules
                 .overallVisual_bar
             );
-            background-color: @csstagged_simple_rule_color;
+            background-color: @csstagged-simple-rule-color;
 
             .rules_total {
                 /*<csstag tag="label">
@@ -1326,6 +1603,7 @@ Mixin's
         </div>
     </csstag>*/
     &:extend(
+        .ruleDetail_contentContainer
         .ruleDetail_content
     );
     z-index: 100;
@@ -1386,7 +1664,7 @@ Mixin's
                 position: absolute;
                 right: 10px;
                 bottom: 0px;
-                .hand();
+                &:extend( .hand );
             }
         }
 
@@ -1414,13 +1692,12 @@ a [
 // @import (reference) "../Shared/shared.less";
 
 .ruleDetail {
-    /*<csstag tag="page,modal">
-        <div ...>
-            { .ruleDetail_header }
-            { .ruleCSS }
-            { .ruleDetailNav }
-        </div>
-    </csstag>*/
+    /* -ctag:
+            "page,modal",
+            "...{ .ruleDetail_header }
+                { .ruleDetail_contentContainer }"
+    */
+
     width: 100vw; height: 100vh;
     position: absolute;
     top: 0px; left: 0px;
@@ -1435,40 +1712,55 @@ a [
     body.s_tag & {
         display: block;
     }
+
+    body.s_detailTab & {
+        /* state */
+    }
 }
 
-.ruleDetail_content {
-    /*<csstag tag="content">
-        <div ...></div>
-    </csstag>*/
+.ruleDetail_contentContainer {
+    /* -ctag:
+            "placeholder",
+            "...{ .ruleDetail_content }"
+    */
     // width: @phi;
     .calc( width , 100% , -300px );
     .calc( height , 100% , -70px );
     position: absolute;
     top: 70px; right: 0px;
-    background-color: #fff;
+
+    .ruleDetail_content {
+        .ctag(
+            "page",
+            "..."
+        );
+        background-color: #fff;
+        width: 100%; height: 100%;
+    }
 }
 
+
+
 .ruleDetail_header {
-    /*<csstag tag="header">
-        <div ...>
-            { .ruleDetail_back }
-            { .ruleDetail_title }
-            { .ruleDetail_headerNav }
-        </div>
-    </csstag>*/
+    /* -ctag:
+            "header",
+            "...{ .ruleDetail_back }
+                { .ruleDetail_title }
+                { .ruleDetail_headerNav }"
+    */
     width: 100%; height: 70px;
     border-bottom: 1px solid #eee;
 
-
+    body.s_detailTab & {
+        /* state */
+    }
 
     .ruleDetail_title {
-        /*<csstag tag="container">
-            <div ...>
-                { .ruleDetail_titleText }
-                { .ruleDetail_iconBox }
-            </div>
-        </csstag>*/
+        /* -ctag:
+                "container",
+                "...{ .ruleDetail_titleText }
+                    { .ruleDetail_iconBox }"
+        */
         width: 300px;
         height: 100%;
         position: relative;
@@ -1480,13 +1772,17 @@ a [
         }*/
 
         .ruleDetail_close {
-            /*<csstag tag="button">
-                <div ...></div>
-            </csstag>*/
+            /* -ctag:
+                    "button",
+                    "...",
+                    "Close the detail",
+                    ".hand"
+            */
+
             width: 70px; height: 100%;
             float: left;
             background-image: url('_assets/close_arrow.png');
-            .hand();
+            &:extend( .hand );
             transition: width .3s;
 
             &:hover {
@@ -1500,13 +1796,14 @@ a [
         }
 
         .ruleDetail_showTree {
-            /*<csstag tag="button">
-                <div ...></div>
-            </csstag>*/
+            /* -ctag:
+                    "button",
+                    "..."
+            */
             width: 70px; height: 100%;
             float: right;
             background-image: url('_assets/show_tree.png');
-            .hand();
+            &:extend( .hand );
             display: none;
             transition: width .3s;
 
@@ -1525,18 +1822,22 @@ a [
         }
 
         .ruleDetail_titleText {
-            /*<csstag tag="title">
-                <div ...>
-                    A Title
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "title",
+                    "...A Title"
+            */
+            .ctag(
+                "label",
+                "...A Title"
+            );
+
             float: left;
             padding: 16px 0px;
             padding-left: 0px;
             height: 100%;
             font-size: 14px;
             color: #555;
-            .hand();
+            &:extend( .hand );
 
             &:hover {
                 background-color: #eee;
@@ -1544,25 +1845,25 @@ a [
         }
 
         .ruleDetail_iconBox {
-            /*<csstag tag="container,nav_item">
-                <div ...>
-                    <div class='rule_icon'></div>
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "container,nav_item",
+                    "...<div class='rule_icon'></div>"
+            */
             width: 50px; height: 100%;
             position: relative; float: left;
         }
     }
 
     .ruleDetail_headerNav {
-        /*<csstag tag="nav">
-            <div ...>
-                { .ruleDetail_item_css }
-                { .ruleDetail_item_overview }
-                { .ruleDetail_item_example }
-                { .ruleDetail_back }
-            </div>
-        </csstag>*/
+        /* -ctag:
+                "nav",
+                "...
+                    { .ruleDetail_item_css }
+                    { .ruleDetail_item_overview }
+                    { .ruleDetail_item_example }
+                    { .ruleDetail_back }
+                "
+        */
         float: right; clear: right;
         width: 410px; height: 100%;
         background-color: #fff;
@@ -1576,16 +1877,15 @@ a [
         @item_color: #ccc;
         @item_selected: #000;
         .ruleDetail_item {
-            /*<csstag tag="nav_item">
-                <div ...>
-                    link_title
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "nav_item",
+                    "...link_title"
+            */
             color: @item_color; height: 100%;
             padding-top: 24px;
             .calc( width , 33.3333% , -70px/3 );
             float: right; text-align: center;
-            .hand();
+            &:extend( .hand );
 
             &:hover {
                 color: @item_selected;
@@ -1593,11 +1893,12 @@ a [
             }
         }
         .ruleDetail_item_overview {
-            /*<csstag tag="nav_item">
-                <div ...>
-                    overview
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "nav_item",
+                    "...overview",
+                    "",
+                    ".ruleDetail_item"
+            */
             &:extend(
                 .ruleDetail_header
                 .ruleDetail_headerNav
@@ -1609,11 +1910,12 @@ a [
             }
         }
         .ruleDetail_item_css {
-            /*<csstag tag="nav_item">
-                <div ...>
-                    overview
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "nav_item",
+                    "...overview",
+                    "",
+                    ".ruleDetail_item"
+            */
             &:extend(
                 .ruleDetail_header
                 .ruleDetail_headerNav
@@ -1626,11 +1928,12 @@ a [
             }
         }
         .ruleDetail_item_example {
-            /*<csstag tag="nav_item">
-                <div ...>
-                    example
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "nav_item",
+                    "...example",
+                    "",
+                    ".ruleDetail_item"
+            */
             &:extend(
                 .ruleDetail_header
                 .ruleDetail_headerNav
@@ -1643,13 +1946,14 @@ a [
         }
 
         .ruleDetail_back {
-            /*<csstag tag="button">
-                <div ...></div>
-            </csstag>*/
+            /* -ctag:
+                    "button",
+                    "..."
+            */
             width: 70px; height: 100%;
             background-image: url("_assets/close.png");
             background-color: #fff;
-            .hand();
+            &:extend( .hand );
             margin-right: 0px;
             float: right;
             transition: all .2s;
@@ -1708,7 +2012,7 @@ a [
             float: left;
             background-image: url('_assets/back_arrow.png');
             transition: width .3s;
-            .hand();
+            &:extend( .hand );
 
             &:hover {
                 width: 60px;
@@ -1951,7 +2255,7 @@ a [
         padding-top: 5px;
         position: relative;
         overflow: hidden;
-        .hand();
+        &:extend( .hand );
         transition: width ( @transitionOffset + @transitionBase );
         color: #999;
 
@@ -1995,6 +2299,7 @@ a [
         <div ... style="display: block;"></div>
     </csstag>*/
     &:extend(
+        .ruleDetail_contentContainer
         .ruleDetail_content
     );
     z-index: 100;
@@ -2028,7 +2333,7 @@ a [
             color: #333;
             white-space: nowrap;
             overflow: hidden;
-            .hand();
+            &:extend( .hand );
             &:hover {
                 background-color: #eee;
             }
@@ -2074,13 +2379,17 @@ a [
 // @import (reference) "../RuleDetail.less";
 
 .rulePreview {
-    /*<csstag tags="page,rulePreview">
-        <div ...>
-            { .rulePreview_stage }
-            { .rulePreview_nav }
-        </div>
-    </csstag>*/
+    .ctag(
+        "page",
+        "...{ .rulePreview_stage }{ .rulePreview_nav }"
+    );
+    /* -ctag-description:
+            This is a description that is long, so needs
+            a commented version.
+    */
+
     &:extend(
+        .ruleDetail_contentContainer
         .ruleDetail_content
     );
     z-index: 300;
@@ -2090,11 +2399,10 @@ a [
     }*/
 
     .rulePreview_stage {
-        /*<csstag tags="page,rulePreview">
-            <div ...>
-                { .rulePreview_iframe }
-            </div>
-        </csstag>*/
+        .ctag(
+            "page,rulePreview",
+            "...{ .rulePreview_iframe }"
+        );
         width: 100%;
         .calc( height , 100% , -40px );
         background-color: #fff;
@@ -2102,17 +2410,27 @@ a [
         left: 0px; top: 0px;
 
         .rulePreview_iframe {
-            /*<csstag tags="page,rulePreview">
-                <iframe style="border:none;" ...></iframe>
-            </csstag>*/
+            .ctag(
+                "page,rulePreview",
+                "<iframe style='border:none;' ...></iframe>"
+            );
+
             width: 100%; height: 100%;
             background-color: #eee;
         }
     }
 
     .rulePreview_nav {
-        -ctag-tag: "navigation";
-        -ctag-example: "...{ .rulePreview_navLabel }{ .rulePreview_state }{ .rulePreview_stateApplied }{ .rulePreview_toggleBGColor }{ .rulePreview_outline }";
+        .ctag(
+            "navigation"
+        );
+        /* -ctag-example:
+                ...{ .rulePreview_navLabel }
+                    { .rulePreview_state }
+                    { .rulePreview_stateApplied }
+                    { .rulePreview_toggleBGColor }
+                    { .rulePreview_outline }
+        */
 
         position: absolute;
         width: 100%; height: 40px;
@@ -2143,7 +2461,7 @@ a [
             width: 40px; height: 100%;
             margin-right: 1px;
             margin-top: 0px;
-            .hand();
+            &:extend( .hand );
             float: right;
             text-align: center;
             font-size: 12px;
@@ -2254,6 +2572,210 @@ a [
         }
     }
 
+}
+
+
+
+
+.styleGuide {
+    .ctag(
+        "unique,container",
+        "...{ .styleGuide_nav }{ .styleGuide_content }"
+    );
+    width: 100%; height: 100%;
+    position: relative;
+
+    .styleGuide_nav {
+        .ctag(
+            "unique,placeholder",
+            "...{ .styleGuideNav }"
+        );
+        position: absolute;
+        left: 0px; top: 0px;
+        width: 300px; height: 100%;
+
+    }
+
+    .styleGuide_content {
+        .ctag(
+            "unique,placeholder",
+            "...{ .rulePreview }"
+        );
+        position: absolute;
+        right: 0px; top: 0px;
+        .calc( width , 100% , -300px );
+        height: 100%;
+        background-color: #f00;
+
+        overflow: auto;
+    }
+
+}
+
+
+
+
+.styleGuideNav {
+    -ctag-tags: container;
+    -ctag-example: "...{ .styleGuideNav_mainNav }{ .styleGuideNav_listContainer }";
+
+    width: 100%; height: 100%;
+
+    .styleGuideNav_mainNav {
+        -ctag-tags: container,navigation;
+        /* -ctag-example:
+                ... { .styleGuideNav_mainItem }
+                    <div class='styleGuideNav_mainItem selected'>
+                        Rules
+                    </div>
+        */
+
+        width: 100%;
+        height: @row-lg;
+        border-bottom: 1px solid #eee;
+
+        .styleGuideNav_mainItem {
+            -ctag-tags: button,navigation;
+            -ctag-example: ...Variables;
+            &:extend( .handover all );
+
+            width: 50%; height: 100%;
+            float: left;
+            font-size: @font-size-lg;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            .center ( padding-top , @row-lg , @font-size-height-lg );
+
+            &.selected {
+                border-bottom: 4px solid #777;
+            }
+        }
+    }
+
+    .styleGuideNav_listContainer {
+        -ctag-tags: unique,list,container;
+        -ctag-example: "...{ .styleGuideNav_listRow }{ .styleGuideNav_listRow }{ .styleGuideNav_listRow }";
+        -ctag-description: "Contains the list of variable categories or rules. This is just the list not the header for rules.";
+
+        width: 100%;
+        .calc( height, 100%, -@row-lg );
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        overflow: auto;
+
+    }
+
+}
+
+
+
+
+.styleGuideNav_rulesList {
+    -ctag-tags: container,list;
+    /* -ctag-example: "...{ .styleGuideNav_rulesListHeader }
+                            { .styleGuideNav_listRow }
+                            { .styleGuideNav_listRow }";*/
+
+    &:extend( .styleGuideList all );
+    width: 100%;
+
+    .styleGuideNav_rulesListHeader {
+        -ctag-tags: container,row;
+        /* -ctag-example: "...{ .styleGuideNav_rulesList
+                                .styleGuideNav_rulesListHeader
+                                .styleGuideNav_rowLabel }";*/
+
+        &:extend(
+            .styleGuideList
+            .styleGuideNav_listRow
+        );
+
+        height: @row-md-lg;
+        width: 100%; margin-left: 0px;
+
+        .styleGuideNav_rowLabel {
+            -ctag-tags: label,pow;
+            -ctag-example: ...left label;
+            &:extend( .label );
+
+            font-size: @font-size-lg;
+            .center ( padding-top , @row-md-lg , @font-size-height-lg );
+            float: left; clear: left;
+            padding-left: @padding;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    }
+}
+
+
+
+
+
+.variablePage {
+    -ctag-tags: page,container;
+    /* -ctag-example: '...
+                        { .variablePage_title }
+                        { .variablePage_description }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_title }
+                        { .variablePage_description }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }';*/
+
+    background-color: @grey-color-xxlt;
+    padding: @vpadding-xlg @phi-inv/2;
+    min-height: 100%;
+
+    .variablePage_title {
+        -ctag-tags: container,header;
+        -ctag-example: ...Title of Variable Cluster;
+
+        width: 100%;
+        font-size: @font-size-xxlg;
+        height: @row-lg;
+        .center( padding-top , @row-lg , @font-size-height-xxlg );
+        color: @grey-color-dk;
+        border-bottom: @border-bottom-dk;
+        margin-bottom: @vpadding;
+    }
+
+    .variablePage_description {
+        -ctag-tags: text;
+        /* -ctag-example: ...These variables are used to describe something
+                            in your site.These variables are used to describe
+                            something in your site. These variables are used
+                            to describe something in your site.;*/
+
+        width: 100%;
+        font-size: @font-size;
+        color: @grey-color-lt;
+        margin-bottom: @vpadding;
+    }
+
+    .variablePage_variableLabel {
+        -ctag-tags: container,header;
+        -ctag-example: "...@variable_name: 123px;";
+
+        font-size: @font-size;
+        height: @row-md-sm;
+        .center( padding-top , @row-md-sm , @font-size-height );
+        color: @grey-color-lt;
+
+        .variablePage_variableName {
+            color: @grey-color;
+            font-weight: bold;
+        }
+    }
 }
 
 /** initial setup **/

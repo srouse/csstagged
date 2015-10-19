@@ -1,0 +1,20 @@
+
+
+
+/*
+Mixin's
+*/
+.calc ( @prop , @percent: 100%  , @diff: 0px ) {
+	@{prop} : calc( @percent ~'+' @diff );
+}
+
+.center ( @prop , @container , @child ) {
+    @{prop}: ( @container/2 - @child/2 );
+}
+
+._handover ( @bg-color: #eee ) {
+	&:extend( .hand );
+	&:hover {
+		background-color: @bg-color;
+	}
+}

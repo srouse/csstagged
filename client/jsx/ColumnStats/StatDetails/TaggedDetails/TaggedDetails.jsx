@@ -93,7 +93,7 @@ var TaggedDetails = React.createClass({
                                     Tagged rules are regular CSS rules with
                                     some extra metadata tagged via a comment.
                                     This allows for rules to be clustered by
-                                    types (buttons, titles, etc) or sections of
+                                    tags (buttons, titles, etc) or sections of
                                     your application. It also allows for simple
                                     examples to be embedded within tags so you
                                     can view isolated implementations of the rules.

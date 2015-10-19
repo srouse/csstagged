@@ -2,9 +2,41 @@
 
 RuleUtil = function(){};
 
-RuleUtil.replaceComps = function (
-    html_str , rule_names , css_info , times_called
+RuleUtil.findRuleRelativeToRule = function (
+    target_rule_name, rule_source, css_info
 ) {
+    var target_rule;
+
+    var found_rule = false;
+    // first children...(inheritance causes valid name dups)
+
+
+    if ( css_info.name_hash[target_rule_name] ) {
+        target_rule = css_info.name_hash[target_rule_name];
+        if (    target_rule.metadata
+                && target_rule.metadata.example )
+        {
+            found_rule = true;
+        }
+    }
+
+    if ( css_info.selector_hash[target_rule_name] ) {
+        target_rule = css_info.selector_hash[target_rule_name];
+        if (    target_rule.metadata
+                && target_rule.metadata.example )
+        {
+            found_rule = true;
+        }
+    }
+
+    console.log( found_rule );
+}
+
+
+RuleUtil.replaceComps = function (
+    rule, html_str , rule_names , css_info , times_called
+) {
+
     if ( !times_called )
         times_called = 1;
 
@@ -25,6 +57,11 @@ RuleUtil.replaceComps = function (
         for ( var sr=0; sr<sub_rules.length; sr++ ) {
             sub_rule_html = sub_rules[sr];
             sub_rule_name = $(sub_rule_html).attr("comp");
+
+            RuleUtil.findRuleRelativeToRule(
+                sub_rule_name, rule , css_info
+            );
+
 
             // TODO Look for names..if not found, then look for selectors
             if ( css_info.name_hash[sub_rule_name] ) {
@@ -96,6 +133,7 @@ RuleUtil.replaceComps = function (
         }
 
         return  RuleUtil.replaceComps(
+                    rule,
                     example_html.html(),
                     rule_names.concat( sub_rule_name_arr ),
                     css_info,
@@ -154,7 +192,7 @@ RuleUtil.findRuleExample = function ( rule , css_info , html_only ) {
         }
 
         var sub_comp_info = RuleUtil.replaceComps(
-            rule.metadata.example, [] , css_info
+            rule , rule.metadata.example, [] , css_info
         );
 
         html.push( sub_comp_info.html );

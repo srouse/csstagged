@@ -1,0 +1,38 @@
+
+
+
+
+
+
+
+.ctag-tag( @tags ) {
+    -ctag-tags: @tags;
+}
+.ctag-tags( @tags ) {
+    .ctag-tag( @tags );
+}
+.ctag-use-on-all-examples() {
+    -ctag-global: "true";
+}
+.ctag-ignore( @ignore ) {
+    -ctag-ignore: @ignore;
+}
+
+.ctag-example( @example ) when ( isstring( @example ) ) {
+    -ctag-example: @example;
+}
+
+.ctag-description ( @description ) when ( isstring( @description ) ) {
+    -ctag-description: @description;
+}
+
+
+.ctag(
+    @tags ,
+    @example : false ,
+    @description : false
+) {
+    .ctag-tags( @tags );
+    .ctag-example( @example );
+    .ctag-description ( @description );
+}

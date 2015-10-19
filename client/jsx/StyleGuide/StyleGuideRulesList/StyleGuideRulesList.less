@@ -1,0 +1,40 @@
+
+
+
+.styleGuideNav_rulesList {
+    -ctag-tags: container,list;
+    /* -ctag-example: "...{ .styleGuideNav_rulesListHeader }
+                            { .styleGuideNav_listRow }
+                            { .styleGuideNav_listRow }";*/
+
+    &:extend( .styleGuideList all );
+    width: 100%;
+
+    .styleGuideNav_rulesListHeader {
+        -ctag-tags: container,row;
+        /* -ctag-example: "...{ .styleGuideNav_rulesList
+                                .styleGuideNav_rulesListHeader
+                                .styleGuideNav_rowLabel }";*/
+
+        &:extend(
+            .styleGuideList
+            .styleGuideNav_listRow
+        );
+
+        height: @row-md-lg;
+        width: 100%; margin-left: 0px;
+
+        .styleGuideNav_rowLabel {
+            -ctag-tags: label,pow;
+            -ctag-example: ...left label;
+            &:extend( .label );
+
+            font-size: @font-size-lg;
+            .center ( padding-top , @row-md-lg , @font-size-height-lg );
+            float: left; clear: left;
+            padding-left: @padding;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    }
+}

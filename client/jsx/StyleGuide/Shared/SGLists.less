@@ -1,0 +1,49 @@
+
+
+
+
+.styleGuideList {
+    -ctag-tags: container,list;
+    -ctag-example: "...{ .styleGuideNav_listRow }{ .styleGuideNav_listRow }";
+
+    width: 100%;
+
+    .styleGuideNav_listRow {
+        -ctag-tags: app,row,container;
+        -ctag-example: "...{ .styleGuideNav_rowLabel }{ .styleGuideNav_rowLabelRight }";
+        &:extend( .handover all );
+
+        .calc(
+            width,
+            100% , -@padding*2
+        );
+        border-bottom: @border-bottom;
+        margin-left: @padding;
+        height: @row;
+
+        .styleGuideNav_rowLabel {
+            -ctag-tag: label;
+            -ctag-example: ...left label;
+
+            &:extend( .label );
+            width: 80%;
+            font-size: @font-size;
+            .center ( padding-top , @row , @font-size-height );
+            float: left; clear: left;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .styleGuideNav_rowLabelRight {
+            -ctag-tag: label;
+            -ctag-example: ...right label;
+            &:extend( .label );
+
+            color: #999;
+            font-size: @font-size;
+            .center ( padding-top , @row , @font-size-height );
+
+            float: right; clear: right;
+        }
+    }
+}

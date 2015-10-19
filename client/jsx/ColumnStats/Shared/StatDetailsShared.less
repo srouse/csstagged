@@ -8,6 +8,7 @@
             { .statDetails_columnExplanation }
         </div>
     </csstag>*/
+
     width: 66.66666%;
     .calc( height , 100% , -90px );
     position: absolute;
@@ -17,11 +18,22 @@
     z-index: 1000;
     color: #ddd;
 
+    test: row;
+    test: 2px;
+    test2: @row;
+    test3: @row + ( @row-2 * 2 );
+    test4: ( @row + ( @row-2 * 2px ) );
+    .calc( test5 , 100% , -@row );
+
+
     .statDetails_column {
         /*<csstag tag="column">
             <div ...></div>
         </csstag>*/
-        width: 50%; height: 100%;
+        -ctag-tag: "sdfsadasdf";
+
+        height: @row-shmoe * 2;
+        width: 50%; heightly: 100%;
         padding: 14px 0px;
         float: left;
     }
@@ -60,7 +72,7 @@
             padding: 0px 30px;
             padding-top: 4px;
             position: relative;
-            .hand();
+            &:extend( .hand );
 
             &:hover {
                 background-color: rgba( 0,0,0,.5);
@@ -167,7 +179,7 @@
         position: absolute;
         right: 0px; top: 0px;
         background-image: url("_assets/close_light.png");
-        .hand();
+        &:extend( .hand );
         &:hover {
             background-color: rgba( 0,0,0,.5);
         }

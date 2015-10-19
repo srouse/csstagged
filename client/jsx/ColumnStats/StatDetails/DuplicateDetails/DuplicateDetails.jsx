@@ -49,6 +49,37 @@ var DuplicateDetails = React.createClass({
         RouteState.removeDiffListener( this.route_listener );
     },
 
+    getExampleErrors: function () {
+        var me = this;
+        var rules = this.props.css_info.example_error_names;
+        var rows = [];
+        rows.push(
+            <div className="statDetails_sectionHeader"
+                key={ "exampleErrors_header" }>
+                Example Template Errors
+            </div>
+        );
+        $.each( rules , function ( i , rule_name ) {
+            var rule = me.props.css_info.name_hash[ rule_name ];
+            if ( rule ) {
+                rows.push(
+                    <div className="statDetails_row"
+                        key={ "dupDetails_" + rule.uuid }
+                        onClick={
+                            me.viewRuleDetail.bind( me , rule.selector )
+                        }>
+                        { rule.name }
+                        <div className="statDetails_typeIcon">
+                            <TypeIcon rule={ rule } />
+                        </div>
+                    </div>
+                );
+            }
+        });
+
+        return rows;
+    },
+
     render: function() {
         var me = this;
         var rules = this.props.css_info.duplicates;
@@ -77,11 +108,14 @@ var DuplicateDetails = React.createClass({
             }
         });
 
+        var example_errors = this.getExampleErrors();
+
         return  <div className="duplicateDetails">
 
                     <div className="statDetails_columnList nano">
                         <div className="nano-content">
                             { rows }
+                            { example_errors }
                         </div>
                     </div>
 

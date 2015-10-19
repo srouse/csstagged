@@ -49,83 +49,85 @@ function getRuleUUID ( rule ) {
     return ( rule.selector.hashCode() + "" ).replace("-","n");
 }
 
-
+    function __cleanUpCTagArg ( value ) {
+        if ( value ) {
+            return value.replace( /\[escaped_quote\]/g , "\"");
+        }else{
+            return "";
+        }
+    }
 function getTaggedCommentInfo ( rule ) {
+
     var ctag_count = 0;
     var ctag_info = {};
     var prop;
 
-    for ( var i=0; i<rule.declarations.length; i++ ) {
-        declaration = rule.declarations[i];
+    var declarations = [];
 
-        if (
-            declaration.type == "declaration" &&
-            declaration.property.indexOf("-ctag") == 0
-        ) {
-
-            var prop = declaration.property.slice(6);
-            if ( prop == "example" && rule.name ) {
-                var clean_name = rule.name.replace(/\./,"");
-                var process_example = declaration.value;
-                process_example = process_example.substring(1, process_example.length-1);
-                process_example = $.trim( process_example );
-                ctag_info[ prop ] = process_example;
-            }else{
-                ctag_info[ prop ] = declaration.value;
+    if ( rule.source ) {
+        var source;
+        var first_selector;
+        for ( var s=0; s<rule.source.length; s++ ) {
+            source = rule.source[s];
+            first_selector = source.selectors[0];
+            // want to determine the rule's status via their own
+            // declarations versus extensions.
+            if ( rule.selector == first_selector ) {
+                declarations = source.declarations;
+                break;
             }
-            ctag_count++;
+        }
+    }else{
+        declarations = rule.declarations
+    }
+
+    for ( var i=0; i<declarations.length; i++ ) {
+        declaration = declarations[i];
+
+        if ( declaration.type == "comment" ) {
+            var trimmed_comment = $.trim( declaration.comment );
+
+            if (
+                trimmed_comment.indexOf("-ctag-metadata ") == 0 ||
+                trimmed_comment.indexOf("-ctag-metadata:") == 0
+            ) {
+                var prop_arr = trimmed_comment.split(":");
+                if ( prop_arr.length > 1 ) {
+                    prop_arr.shift();
+
+                    var metadata = prop_arr.join(":");
+                    ctag_info = JSON.parse( metadata );
+
+                    if (
+                        ctag_info.tags &&
+                        ctag_info.example
+                    ) {
+                        ctag_count+=2;
+                    }
+
+                    if ( ctag_info.tags ) {
+                        ctag_info.tags = ctag_info.tags.split(",");
+                    }
+
+                    break;
+                }
+            }
         }
     }
+
+
+    /*if ( rule.name == ".variablesPage" ) {
+        cons ole.log( "-----getTaggedCommentInfo");
+        con sole.log( ctag_info );
+        cons ole.log( ctag_count );
+        cons ole.log( rule );
+        cons ole.log( "-----getTaggedCommentInfo");
+        ale rt("stop");
+    }*/
 
     if ( ctag_count == 0 ) {
         return false;
     }else{
         return ctag_info;
     }
-}
-
-function getTaggedComment ( rule ) {
-    var declaration;
-
-    // some legacy...-ctag-tags:"a,b" should be new format
-    // any "-ctag"s will force the comment version to be ignored.
-
-    var ctag_info = getTaggedCommentInfo( rule );
-
-    rule.ctag_info = ctag_info;
-
-    if ( ctag_info == false ) {
-        for ( var i=0; i<rule.declarations.length; i++ ) {
-            declaration = rule.declarations[i];
-            if ( declaration.type == "comment" ) {
-                var processed_comment = declaration.comment;
-                var trimmed_comment = $.trim( processed_comment );
-                if ( trimmed_comment.indexOf("<csstag") == 0 ) {
-                    return processed_comment;
-                    break;
-                }
-            }
-        }
-    }else{
-        var comment_str = "<csstag";
-        if ( ctag_info['global'] )
-            comment_str += ' global=' + ctag_info['global'];
-        if ( ctag_info['tags'] )
-            comment_str += ' tags=' + ctag_info['tags'];
-        if ( ctag_info['tag'] )
-            comment_str += ' tag=' + ctag_info['tag'];
-        if ( ctag_info['ignore'] )
-            comment_str += ' ignore=' + ctag_info['ignore'];
-        if ( ctag_info['url_prefix'] )
-            comment_str += ' url_prefix=' + ctag_info['url_prefix'];
-
-        comment_str += ">";
-        if ( ctag_info['example'] )
-            comment_str += ctag_info['example'];
-
-        comment_str += "</csstag>";
-        return comment_str;
-    }
-
-    return false;
 }

@@ -1,0 +1,177 @@
+
+
+/* -ctag-title:
+		Circle Colors
+*/
+/* -ctag-description:
+		Some colors...
+*/
+@csstagged-tagged-rule-color : #79E1DA;
+@csstagged-simple-rule-color : #FFE29B;
+@csstagged-error-color : #FF8990;
+
+
+/* -ctag-title:
+		Grey Colors
+*/
+/* -ctag-description:
+		Variations of greys
+*/
+
+@grey-color-xxdk : #000;
+@grey-color-xdk : #333;
+@grey-color-dk : #555;
+@grey-color : #777;
+@grey-color-lt : #999;
+@grey-color-xlt : #ccc;
+@grey-color-xxlt : #eee;
+
+
+
+/* -ctag-title:
+		Phi Layout
+*/
+/* -ctag-description:
+
+*/
+@phi-num: 1.618033;
+@phi-num-inv: .618033;
+
+@phi: 61.803398%;
+@phi-rec: 161.8033%;
+@phi-inv: 100 - ( @phi );
+
+@phi-phi: @phi * .618033;
+@phi-phinv: @phi * .381967;
+
+@phi-phi-phi: @phi * .618033 * .618033;
+@phi-phi-phinv: @phi * .618033 * .381967;
+
+@phi-phinv-phi: @phi * .381967 * .618033;
+@phi-phinv-phinv: @phi * .381967 * .381967;
+
+@phinv-phi: @phi-inv * .618033;
+@phinv-phinv: @phi-inv * .381967;
+
+@phinv-phi-phi: @phi-inv * .618033 * .618033;
+@phinv-phi-phinv: @phi-inv * .618033 * .381967;
+
+@phinv-phinv-phi: @phi-inv * .381967 * .618033;
+@phinv-phinv-phinv: @phi-inv * .381967 * .381967;
+
+
+
+/* -ctag-title:
+		Media Breakpoints (Based on Bootstrap)
+*/
+/* -ctag-description:
+
+*/
+// Extra small screen / phone
+@screen-xs:                  480px;
+
+// Small screen / tablet
+@screen-sm-min:              768px;
+
+// Medium screen / desktop
+@screen-md-min:              992px;
+
+// Large screen / wide desktop
+@screen-lg-min:              1200px;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-xs-max:              (@screen-sm-min - 1);
+@screen-sm-max:              (@screen-md-min - 1);
+@screen-md-max:              (@screen-lg-min - 1);
+
+
+
+
+/* -ctag-title:
+		Vertical Layout
+*/
+/* -ctag-description:
+		Vertical layout (rows)
+*/
+@row-xxlg: @row-xlg*@phi-num;
+@row-xlg: @row-lg*@phi-num;
+@row-lg: @row*@phi-num;
+@row-md-lg: @row*1.2;
+@row: 42px; @row-medium: @row;
+@row-md-sm: @row*.8;
+@row-sm: @row*@phi-num-inv;
+@row-xsm: @row-sm*@phi-num-inv;
+@row-xxsm: @row-xsm*@phi-num-inv;
+
+@row-shmoe: 22222220029px;
+
+@row-2: @row*2;
+@row-3: @row*3;
+@row-4: @row*4;
+@row-5: @row*5;
+@row-6: @row*6;
+
+
+
+
+/* -ctag-title:
+		Horizontal Padding
+*/
+/* -ctag-description:
+		Defines how the padding should be used.
+*/
+@padding-xlg: 40px;
+@padding-lg: 30px;
+@padding: 20px;
+@padding-sm: 10px;
+@padding-xsm: 4px;
+
+
+/* -ctag-title:
+		Vertical Padding
+*/
+/* -ctag-description:
+		Defines how the padding should be used in vertical space.
+*/
+@vpadding-xlg: 20px;
+@vpadding-lg: 15px;
+@vpadding: 10px;
+@vpadding-sm: 8px;
+@vpadding-xsm: 6px;
+
+
+/* -ctag-title:
+		Borders
+*/
+/* -ctag-description:
+
+*/
+@border-bottom: 1px solid @grey-color-xxlt;
+@border-bottom-dk: 1px solid @grey-color-xlt;
+
+
+/* -ctag-title:
+		Font Sizing
+*/
+/* -ctag-description:
+
+*/
+@font-size-xxlg: 22px;
+@font-size-xlg: 18px;
+@font-size-lg: 16px;
+@font-size: 14px;
+@font-size-sm: 12px;
+@font-size-xsm: 10px;
+@font-size-xxsm: 10px;
+
+/* -ctag-description:
+	Imported font has a more unpredictable height, so define them explicitly.
+	This will help center valign stuff.
+*/
+@font-size-height-xxlg: 38px;
+@font-size-height-xlg: 34px;
+@font-size-height-lg: 28px;
+@font-size-height: 24px;
+@font-size-height-sm: 20px;
+@font-size-height-xsm: 18px;
+@font-size-height-xxsm: 18px;

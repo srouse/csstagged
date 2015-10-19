@@ -7,32 +7,27 @@ var TypeIcon = React.createClass({
         var icon_class = "rule_icon";
 
 
-        if ( this.props.rule.is_duplicate ) {
+        if ( this.props.rule.has_error ) {
             icon_class = "dup_icon";
         }else if ( this.props.rule.type == "tagged_rule" ) {
             icon_class = "tagged_icon";
-            if ( this.props.rule.metadata.complete ) {
-                icon_class = "tagged_icon";
+
+            if ( this.props.rule.metadata ) {
+                if ( this.props.rule.metadata.complete ) {
+                    icon_class = "tagged_icon";
+                }else{
+                    icon_class = "tagged_incomplete_icon";
+                }
             }else{
-                icon_class = "tagged_incomplete_icon";
+                console.log( this.props.rule );
             }
         }
 
-        /*
-        var total_stats = 0;
-        if ( this.props.rule.is_extended ) {
-            total_stats++;
-        }
-        if ( this.props.rule.is_duplicate ) {
-            total_stats++;
-        }
-        if ( this.props.rule.extends_rule ) {
-            total_stats++;
-        }
-        */
-
         var extended = "";
-        if ( this.props.rule.is_extended ) {
+
+        if (
+            this.props.rule.is_extended
+        ) {
             extended =
                 <div className="extendedIcon">
                     <div className="extendedIcon_content"></div>
@@ -44,7 +39,10 @@ var TypeIcon = React.createClass({
         //}
 
         var extendee = "";
-        if ( this.props.rule.extends_rule ) {
+        if (
+            this.props.rule.metadata &&
+            this.props.rule.metadata.based_on
+        ) {
             extendee =
                 <div className="extendeeIcon">
                     <div className="extendeeIcon_content"></div>

@@ -43,7 +43,6 @@ function processRule ( rule , returnObj ) {
     rule.states = [];
     rule.pseudos = [];
 
-    //var is_comp = _checkIfComponent( rule );
     if ( rule.type == "rule" ) {
         returnObj.totals.rules++;
         returnObj.rules.push( rule );

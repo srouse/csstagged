@@ -1,0 +1,36 @@
+
+
+
+
+@root-var : #79E1DA;
+
+.test {
+    height: 100%;
+}
+
+.csstagged_variables {
+    -ctag-tag: dog,cat;
+    &:extend( .test );
+
+    //hie
+
+    /* -ctag-definition:
+        end of the road
+    d*/
+
+    @ruleset-var : #79E1DA;
+    @ruleset-var2 : 2px;
+    @ruleset-var3 : url( "papa.jpg" );
+    @ruleset-var4 : rgba( 3,3,3,.3);
+
+
+    width: @ruleset-var4;
+    height: 23px;
+    border: 5px * 3;
+    background-image: url("img_tree.gif"), url("img_flwr.gif");
+
+}
+
+
+
+@late-var : 23px - 54%;

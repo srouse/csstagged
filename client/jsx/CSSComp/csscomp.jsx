@@ -6,7 +6,6 @@ var CSSComp = React.createClass({
 
     render: function() {
         return  <div className="cssComp">
-
                     <div className="cssComp_columns">
                         <ColumnStats
                             css_info={ this.props.css_info } />

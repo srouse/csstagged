@@ -9,6 +9,7 @@
         </div>
     </csstag>*/
     &:extend(
+        .ruleDetail_contentContainer
         .ruleDetail_content
     );
     z-index: 100;
@@ -69,7 +70,7 @@
                 position: absolute;
                 right: 10px;
                 bottom: 0px;
-                .hand();
+                &:extend( .hand );
             }
         }
 

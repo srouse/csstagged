@@ -6,7 +6,6 @@ var CSSComp = React.createClass({displayName: "CSSComp",
 
     render: function() {
         return  React.createElement("div", {className: "cssComp"}, 
-
                     React.createElement("div", {className: "cssComp_columns"}, 
                         React.createElement(ColumnStats, {
                             css_info:  this.props.css_info}), 
@@ -280,7 +279,7 @@ var ColumnStats = React.createClass({displayName: "ColumnStats",
                                 )
                             ), 
                             React.createElement("div", {className: "tile_label"}, 
-                                "Tagged Rules", 
+                                "Tagged", 
                                 React.createElement("div", {className: "columnStats_typeBox"}, 
                                     React.createElement(TypeIcon, {rule: {
                                             type:"tagged_rule",
@@ -310,13 +309,21 @@ var ColumnStats = React.createClass({displayName: "ColumnStats",
                                             ) / totals.overall ) * 100
                                         ), 
                                     
+                                    "data-label": 
+                                        Math.round(
+                                            (
+                                                totals.tagged_completed /
+                                                totals.tagged_rules
+                                            ) * 100
+                                        ) + "%", 
+                                    
                                     "data-base-color": "#FFE29B", 
                                     "data-score-color": "#79E1DA", 
                                     "data-score-two-color": "#555"}
                                 )
                             ), 
                             React.createElement("div", {className: "tile_label"}, 
-                                "Complete Tags", 
+                                "Complete", 
                                 React.createElement("div", {className: "columnStats_typeBox"}, 
                                     React.createElement(TypeIcon, {rule: {
                                             type:"tagged_rule",
@@ -360,7 +367,7 @@ var ColumnStats = React.createClass({displayName: "ColumnStats",
                                 )
                             ), 
                             React.createElement("div", {className: "tile_label"}, 
-                                "Extended Rules", 
+                                "Based On", 
                                 React.createElement("div", {className: "columnStats_typeBox"}, 
                                     React.createElement(TypeIcon, {rule: {
                                             type:"tagged_rule",
@@ -380,21 +387,23 @@ var ColumnStats = React.createClass({displayName: "ColumnStats",
                                 React.createElement("div", {className: "tile_circle", 
                                     "data-score": 
                                         Math.round(
-                                            totals.name_duplicates
+                                            totals.errors
                                             / totals.overall * 100
                                         ), 
                                     
-                                    "data-label":  totals.name_duplicates, 
+                                    "data-label": 
+                                        totals.errors, 
+                                    
                                     "data-base-color": "#555", 
                                     "data-score-color": "#FF8990"}
                                 )
                             ), 
                             React.createElement("div", {className: "tile_label"}, 
-                                "Duplicate Names", 
+                                "Errors", 
                                 React.createElement("div", {className: "columnStats_typeBox"}, 
                                     React.createElement(TypeIcon, {rule: {
                                             type:"tagged_rule",
-                                            is_duplicate:true
+                                            has_error:true
                                         }})
                                 )
                             )
@@ -740,6 +749,37 @@ var DuplicateDetails = React.createClass({displayName: "DuplicateDetails",
         RouteState.removeDiffListener( this.route_listener );
     },
 
+    getExampleErrors: function () {
+        var me = this;
+        var rules = this.props.css_info.example_error_names;
+        var rows = [];
+        rows.push(
+            React.createElement("div", {className: "statDetails_sectionHeader", 
+                key:  "exampleErrors_header" }, 
+                "Example Template Errors"
+            )
+        );
+        $.each( rules , function ( i , rule_name ) {
+            var rule = me.props.css_info.name_hash[ rule_name ];
+            if ( rule ) {
+                rows.push(
+                    React.createElement("div", {className: "statDetails_row", 
+                        key:  "dupDetails_" + rule.uuid, 
+                        onClick: 
+                            me.viewRuleDetail.bind( me , rule.selector)
+                        }, 
+                         rule.name, 
+                        React.createElement("div", {className: "statDetails_typeIcon"}, 
+                            React.createElement(TypeIcon, {rule:  rule })
+                        )
+                    )
+                );
+            }
+        });
+
+        return rows;
+    },
+
     render: function() {
         var me = this;
         var rules = this.props.css_info.duplicates;
@@ -768,11 +808,14 @@ var DuplicateDetails = React.createClass({displayName: "DuplicateDetails",
             }
         });
 
+        var example_errors = this.getExampleErrors();
+
         return  React.createElement("div", {className: "duplicateDetails"}, 
 
                     React.createElement("div", {className: "statDetails_columnList nano"}, 
                         React.createElement("div", {className: "nano-content"}, 
-                             rows 
+                             rows, 
+                             example_errors 
                         )
                     ), 
 
@@ -1084,7 +1127,7 @@ var TaggedDetails = React.createClass({displayName: "TaggedDetails",
                                     "Tagged rules are regular CSS rules with" + ' ' +
                                     "some extra metadata tagged via a comment." + ' ' +
                                     "This allows for rules to be clustered by" + ' ' +
-                                    "types (buttons, titles, etc) or sections of" + ' ' +
+                                    "tags (buttons, titles, etc) or sections of" + ' ' +
                                     "your application. It also allows for simple" + ' ' +
                                     "examples to be embedded within tags so you" + ' ' +
                                     "can view isolated implementations of the rules." + ' ' +
@@ -1167,7 +1210,7 @@ var ColumnTypeList = React.createClass({displayName: "ColumnTypeList",
 
     buildRuleList : function () {
         var rows = [];
-        var rules = this.props.css_info.types_hash[
+        var rules = this.props.css_info.tags_hash[
                         this.state.type
                     ];
 
@@ -1190,17 +1233,17 @@ var ColumnTypeList = React.createClass({displayName: "ColumnTypeList",
     buildTypeList : function () {
 
         var rows = [];
-        var types = this.props.css_info.types_hash;
+        var tags = this.props.css_info.tags_hash;
 
-        var types_arr = [];
-        for ( var type in types ) {
-            types_arr.push( {
+        var tags_arr = [];
+        for ( var type in tags ) {
+            tags_arr.push( {
                 type:type,
-                length:types[type].length
+                length:tags[type].length
             } );
         }
 
-        types_arr.sort(
+        tags_arr.sort(
             function(a, b) {
                 if (a.type > b.type) {
                     return 1;
@@ -1214,9 +1257,9 @@ var ColumnTypeList = React.createClass({displayName: "ColumnTypeList",
 
         var type_arr;
         var type;
-        for ( var t=0; t<types_arr.length; t++ ) {
-            type = types_arr[t].type;
-            type_arr = types[type];
+        for ( var t=0; t<tags_arr.length; t++ ) {
+            type = tags_arr[t].type;
+            type_arr = tags[type];
             rows.push(
                 React.createElement("div", {className: "column_List_Row", 
                     key:  type }, 
@@ -1356,6 +1399,8 @@ var RuleCSS = React.createClass({displayName: "RuleCSS",
                     ];
 
         var rule = this.props.rule;
+
+        
 
         if ( !rule ) {
             return React.createElement("div", null);
@@ -1522,7 +1567,7 @@ var RuleDetail = React.createClass({displayName: "RuleDetail",
     render: function() {
 
         if ( this.state.tag ) {
-            var rules_by_tag = this.props.css_info.types_hash[this.state.tag];
+            var rules_by_tag = this.props.css_info.tags_hash[this.state.tag];
             var tree_rule = {
                 name:this.state.tag + " (tag)",
                 children:rules_by_tag,
@@ -1605,7 +1650,10 @@ var RuleDetail = React.createClass({displayName: "RuleDetail",
                         )
                     ), 
 
-                     content, 
+                    React.createElement("div", {className: "ruleDetail_contentContainer"}, 
+                         content 
+                    ), 
+
 
                     React.createElement(RuleNesting, {
                         css_info:  this.props.css_info, 
@@ -2050,7 +2098,6 @@ var RulePreview = React.createClass({displayName: "RulePreview",
         RouteState.addDiffListeners(
     		["rulestate","bg","outline"],
     		function ( route , prev_route ) {
-                //me.forceUpdate();
                 me.refreshDisplayedState();
     		},
             "rule_preview"
@@ -2066,6 +2113,9 @@ var RulePreview = React.createClass({displayName: "RulePreview",
     refreshDisplayedState: function () {
         var state,state_name;
         var rule = this.props.rule;
+
+        if ( !rule )
+            return;
 
         for ( var s=0; s<rule.states.length; s++ ) {
             state = rule.states[s];
@@ -2153,6 +2203,10 @@ var RulePreview = React.createClass({displayName: "RulePreview",
 
     render: function() {
         var rule = this.props.rule;
+
+        if ( !rule )
+            return React.createElement("div", null);
+
         var example = RuleUtil.findRuleExample( rule , this.props.css_info );
         example = example.all;
 
@@ -2357,32 +2411,27 @@ var TypeIcon = React.createClass({displayName: "TypeIcon",
         var icon_class = "rule_icon";
 
 
-        if ( this.props.rule.is_duplicate ) {
+        if ( this.props.rule.has_error ) {
             icon_class = "dup_icon";
         }else if ( this.props.rule.type == "tagged_rule" ) {
             icon_class = "tagged_icon";
-            if ( this.props.rule.metadata.complete ) {
-                icon_class = "tagged_icon";
+
+            if ( this.props.rule.metadata ) {
+                if ( this.props.rule.metadata.complete ) {
+                    icon_class = "tagged_icon";
+                }else{
+                    icon_class = "tagged_incomplete_icon";
+                }
             }else{
-                icon_class = "tagged_incomplete_icon";
+                console.log( this.props.rule );
             }
         }
 
-        /*
-        var total_stats = 0;
-        if ( this.props.rule.is_extended ) {
-            total_stats++;
-        }
-        if ( this.props.rule.is_duplicate ) {
-            total_stats++;
-        }
-        if ( this.props.rule.extends_rule ) {
-            total_stats++;
-        }
-        */
-
         var extended = "";
-        if ( this.props.rule.is_extended ) {
+
+        if (
+            this.props.rule.is_extended
+        ) {
             extended =
                 React.createElement("div", {className: "extendedIcon"}, 
                     React.createElement("div", {className: "extendedIcon_content"})
@@ -2394,7 +2443,10 @@ var TypeIcon = React.createClass({displayName: "TypeIcon",
         //}
 
         var extendee = "";
-        if ( this.props.rule.extends_rule ) {
+        if (
+            this.props.rule.metadata &&
+            this.props.rule.metadata.based_on
+        ) {
             extendee =
                 React.createElement("div", {className: "extendeeIcon"}, 
                     React.createElement("div", {className: "extendeeIcon_content"})
@@ -2412,4 +2464,287 @@ var TypeIcon = React.createClass({displayName: "TypeIcon",
                 );
     }
 
+});
+
+
+
+var StyleGuide = React.createClass({displayName: "StyleGuide",
+
+    render: function() {
+
+
+
+        return  React.createElement("div", {className: "styleGuide"}, 
+                    React.createElement("div", {className: "styleGuide_nav"}, 
+                        React.createElement(StyleGuideNav, null)
+                    ), 
+                    React.createElement("div", {className: "styleGuide_content"}, 
+                        React.createElement(VariablesPage, null)
+                    )
+                );
+    }
+});
+
+
+
+
+
+var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
+
+    componentDidMount: function() {
+        var me = this;
+        RouteState.addDiffListeners(
+    		["tab"],
+    		function ( route , prev_route ) {
+                me.forceUpdate();
+    		},
+            "StyleGuideNav"
+    	);
+    },
+
+    componentWillUnmount: function(){
+        RouteState.removeDiffListenersViaClusterId( "StyleGuideNav" );
+    },
+
+    gotoVariables: function () {
+        RS.merge(
+            {tab:""}
+        );
+    },
+
+    gotoRules: function () {
+        RS.merge(
+            {tab:"rules"}
+        );
+    },
+
+    gotoVariableCluster: function ( index ) {
+        RS.merge(
+            {variables:index}
+        );
+    },
+
+    getVariablesList: function () {
+        var variable_titles = CSSInfo.definitions.title;
+
+        var var_title;
+        var var_html = [];
+        for ( var v=0; v<variable_titles.length; v++ ) {
+            var_title = variable_titles[v];
+            var_html.push(
+                React.createElement("div", {className: "styleGuideNav_listRow", 
+                    key:  "variables_" + v, 
+                    onClick:  this.gotoVariableCluster.bind( this , v) }, 
+                    React.createElement("div", {className: "styleGuideNav_rowLabel"}, 
+                         var_title.content
+                    )
+                )
+            );
+        }
+        return React.createElement("div", {className: "styleGuideList"},  var_html );
+    },
+
+
+    render: function() {
+
+        var var_class = " selected";
+        var rules_class = "";
+        var var_list = [];
+        if ( RS.route.tab == "rules" ) {
+            rules_class = " selected";
+            var_class = "";
+            var_list = React.createElement(StyleGuideRulesNav, null);
+        }else{
+            var_list = this.getVariablesList();
+        }
+
+        return  React.createElement("div", {className: "styleGuideNav"}, 
+                    React.createElement("div", {className: "styleGuideNav_mainNav"}, 
+                        React.createElement("div", {className:  "styleGuideNav_mainItem" + var_class, 
+                            onClick:  this.gotoVariables}, 
+                            "Variables"
+                        ), 
+                        React.createElement("div", {className:  "styleGuideNav_mainItem" + rules_class, 
+                            onClick:  this.gotoRules}, 
+                            "Rules"
+                        )
+                    ), 
+                    React.createElement("div", {className: "styleGuideNav_listContainer"}, 
+                         var_list 
+                    )
+                );
+    }
+});
+
+
+
+var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
+
+    componentDidMount: function() {
+        var me = this;
+        RouteState.addDiffListeners(
+    		["tag"],
+    		function ( route , prev_route ) {
+                me.forceUpdate();
+    		},
+            "StyleGuideRulesNav"
+    	);
+    },
+
+    componentWillUnmount: function(){
+        RouteState.removeDiffListenersViaClusterId( "StyleGuideRulesNav" );
+    },
+
+    gotoTag: function ( tag ) {
+        RS.merge(
+            {tag:tag}
+        );
+    },
+
+    gotoTags: function () {
+        RS.merge(
+            {tag:""}
+        );
+    },
+
+    render: function() {
+
+        if ( RS.route.tag ) {
+            var tag = RS.route.tag;
+            var rules = CSSInfo.tags_hash[ RS.route.tag ];
+            var html = [],rule;
+
+            html.push(
+                React.createElement("div", {className: "styleGuideNav_rulesListHeader", 
+                    key:  "tag_title_" + tag, 
+                    onClick:  this.gotoTags}, 
+                    React.createElement("div", {className: "styleGuideNav_rowLabel"}, 
+                         tag 
+                    )
+                )
+            );
+
+            if ( rules ) {
+
+                for ( var t=0; t < rules.length; t++ ) {
+                    rule = rules[t];
+                    html.push(
+                        React.createElement("div", {className: "styleGuideNav_listRow", 
+                            key:  "rule_" + rule.uuid, 
+                            onClick:  this.gotoTag.bind( this , rule) }, 
+                            React.createElement("div", {className: "styleGuideNav_rowLabelRight"}
+
+                            ), 
+                            React.createElement("div", {className: "styleGuideNav_rowLabel"}, 
+                                 rule.name
+                            )
+                        )
+                    );
+                }
+            }
+
+        }else{
+
+            var tags = CSSInfo.tags;
+            var html = [],tag,tag_rules;
+            for ( var t=0; t < tags.length; t++ ) {
+                tag = tags[t];
+                tag_rules = CSSInfo.tags_hash[ tag ];
+                html.push(
+                    React.createElement("div", {className: "styleGuideNav_listRow", 
+                        key:  "tag_" + tag, 
+                        onClick:  this.gotoTag.bind( this , tag) }, 
+                        React.createElement("div", {className: "styleGuideNav_rowLabelRight"}, 
+                             tag_rules.length
+                        ), 
+                        React.createElement("div", {className: "styleGuideNav_rowLabel"}, 
+                             tag 
+                        )
+                    )
+                );
+            }
+
+        }
+
+        return  React.createElement("div", {className: "styleGuideNav_rulesList"}, 
+                     html 
+                );
+    }
+});
+
+
+
+
+
+
+
+var VariablesPage = React.createClass({displayName: "VariablesPage",
+
+    componentDidMount: function() {
+        var me = this;
+        RouteState.addDiffListeners(
+    		["variables"],
+    		function ( route , prev_route ) {
+                me.forceUpdate();
+    		},
+            "VariablesPage"
+    	);
+    },
+
+    componentWillUnmount: function(){
+        RouteState.removeDiffListenersViaClusterId( "VariablesPage" );
+    },
+
+
+    render: function() {
+
+        var variable_titles = CSSInfo.definitions.title;
+        var descriptions = CSSInfo.definitions.description;
+        var definitions = CSSInfo.definitions.definitions;
+        var def_html = [];
+
+        var variables = [];
+        var variable_title,description;
+        var definitions_index = 0;
+        if ( variable_titles.length > RS.route.variables ) {
+            variable_title = variable_titles[RS.route.variables];
+            description = descriptions[RS.route.variables];
+            definitions_index = variable_title.definitions_index;
+            def_html.push(
+                React.createElement("div", {className: "variablePage_title", 
+                    key:  "variablePage_title" }, 
+                     variable_title.content
+                )
+            );
+            def_html.push(
+                React.createElement("div", {className: "variablePage_description", 
+                    key:  "variablePage_description" }, 
+                     description.content
+                )
+            );
+        }
+
+        var definitions_end_index = variable_titles.length;
+        if ( variable_titles.length > parseInt( RS.route.variables )+1 ) {
+            variable_title = variable_titles[parseInt( RS.route.variables )+1];
+            definitions_end_index = variable_title.definitions_index;
+        }
+
+        var definition;
+
+        for ( var i=definitions_index; i<definitions_end_index; i++ ) {
+            definition = definitions[i];
+            def_html.push(
+                React.createElement("div", {className: "variablePage_variableLabel", 
+                    key:  "var_" + i}, 
+                    React.createElement("span", {className: "variablePage_variableName"}, 
+                         definition.name), ": ",  definition.value, ";"
+                )
+            );
+        }
+
+        return  React.createElement("div", {className: "variablePage"}, 
+                     def_html 
+                );
+    }
 });

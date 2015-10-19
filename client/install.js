@@ -52,23 +52,40 @@ for ( var j=0; j<js_install.length; j++ ) {
 
 document.write( html.join("\n") );
 
-// $(window).ready(function () {
+var RS,CSSInfo;
 window.onload = function () {
     RouteState.listenToHash();
+    RS = RouteState;
+
     $.ajax(
         "csstagged.json?" + Math.random()
     ).done(
         function ( css_dom ) {
             var css_info = processRules ( css_dom );
-            React.render(
-                React.createElement(
-                    CSSComp,
-                    {
-                        css_info:css_info
-                    }
-                ),
-                document.body
-            );
+            CSSInfo = css_info;
+
+            if ( is_style_guide && is_style_guide == true ) {
+                React.render(
+                    React.createElement(
+                        StyleGuide,
+                        {
+                            css_info:css_info
+                        }
+                    ),
+                    document.body
+                );
+            }else{
+                React.render(
+                    React.createElement(
+                        CSSComp,
+                        {
+                            css_info:css_info
+                        }
+                    ),
+                    document.body
+                );
+            }
+
         }
     );
 };

@@ -51,7 +51,7 @@ var ColumnTypeList = React.createClass({
 
     buildRuleList : function () {
         var rows = [];
-        var rules = this.props.css_info.types_hash[
+        var rules = this.props.css_info.tags_hash[
                         this.state.type
                     ];
 
@@ -74,17 +74,17 @@ var ColumnTypeList = React.createClass({
     buildTypeList : function () {
 
         var rows = [];
-        var types = this.props.css_info.types_hash;
+        var tags = this.props.css_info.tags_hash;
 
-        var types_arr = [];
-        for ( var type in types ) {
-            types_arr.push( {
+        var tags_arr = [];
+        for ( var type in tags ) {
+            tags_arr.push( {
                 type:type,
-                length:types[type].length
+                length:tags[type].length
             } );
         }
 
-        types_arr.sort(
+        tags_arr.sort(
             function(a, b) {
                 if (a.type > b.type) {
                     return 1;
@@ -98,9 +98,9 @@ var ColumnTypeList = React.createClass({
 
         var type_arr;
         var type;
-        for ( var t=0; t<types_arr.length; t++ ) {
-            type = types_arr[t].type;
-            type_arr = types[type];
+        for ( var t=0; t<tags_arr.length; t++ ) {
+            type = tags_arr[t].type;
+            type_arr = tags[type];
             rows.push(
                 <div className="column_List_Row"
                     key={ type }>

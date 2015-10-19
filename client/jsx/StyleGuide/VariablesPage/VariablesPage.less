@@ -1,0 +1,67 @@
+
+
+
+
+.variablePage {
+    -ctag-tags: page,container;
+    /* -ctag-example: '...
+                        { .variablePage_title }
+                        { .variablePage_description }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_title }
+                        { .variablePage_description }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }
+                        { .variablePage_variableLabel }';*/
+
+    background-color: @grey-color-xxlt;
+    padding: @vpadding-xlg @phi-inv/2;
+    min-height: 100%;
+
+    .variablePage_title {
+        -ctag-tags: container,header;
+        -ctag-example: ...Title of Variable Cluster;
+
+        width: 100%;
+        font-size: @font-size-xxlg;
+        height: @row-lg;
+        .center( padding-top , @row-lg , @font-size-height-xxlg );
+        color: @grey-color-dk;
+        border-bottom: @border-bottom-dk;
+        margin-bottom: @vpadding;
+    }
+
+    .variablePage_description {
+        -ctag-tags: text;
+        /* -ctag-example: ...These variables are used to describe something
+                            in your site.These variables are used to describe
+                            something in your site. These variables are used
+                            to describe something in your site.;*/
+
+        width: 100%;
+        font-size: @font-size;
+        color: @grey-color-lt;
+        margin-bottom: @vpadding;
+    }
+
+    .variablePage_variableLabel {
+        -ctag-tags: container,header;
+        -ctag-example: "...@variable_name: 123px;";
+
+        font-size: @font-size;
+        height: @row-md-sm;
+        .center( padding-top , @row-md-sm , @font-size-height );
+        color: @grey-color-lt;
+
+        .variablePage_variableName {
+            color: @grey-color;
+            font-weight: bold;
+        }
+    }
+}

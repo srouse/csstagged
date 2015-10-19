@@ -1,9 +1,8 @@
 
 // @import (reference) "../shared.less";
 
-
 @column_header_height: 60px;
-@column_footer_height: 0px;//60px;
+@column_footer_height: 0px;
 
 .column {
     /*<csstag tag="section">
@@ -94,7 +93,7 @@
             </csstag>*/
             float: left; clear: left;
             height: 40px;
-            .hand();
+            &:extend( .hand );
             padding: 0px 30px;
             width: 100%;
 

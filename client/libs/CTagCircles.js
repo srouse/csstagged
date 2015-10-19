@@ -62,8 +62,6 @@ CTagCircles.renderCircle = function ( $loc ) {
         score_color, ""
 	);
 
-
-
 	//=============WHITE CIRCLE=============
 	paper.circle(
 		//pwidth/2, pheight/2,

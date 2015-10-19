@@ -53,7 +53,7 @@ var ColumnStats = React.createClass({
                                 </div>
                             </div>
                             <div className="tile_label">
-                                Tagged Rules
+                                Tagged
                                 <div className="columnStats_typeBox">
                                     <TypeIcon rule={{
                                             type:"tagged_rule",
@@ -83,13 +83,21 @@ var ColumnStats = React.createClass({
                                             ) / totals.overall ) * 100
                                         )
                                     }
+                                    data-label={
+                                        Math.round(
+                                            (
+                                                totals.tagged_completed /
+                                                totals.tagged_rules
+                                            ) * 100
+                                        ) + "%"
+                                    }
                                     data-base-color="#FFE29B"
                                     data-score-color="#79E1DA"
                                     data-score-two-color="#555">
                                 </div>
                             </div>
                             <div className="tile_label">
-                                Complete Tags
+                                Complete
                                 <div className="columnStats_typeBox">
                                     <TypeIcon rule={{
                                             type:"tagged_rule",
@@ -133,7 +141,7 @@ var ColumnStats = React.createClass({
                                 </div>
                             </div>
                             <div className="tile_label">
-                                Extended Rules
+                                Based On
                                 <div className="columnStats_typeBox">
                                     <TypeIcon rule={{
                                             type:"tagged_rule",
@@ -153,21 +161,23 @@ var ColumnStats = React.createClass({
                                 <div className="tile_circle"
                                     data-score={
                                         Math.round(
-                                            totals.name_duplicates
+                                            totals.errors
                                             / totals.overall * 100
                                         )
                                     }
-                                    data-label={ totals.name_duplicates }
+                                    data-label={
+                                        totals.errors
+                                    }
                                     data-base-color="#555"
                                     data-score-color="#FF8990">
                                 </div>
                             </div>
                             <div className="tile_label">
-                                Duplicate Names
+                                Errors
                                 <div className="columnStats_typeBox">
                                     <TypeIcon rule={{
                                             type:"tagged_rule",
-                                            is_duplicate:true
+                                            has_error:true
                                         }} />
                                 </div>
                             </div>

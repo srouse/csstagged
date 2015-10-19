@@ -6,7 +6,6 @@ var RulePreview = React.createClass({
         RouteState.addDiffListeners(
     		["rulestate","bg","outline"],
     		function ( route , prev_route ) {
-                //me.forceUpdate();
                 me.refreshDisplayedState();
     		},
             "rule_preview"
@@ -22,6 +21,9 @@ var RulePreview = React.createClass({
     refreshDisplayedState: function () {
         var state,state_name;
         var rule = this.props.rule;
+
+        if ( !rule )
+            return;
 
         for ( var s=0; s<rule.states.length; s++ ) {
             state = rule.states[s];
@@ -109,6 +111,10 @@ var RulePreview = React.createClass({
 
     render: function() {
         var rule = this.props.rule;
+
+        if ( !rule )
+            return <div></div>;
+
         var example = RuleUtil.findRuleExample( rule , this.props.css_info );
         example = example.all;
 

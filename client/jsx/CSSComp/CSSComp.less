@@ -1,23 +1,39 @@
 
-// @import (reference) "../Shared/shared.less";
 
 .cssComp {
-	/*<csstag tag="app"
-		description="The root app">
-        <div class="cssComp">
-			<cssComp_columns />
-        </div>
-    </div>*/
+    /* -ctag:
+            "app,container",
+            "...Example",
+            "hello, there \"dog\" here",
+
+    */
     height: 100%;
 
     .cssComp_columns {
-		/*<csstag tag="section,column"
-			description="Defines the core idea of
-				columns">
-	        <div class="cssComp_columns"></div>
-	    </div>*/
+        /* -ctag:
+                "app,container",
+                "...Example",
+                "hello, there \"dog\"
+                here"
+        */
 		position: relative;
 		z-index: 200;
         .calc( height , 100% , -90px );
     }
+
+    .cssComp_col2 {
+        /* -ctag:
+                "app,container",
+                "...",
+                "Example of an extended class",
+                ".cssComp_columns"
+        */
+
+        // extend it
+        &:extend(
+            .cssComp
+            .cssComp_columns
+        );
+    }
+
 }

@@ -7,27 +7,19 @@
 @tile_circle_diameter : 84px;
 
 .columnStats {
-    /*<csstag
-        tag="section,column"
-        extend="column">
-        <div ...>
-            { .columnStats_graph }
-            { .columnStats_content }
-            { .columnStats_depthChart }
-        </div>
-    </csstag>*/
+    /* -ctag:
+            "section,column",
+            "<div ...>
+                { .columnStats_graph }
+                { .columnStats_content }
+                { .columnStats_depthChart }
+            </div>"
+    */
     &:extend( .column );
 
     .columnStats_content {
-        /*<csstag
-            tag="section,content">
-            <div ...>
-                { .columnStats_tile }
-                { .columnStats_tile }
-                { .columnStats_tile }
-                { .columnStats_tile }
-            </div>
-        </csstag>*/
+        -ctag-tags: section,content;
+        -ctag-example: "...{ .columnStats_tile }{ .columnStats_tile }{ .columnStats_tile }{ .columnStats_tile }";
         &:extend(
             .column
             .column_Content
@@ -38,19 +30,15 @@
         padding: 20px 30px;
 
         .columnStats_tile {
-            /*<csstag
-                tag="section,tile">
-                <div ...>
-                    { .tile_graph }
-                    { .tile_label }
-                </div>
-            </csstag>*/
+            -ctag-tags: section,tile;
+            -ctag-example: "...{ .tile_graph }{ .tile_label }";
+            &:extend( .hand );
+
             width: 50%; height: 50%;
             float: left;
             position: relative;
             background-color: #fff;
             z-index: 10;
-            .hand();
 
             &:hover {
                 //background-color: #eee;
@@ -92,12 +80,9 @@
             }
 
             .tile_graph {
-                /*<csstag
-                    tag="graph">
-                    <div ...>
-                        { .tile_circle }
-                    </div>
-                </csstag>*/
+                -ctag-tag: graph;
+                -ctag-example: "...{ .tile_circle }";
+
                 width: 100%;
                 .calc( height , 100% , -28px );
                 position: absolute;
@@ -106,10 +91,11 @@
                 text-align: center;
 
                 .tile_circle {
-                    /*<csstag
-                        tag="graph">
-                        <div ...>43%</div>
-                    </csstag>*/
+                    /* -ctag:
+                            "graph,unique",
+                            "<div ...>43%</div>",
+                    */
+
                     position: absolute;
                     .calc( top , 50% , -@tile_circle_diameter/2 );
                     .calc( left , 50% , -@tile_circle_diameter/2 );
@@ -132,6 +118,7 @@
             .tile_label {
                 -ctag-tag: "graph";
                 -ctag-example: "...Rule of Dogs{ .columnStats_typeBox }";
+
                 position: absolute;
                 left: 0px;
                 width: 100%;
@@ -152,6 +139,11 @@
         }
 
         .extendable_tile {
+            .ctag(
+                "application,section",
+                "...{ .tile_graph }{ .tile_label }",
+                "Exentions of columnStats_tile"
+            );
             &:extend(
                 .columnStats
                 .columnStats_content
@@ -178,7 +170,7 @@
         padding: 10px 30px;
         margin: 0px 30px;
         border: 1px solid #fff;
-        .hand();
+        &:extend( .hand );
 
         &:hover {
             box-shadow: 0px 0px 6px rgba(  0,0,0,.1 );

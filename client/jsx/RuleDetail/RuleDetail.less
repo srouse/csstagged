@@ -2,13 +2,12 @@
 // @import (reference) "../Shared/shared.less";
 
 .ruleDetail {
-    /*<csstag tag="page,modal">
-        <div ...>
-            { .ruleDetail_header }
-            { .ruleCSS }
-            { .ruleDetailNav }
-        </div>
-    </csstag>*/
+    /* -ctag:
+            "page,modal",
+            "...{ .ruleDetail_header }
+                { .ruleDetail_contentContainer }"
+    */
+
     width: 100vw; height: 100vh;
     position: absolute;
     top: 0px; left: 0px;
@@ -23,40 +22,55 @@
     body.s_tag & {
         display: block;
     }
+
+    body.s_detailTab & {
+        /* state */
+    }
 }
 
-.ruleDetail_content {
-    /*<csstag tag="content">
-        <div ...></div>
-    </csstag>*/
+.ruleDetail_contentContainer {
+    /* -ctag:
+            "placeholder",
+            "...{ .ruleDetail_content }"
+    */
     // width: @phi;
     .calc( width , 100% , -300px );
     .calc( height , 100% , -70px );
     position: absolute;
     top: 70px; right: 0px;
-    background-color: #fff;
+
+    .ruleDetail_content {
+        .ctag(
+            "page",
+            "..."
+        );
+        background-color: #fff;
+        width: 100%; height: 100%;
+    }
 }
 
+
+
 .ruleDetail_header {
-    /*<csstag tag="header">
-        <div ...>
-            { .ruleDetail_back }
-            { .ruleDetail_title }
-            { .ruleDetail_headerNav }
-        </div>
-    </csstag>*/
+    /* -ctag:
+            "header",
+            "...{ .ruleDetail_back }
+                { .ruleDetail_title }
+                { .ruleDetail_headerNav }"
+    */
     width: 100%; height: 70px;
     border-bottom: 1px solid #eee;
 
-
+    body.s_detailTab & {
+        /* state */
+    }
 
     .ruleDetail_title {
-        /*<csstag tag="container">
-            <div ...>
-                { .ruleDetail_titleText }
-                { .ruleDetail_iconBox }
-            </div>
-        </csstag>*/
+        /* -ctag:
+                "container",
+                "...{ .ruleDetail_titleText }
+                    { .ruleDetail_iconBox }"
+        */
         width: 300px;
         height: 100%;
         position: relative;
@@ -68,13 +82,17 @@
         }*/
 
         .ruleDetail_close {
-            /*<csstag tag="button">
-                <div ...></div>
-            </csstag>*/
+            /* -ctag:
+                    "button",
+                    "...",
+                    "Close the detail",
+                    ".hand"
+            */
+
             width: 70px; height: 100%;
             float: left;
             background-image: url('_assets/close_arrow.png');
-            .hand();
+            &:extend( .hand );
             transition: width .3s;
 
             &:hover {
@@ -88,13 +106,14 @@
         }
 
         .ruleDetail_showTree {
-            /*<csstag tag="button">
-                <div ...></div>
-            </csstag>*/
+            /* -ctag:
+                    "button",
+                    "..."
+            */
             width: 70px; height: 100%;
             float: right;
             background-image: url('_assets/show_tree.png');
-            .hand();
+            &:extend( .hand );
             display: none;
             transition: width .3s;
 
@@ -113,18 +132,22 @@
         }
 
         .ruleDetail_titleText {
-            /*<csstag tag="title">
-                <div ...>
-                    A Title
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "title",
+                    "...A Title"
+            */
+            .ctag(
+                "label",
+                "...A Title"
+            );
+
             float: left;
             padding: 16px 0px;
             padding-left: 0px;
             height: 100%;
             font-size: 14px;
             color: #555;
-            .hand();
+            &:extend( .hand );
 
             &:hover {
                 background-color: #eee;
@@ -132,25 +155,25 @@
         }
 
         .ruleDetail_iconBox {
-            /*<csstag tag="container,nav_item">
-                <div ...>
-                    <div class='rule_icon'></div>
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "container,nav_item",
+                    "...<div class='rule_icon'></div>"
+            */
             width: 50px; height: 100%;
             position: relative; float: left;
         }
     }
 
     .ruleDetail_headerNav {
-        /*<csstag tag="nav">
-            <div ...>
-                { .ruleDetail_item_css }
-                { .ruleDetail_item_overview }
-                { .ruleDetail_item_example }
-                { .ruleDetail_back }
-            </div>
-        </csstag>*/
+        /* -ctag:
+                "nav",
+                "...
+                    { .ruleDetail_item_css }
+                    { .ruleDetail_item_overview }
+                    { .ruleDetail_item_example }
+                    { .ruleDetail_back }
+                "
+        */
         float: right; clear: right;
         width: 410px; height: 100%;
         background-color: #fff;
@@ -164,16 +187,15 @@
         @item_color: #ccc;
         @item_selected: #000;
         .ruleDetail_item {
-            /*<csstag tag="nav_item">
-                <div ...>
-                    link_title
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "nav_item",
+                    "...link_title"
+            */
             color: @item_color; height: 100%;
             padding-top: 24px;
             .calc( width , 33.3333% , -70px/3 );
             float: right; text-align: center;
-            .hand();
+            &:extend( .hand );
 
             &:hover {
                 color: @item_selected;
@@ -181,11 +203,12 @@
             }
         }
         .ruleDetail_item_overview {
-            /*<csstag tag="nav_item">
-                <div ...>
-                    overview
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "nav_item",
+                    "...overview",
+                    "",
+                    ".ruleDetail_item"
+            */
             &:extend(
                 .ruleDetail_header
                 .ruleDetail_headerNav
@@ -197,11 +220,12 @@
             }
         }
         .ruleDetail_item_css {
-            /*<csstag tag="nav_item">
-                <div ...>
-                    overview
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "nav_item",
+                    "...overview",
+                    "",
+                    ".ruleDetail_item"
+            */
             &:extend(
                 .ruleDetail_header
                 .ruleDetail_headerNav
@@ -214,11 +238,12 @@
             }
         }
         .ruleDetail_item_example {
-            /*<csstag tag="nav_item">
-                <div ...>
-                    example
-                </div>
-            </csstag>*/
+            /* -ctag:
+                    "nav_item",
+                    "...example",
+                    "",
+                    ".ruleDetail_item"
+            */
             &:extend(
                 .ruleDetail_header
                 .ruleDetail_headerNav
@@ -231,13 +256,14 @@
         }
 
         .ruleDetail_back {
-            /*<csstag tag="button">
-                <div ...></div>
-            </csstag>*/
+            /* -ctag:
+                    "button",
+                    "..."
+            */
             width: 70px; height: 100%;
             background-image: url("_assets/close.png");
             background-color: #fff;
-            .hand();
+            &:extend( .hand );
             margin-right: 0px;
             float: right;
             transition: all .2s;

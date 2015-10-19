@@ -1,0 +1,56 @@
+
+
+
+.styleGuideNav {
+    -ctag-tags: container;
+    -ctag-example: "...{ .styleGuideNav_mainNav }{ .styleGuideNav_listContainer }";
+
+    width: 100%; height: 100%;
+
+    .styleGuideNav_mainNav {
+        -ctag-tags: container,navigation;
+        /* -ctag-example:
+                ... { .styleGuideNav_mainItem }
+                    <div class='styleGuideNav_mainItem selected'>
+                        Rules
+                    </div>
+        */
+
+        width: 100%;
+        height: @row-lg;
+        border-bottom: 1px solid #eee;
+
+        .styleGuideNav_mainItem {
+            -ctag-tags: button,navigation;
+            -ctag-example: ...Variables;
+            &:extend( .handover all );
+
+            width: 50%; height: 100%;
+            float: left;
+            font-size: @font-size-lg;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            .center ( padding-top , @row-lg , @font-size-height-lg );
+
+            &.selected {
+                border-bottom: 4px solid #777;
+            }
+        }
+    }
+
+    .styleGuideNav_listContainer {
+        -ctag-tags: unique,list,container;
+        -ctag-example: "...{ .styleGuideNav_listRow }{ .styleGuideNav_listRow }{ .styleGuideNav_listRow }";
+        -ctag-description: "Contains the list of variable categories or rules. This is just the list not the header for rules.";
+
+        width: 100%;
+        .calc( height, 100%, -@row-lg );
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        overflow: auto;
+
+    }
+
+}

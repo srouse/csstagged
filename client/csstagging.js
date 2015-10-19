@@ -37,7 +37,11 @@ function processRules ( css_dom ) {
             depths_rules:[],
             depths_tagged:[],
             selectorStringLengthTotal:0,
-            time_to_process:0
+            time_to_process:0,
+
+            example_errors:0,
+
+            errors:0
         },
         scores:{
             total_tagged_rules:0,
@@ -52,12 +56,14 @@ function processRules ( css_dom ) {
         rules:[],
         tagged_rules:[],
         incomplete_tagged_rules:[],
+        example_error_names:[],
         states:[],
         pseudos:[],
         depths_all:[],
 
         extended_rules_hash:{},
         extended_rules:[],
+        extendee_rules_hash:{},
         extendee_rules:[],
 
         css_dom:[],
@@ -68,7 +74,8 @@ function processRules ( css_dom ) {
         selector_hash:{},
         name_hash:{},
         uuid_hash:{},
-        types_hash:{},
+        tags_hash:{},
+        tags:[],
 
         //global rules...
         global_rules:[],
@@ -82,8 +89,7 @@ function processRules ( css_dom ) {
     var rule_hash = {};
 
     // need 1:1 relationship selector to rule
-    var selectors = flattenSelectors( rules );
-
+    var selectors = flattenSelectors( rules , returnObj );
 
     // <IGNORE>
     // find ignore rules early...
@@ -156,6 +162,13 @@ function processRules ( css_dom ) {
     returnObj.name_hash = rules_name.rule_name_hash;
     // </NAMES>
 
+    // <BASED ON PARENTS>
+    var tagged_rule,based_on_name,based_on_rule;
+    for ( var r=0; r<returnObj.tagged_rules.length; r++ ) {
+        findBasedOnRelationship( returnObj.tagged_rules[r] , returnObj );
+    }
+    // </BASED ON PARENTS>
+
     // <DIRECT_CHILDS>
     this.processRuleDirectChild( returnObj.selectors );
     // </DIRECT_CHILDS>
@@ -168,10 +181,67 @@ function processRules ( css_dom ) {
     }
     // </DUPS>
 
+    // <ERRORS>
+    var tagged_rule;
+    for ( var r=0; r<returnObj.tagged_rules.length; r++ ) {
+        tagged_rule = returnObj.tagged_rules[r];
+
+        // now do replacements....
+        tagged_rule.metadata.example_info
+            = __replaceComps( tagged_rule.metadata.example , returnObj );
+
+        // tally errors
+        if ( tagged_rule.metadata.example_info.errors.length > 0 ) {
+            tagged_rule.has_error = true;
+            returnObj.totals.example_errors++;
+            returnObj.example_error_names.push( tagged_rule.name );
+
+            if ( !tagged_rule.is_duplicate )
+                returnObj.totals.errors++;
+        }
+    }
+    // </ERRORS>
+
+    // <VARIABLES>
+    /*var variables = returnObj.name_hash[".___csstagged"];
+    var var_objs = [];
+    var var_cluster,var_obj;
+    var declaration,var_name,var_val;
+    if ( variables ) {
+        for ( var v=0; v<variables.source.length; v++ ) {
+            var_cluster = variables.source[v];
+            var_obj = {};
+            var_obj.variables = [];
+            for ( var d=0; d<var_cluster.declarations.length; d++ ) {
+                declaration = var_cluster.declarations[d];
+                var_name = declaration.property.slice( 14 );
+                var_val = declaration.value;
+                if (
+                    var_name == "title" ||
+                    var_name == "description"
+                ) {
+                    if ( var_val.indexOf( "\"" ) == 0 ) {
+                        var_val = var_val.slice( 1 , var_val.length-1 );
+                    }
+                    var_obj[ var_name ] = var_val;
+                }else{
+                    // order is important
+                    var_obj.variables.push( {name:var_name,value:var_val} );
+                }
+            }
+            var_objs.push( var_obj );
+        }
+    }
+    returnObj.variables = var_objs;*/
+    returnObj.variables = [];
+    // </VARIABLES>
+
     scoreDOM( returnObj );
 
     returnObj.totals.selectorStringLengthTotal =
         returnObj.totals.selectorStringLengthTotal/returnObj.totals.overall;
+
+    returnObj.tags.sort();
 
     console.log( returnObj );
 
@@ -205,7 +275,29 @@ function processRules ( css_dom ) {
         return false;
     }
 
-    function flattenSelectors ( rules ) {
+    function findBasedOnRelationship ( tagged_rule , returnObj ) {
+        if ( tagged_rule.metadata.based_on ) {
+            for ( var b=0; b<tagged_rule.metadata.based_on.length; b++ ) {
+                based_on_name = tagged_rule.metadata.based_on[b];
+                based_on_rule = returnObj.name_hash[ based_on_name ];
+                if ( based_on_rule ) {
+                    based_on_rule.is_extended = true;
+                    if ( !returnObj.extended_rules_hash[based_on_rule.name] ) {
+                        returnObj.extended_rules_hash[based_on_rule.name] = based_on_rule;
+                        returnObj.extended_rules.push( based_on_rule );
+                        returnObj.totals.rules_extended++;
+                    }
+                    if ( !returnObj.extendee_rules_hash[tagged_rule.name] ) {
+                        returnObj.extendee_rules_hash[tagged_rule.name] = based_on_rule;
+                        returnObj.extendee_rules.push( tagged_rule );
+                        returnObj.totals.rules_extendee++;
+                    }
+                }
+            }
+        }
+    }
+
+    function flattenSelectors ( rules , returnObj ) {
         var selector;
         var new_rules = [];
         var child_arr,child_space_arr,raw_selector;
@@ -234,6 +326,13 @@ function processRules ( css_dom ) {
                     rule.selector = selector;
                     rule.raw_selector = raw_selector;
                     new_rules.push( rule );
+                }
+            }else if ( rule.type == "comment" ) {
+                var comment = rule.comment.trim();
+
+                if ( comment.indexOf( "-ctag-metadata:") == 0 ) {
+                    comment = comment.slice( 15 );
+                    returnObj.definitions = JSON.parse( comment );
                 }
             }
         }
@@ -298,55 +397,41 @@ function processRules ( css_dom ) {
             }
         }
 
+
         // see if it is tagged...
+
+        var tagged_comment = getTaggedCommentInfo ( selector_rule );
+        if ( tagged_comment ) {
+            selector_rule.type = "tagged_rule";
+        }
+
+
+        // give all the source the same name...
         var source_rule;
         for ( var d=0; d<selector_rule.source.length; d++ ) {
             source_rule = selector_rule.source[d];
             source_rule.name = selector_rule.name;
 
-
+            /*
             // if this is the root selector, or if there isn't one...
             if (
                 !has_root_selector
                 || source_rule.selectors[0] == selector_rule.selector
             ) {
-                var tagged_comment = getTaggedComment( source_rule );
+                var tagged_comment = getTaggedCommentInfo ( source_rule );
+
+                if ( selector_rule.name == ".statDetails_sectionHeader" ) {
+                    console.log( "-----");
+                    console.log( tagged_comment );
+                    console.log( selector_rule );
+                    console.log( "-----");
+                }
                 if ( tagged_comment ) {
-                    selector_rule.tagged_comment = tagged_comment;
                     selector_rule.type = "tagged_rule";
                     break;
                 }
             }
-        }
-
-        // see if it is extended or an extendee
-        selector_rule.is_extended = false;
-        selector_rule.extends_rule = false;
-        // rule.is_duplicate = false;
-        var core_selector = false;
-        for ( var d=0; d<selector_rule.source.length; d++ ) {
-            source_rule = selector_rule.source[d];
-            if ( source_rule.selectors.length > 1 ) {
-                var cleaned_first_selector = _getCleanedSelector(
-                                                source_rule.selectors[0]
-                                            );
-                if ( cleaned_first_selector == source_rule.selector ) {
-                    if ( selector_rule.is_extended == false ) {
-                        returnObj.totals.rules_extended++;
-                        returnObj.extended_rules.push( selector_rule );
-                        returnObj.extended_rules_hash[
-                            selector_rule.selector
-                        ] = selector_rule;
-                    }
-                    selector_rule.is_extended = true;
-                }else{
-                    if ( selector_rule.extends_rule == false ) {
-                        returnObj.totals.rules_extendee++;
-                    }
-                    returnObj.extendee_rules.push( selector_rule );
-                    selector_rule.extends_rule = true;
-                }
-            }
+            */
         }
     }
 
@@ -375,8 +460,11 @@ function processRules ( css_dom ) {
                 // need one entry that is the same...
                 if ( source_rule.selectors.indexOf( core_selector ) == -1 ) {
                     name_rule.is_duplicate = true;
+                    name_rule.has_error = true;
+
                     returnObj.totals.name_duplicates++;
                     returnObj.duplicates.push( name_rule.name );
+                    returnObj.totals.errors++;
                     break;
                 }
             }

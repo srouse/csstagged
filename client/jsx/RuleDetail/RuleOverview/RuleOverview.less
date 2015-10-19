@@ -4,6 +4,7 @@
         <div ... style="display: block;"></div>
     </csstag>*/
     &:extend(
+        .ruleDetail_contentContainer
         .ruleDetail_content
     );
     z-index: 100;
@@ -37,7 +38,7 @@
             color: #333;
             white-space: nowrap;
             overflow: hidden;
-            .hand();
+            &:extend( .hand );
             &:hover {
                 background-color: #eee;
             }

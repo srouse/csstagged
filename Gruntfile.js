@@ -3,11 +3,12 @@
 module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-jst');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-css-parse');
     grunt.loadNpmTasks('grunt-react');
+
+
 
     var configObj = {
         pkg: '<json:package.json>'
@@ -26,17 +27,24 @@ module.exports = function(grunt) {
         files: {
             'client/_client/csscomp.less':
             [
+                // 'client/less/test.less',//fonts there
+                'client/less/csstagged.less',//core CTag
                 'client/jsx/Shared/html.less',//fonts there
                 'client/jsx/Shared/**/*.less',
                 'client/jsx/**/Shared/**/*.less',//process shared less first
                 'client/jsx/**/*.less',
-                "node_modules/nanoscroller/bin/css/nanoscroller.css"
+                'node_modules/nanoscroller/bin/css/nanoscroller.css'
             ]
         }
     }
 
     configObj.less = configObj.less || {};
     configObj.less["csscomp"] = {
+        options: {
+            plugins: [
+                new (require('./client/less-plugin-csstagged/index.js'))()
+            ]
+        },
         files: {
             'client/_client/csscomp.css':
             [

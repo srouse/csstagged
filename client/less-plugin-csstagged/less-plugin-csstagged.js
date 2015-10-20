@@ -397,7 +397,8 @@ module.exports = function(less) {
                             var ctag_name = comment_value_arr.shift();
                             var ctag_value = comment_value_arr.join(":");
                             this.createCTag( ctag_name , ctag_value , metadata );
-                            this.removeCommentFromCSS( rule );
+
+                            // this.removeCommentFromCSS( rule );
                         }
                     }else if ( rule.rules ) { // a child rule
                         this.debug( "------child...");

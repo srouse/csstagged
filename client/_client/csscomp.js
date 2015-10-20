@@ -2724,12 +2724,12 @@ var VariablesPage = React.createClass({displayName: "VariablesPage",
             );
         }
 
-        var definitions_end_index = variable_titles.length;
+        var definitions_end_index = definitions.length;
         if ( variable_titles.length > parseInt( RS.route.variables )+1 ) {
             variable_title = variable_titles[parseInt( RS.route.variables )+1];
             definitions_end_index = variable_title.definitions_index;
         }
-
+        console.log( definitions_index , variable_titles.length );
         var definition;
 
         for ( var i=definitions_index; i<definitions_end_index; i++ ) {

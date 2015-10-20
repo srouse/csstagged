@@ -276,19 +276,21 @@ function processRules ( css_dom ) {
     }
 
     function findBasedOnRelationship ( tagged_rule , returnObj ) {
-        if ( tagged_rule.metadata.based_on ) {
-            for ( var b=0; b<tagged_rule.metadata.based_on.length; b++ ) {
-                based_on_name = tagged_rule.metadata.based_on[b];
-                based_on_rule = returnObj.name_hash[ based_on_name ];
+        if ( tagged_rule.metadata.extends ) {
+            for ( var b=0; b<tagged_rule.metadata.extends.length; b++ ) {
+                based_on_selector = tagged_rule.metadata.extends[b];
+                based_on_rule = returnObj.selector_hash[ based_on_selector ];
                 if ( based_on_rule ) {
                     based_on_rule.is_extended = true;
                     if ( !returnObj.extended_rules_hash[based_on_rule.name] ) {
-                        returnObj.extended_rules_hash[based_on_rule.name] = based_on_rule;
+                        returnObj.extended_rules_hash[based_on_rule.name]
+                            = based_on_rule;
                         returnObj.extended_rules.push( based_on_rule );
                         returnObj.totals.rules_extended++;
                     }
                     if ( !returnObj.extendee_rules_hash[tagged_rule.name] ) {
-                        returnObj.extendee_rules_hash[tagged_rule.name] = based_on_rule;
+                        returnObj.extendee_rules_hash[tagged_rule.name]
+                            = based_on_rule;
                         returnObj.extendee_rules.push( tagged_rule );
                         returnObj.totals.rules_extendee++;
                     }

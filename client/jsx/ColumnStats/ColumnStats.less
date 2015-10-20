@@ -3,6 +3,10 @@
 // @import (reference) "../Shared/DepthChart/DepthChart.less";
 // @import (reference) "../Shared/Column/Column.less";
 
+
+/* -ctag-title: ColumnStats;*/
+/* -ctag-description: Variables local to ColumnStats;*/
+
 @overall_score_height: 60px;
 @tile_circle_diameter : 84px;
 
@@ -91,10 +95,8 @@
                 text-align: center;
 
                 .tile_circle {
-                    /* -ctag:
-                            "graph,unique",
-                            "<div ...>43%</div>",
-                    */
+                    -ctag-tags: graph,unique;
+                    -ctag-example: ...43%;
 
                     position: absolute;
                     .calc( top , 50% , -@tile_circle_diameter/2 );

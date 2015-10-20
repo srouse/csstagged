@@ -33,6 +33,11 @@ module.exports = function(grunt) {
     // @import (optional, reference) "../../shared/global.less";
     configObj.less = configObj.less || {};
     configObj.less["csscomp"] = {
+        options: {
+            plugins: [
+                new (require('./client/less-plugin-csstagged/index.js'))()
+            ]
+        },
         files: {
             'client/_client/csscomp.css':
             [

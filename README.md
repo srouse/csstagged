@@ -40,6 +40,13 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 -ctag-example: "...Label";
 // Replaces to <div class="[classname]">Label</div>
 
+// can also nest entirely within a comment for line returns
+/* -ctag-example: ...{ .row }
+					{ .row }
+					{ .row }
+					{ .row }
+*/
+
 -ctag-example: "<span ...>Label</div>";
 // Replaces to <span class="[classname]">Label</span>
 
@@ -56,7 +63,7 @@ CSSTagged visualizes a number of important signs of the overall health of the CS
 -ctag-url_prefix: "/client/_client/";
 ```
 
-### HTML Comment Style (Depracated)
+### HTML Comment Style (Deprecated)
 
 ## Example
 

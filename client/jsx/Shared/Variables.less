@@ -11,6 +11,17 @@
 @csstagged-error-color : #FF8990;
 
 
+
+/* -ctag-title:
+		Brand Colors
+*/
+/* -ctag-description:
+		Some colors...
+*/
+@csstagged-purple : #7061AB;
+@csstagged-blue : #3B8182;
+
+
 /* -ctag-title:
 		Grey Colors
 */
@@ -18,15 +29,28 @@
 		Variations of greys
 */
 
-@grey-color-xxdk : #000;
-@grey-color-xdk : #333;
-@grey-color-dk : #555;
-@grey-color : #777;
-@grey-color-lt : #999;
-@grey-color-xlt : #ccc;
-@grey-color-xxlt : #eee;
+@gray-darkest : #000;
+@gray-darker : #333;
+@gray-dark : #555;
+@gray : #777;
+@gray-light : #999;
+@gray-lighter : #ccc;
+@gray-lightest : #eee;
 
+/* -ctag-title:
+		Text Colors
+*/
+/* -ctag-description:
+		Variations of text colors
+*/
 
+@text-color-darkest : #000;
+@text-color-darker : #111;
+@text-color-dark : #333;
+@text-color : #555;
+@text-color-light : #777;
+@text-color-lighter : #999;
+@text-color-lightest : #999;
 
 /* -ctag-title:
 		Phi Layout
@@ -85,6 +109,33 @@
 @screen-md-max:              (@screen-lg-min - 1);
 
 
+
+/* -ctag-title: Horizontal Layout */
+/* -ctag-description: Colors used; */
+
+@col: 8.333333vw;
+@col_1: @col;
+@col_2: @col * 2;
+@col_3: @col * 3;
+@col_4: @col * 4;
+@col_5: @col * 5;
+@col_6: @col * 6;
+@col_7: @col * 7;
+@col_8: @col * 8;
+@col_9: @col * 9;
+@col_10: @col * 10;
+@col_11: @col * 11;
+@col_12: @col * 12;
+
+
+.col_md {
+	-ctag-tag: base,size;
+	-ctag-example: ...;
+
+	@media ( max-width: @screen-md-min ) {
+		width: @col_1 !important;
+	}
+}
 
 
 /* -ctag-title:
@@ -146,8 +197,8 @@
 /* -ctag-description:
 
 */
-@border-bottom: 1px solid @grey-color-xxlt;
-@border-bottom-dk: 1px solid @grey-color-xlt;
+@border-bottom: 1px solid @gray-lightest;
+@border-bottom-dk: 1px solid @gray-lighter;
 
 
 /* -ctag-title:

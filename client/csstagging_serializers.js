@@ -49,6 +49,9 @@ function _ruleAndPseudosToCSSString ( rule , pretty ) {
     return css_str;
 }
 
+
+
+
 function ruleToCSSString ( rule , pretty ) {
     var source;
     var css_str = [];
@@ -139,3 +142,27 @@ function ruleToCSSString ( rule , pretty ) {
 
         return css_str;
     }
+
+
+
+function ruleLocalToCSSString ( rule ) {
+
+    var css_str = [];
+    if ( rule.metadata && rule.metadata.local ) {
+        var local = rule.metadata.local;
+        for ( var name in local ) {
+            css_str.push( name + ": " + local[name] + ";" );
+        }
+    }
+
+    if ( rule.metadata && rule.metadata.pointers ) {
+        var pointers = rule.metadata.pointers;
+        for ( var p=0; p<pointers.length; p++ ) {
+            css_str.push( pointers[p] + "();" );
+        }
+    }
+    console.log( rule );
+
+    return css_str.join("\n");
+
+}

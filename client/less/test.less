@@ -1,39 +1,34 @@
 
 
 
-/*-ctag-definition:
-    THis is one var...
-*/
-@root-var : #79E1DA;
-@root-var2 : #79E1DA;
-@root-var3 : #79E1DA;
 
-/*-ctag-title:
-    Next Section
-*/
-/*-ctag-definition:
-    THis is one var...
-*/
-@root-var4 : #79E1DA;
-@root-var5 : #79E1DA;
-@root-var6 : #79E1DA;
+.col_md_1 {
+    -ctag-tags: base,layout;
+	-ctag-example: ...Label;
+	-ctag-description: "Counteracts the effects of 'hand'";
+
+    width: 100%;
+    padding: 80px;
+
+    .pog {
+		width: 1000000%;
+	}
+}
+.row_md_1 {
+    height: 30%;
+}
 
 .test {
-    height: 100%;
+    -ctag-tags: layout;
+	-ctag-example: ...Label;
+	-ctag-description: "my own label";
+    &:extend( .col_md_1 );
+
+    color: rgba(0,0,0,.2 );
+    background-image: url("dd");
+
+    .col_md_1();
+    .row_md_1();
+
+    .col_md_1 .pog();
 }
-
-.csstagged_variables {
-    -ctag-singlye: ddd fasdf sdf ;
-    width: 50%;
-    &:extend( .test );
-
-    -ctag-title: Hoppy;
-    @my-local-var: #fff;
-}
-
-
-
-/*-ctag-definition:
-    THis is another var...
-*/
-@late-var : 23px - 54%;

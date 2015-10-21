@@ -76,6 +76,10 @@ function processRules ( css_dom ) {
         uuid_hash:{},
         tags_hash:{},
         tags:[],
+        base_tags_hash:{},
+        base_tags:[],
+        design_tags_hash:{},
+        design_tags:[],
 
         //global rules...
         global_rules:[],

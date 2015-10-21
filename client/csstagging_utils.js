@@ -56,13 +56,13 @@ function getRuleUUID ( rule ) {
             return "";
         }
     }
-function getTaggedCommentInfo ( rule ) {
 
+function getCommentInfo ( rule ) {
     var ctag_count = 0;
     var ctag_info = {};
     var prop;
 
-    var declarations = [];
+    var declarations = [];//rule.declarations;//[];
 
     if ( rule.source ) {
         var source;
@@ -78,7 +78,13 @@ function getTaggedCommentInfo ( rule ) {
             }
         }
     }else{
-        declarations = rule.declarations
+        declarations = rule.declarations;
+    }
+
+    if ( rule.selector == ".hand-test.cat" ) {
+        //console.log( declarations );
+        //console.log( rule );
+        //console.log( "HERE" );
     }
 
     for ( var i=0; i<declarations.length; i++ ) {
@@ -125,9 +131,17 @@ function getTaggedCommentInfo ( rule ) {
         ale rt("stop");
     }*/
 
-    if ( ctag_count == 0 ) {
-        return false;
-    }else{
+    return ctag_info;
+}
+function getTaggedCommentInfo ( rule ) {
+    var ctag_info = getCommentInfo( rule );
+
+    if (
+        ctag_info.tags &&
+        ctag_info.example
+    ) {
         return ctag_info;
+    }else{
+        return false;
     }
 }

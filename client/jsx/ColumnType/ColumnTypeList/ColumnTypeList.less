@@ -3,9 +3,9 @@
 // @import (reference) "../../Shared/Column/Column.less";
 
 .dog {
-    /*<csstag tag="example">
-        <div ...></div>
-    </csstag>*/
+    -ctag-tag: example;
+    -ctag-example: "...";
+
     width: 10px;
     .tail {
         color: pink;
@@ -27,11 +27,8 @@
     }
 }
 .cat {
-    /*<csstag tag="example">
-        <div ...>
-            { .spit }
-        </div>
-    </csstag>*/
+    -ctag-tag: example;
+    -ctag-example: "...{ .spit }";
 
     &:extend(
         .dog all

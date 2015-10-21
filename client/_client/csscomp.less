@@ -92,7 +92,7 @@ html {
     body {
         width: 100%; height: 100%;
         margin: 0px; padding: 0px;
-        
+
     }
 
     .list_bottom_padding {
@@ -292,11 +292,10 @@ html {
 
 
 .hand {
-	.ctag(
-		"global,property",
-		"...Label",
-		"Gives any element a hand rollover...and turns off text selection"
-	);
+	-ctag-tags: base,button;
+	-ctag-example: ...Label;
+	-ctag-description: "Gives any element a hand rollover...and turns off text selection";
+
 	cursor: pointer;
 	cursor: hand;
 	-webkit-touch-callout: none;
@@ -307,32 +306,68 @@ html {
     user-select: none;
 }
 
+.hand-test {
+	-ctag-tags: base,button;
+	-ctag-example: ...Label;
+	-ctag-description: "Gives any element a hand rollover...and turns off text selection";
+
+
+	&:extend( .clearfix );
+	cursor: pointer;
+	cursor: hand;
+	test: @col_1;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+	.label();
+
+	&:empty {
+		color: #f00;
+		test: @col_2;
+	}
+
+	-ctag-description: "Here is a dog state that is magically connected to a cat state";
+	&.dog {
+		color: #000;
+		test: @col_3;
+	}
+}
+
 .handover {
-	.ctag(
-		"global,property",
-		"...Label",
-		"Gives any element a hand rollover with a background color rollover"
-	);
+	-ctag-tags: base,button;
+	-ctag-example: ...Label;
+	-ctag-description: "Gives any element a hand rollover...and turns off text selection";
+
 	._handover();
 }
 
 
 .unhand {
-	.ctag(
-		"global,property",
-		"...Label",
-		"Counteracts the effects of 'hand'"
-	);
+	-ctag-tags: base,button;
+	-ctag-example: ...Label;
+	-ctag-description: "Counteracts the effects of 'hand'";
+
 	cursor: default;
 }
 
 .label {
+	-ctag-tags: base,label;
+	-ctag-example: ...Label;
+	-ctag-description: "Basic label";
+
 	font-size: @font-size;
 	color: #555;
 }
 
-
 .clearfix {
+	-ctag-tags: base,misc;
+	-ctag-example: ...;
+	-ctag-description: "Fixes issue with floats and height";
+
 	clear: both;
 }
 
@@ -351,7 +386,8 @@ Mixin's
 }
 
 ._handover ( @bg-color: #eee ) {
-	&:extend( .hand );
+	.hand();
+	
 	&:hover {
 		background-color: @bg-color;
 	}
@@ -496,6 +532,17 @@ Mixin's
 @csstagged-error-color : #FF8990;
 
 
+
+/* -ctag-title:
+		Brand Colors
+*/
+/* -ctag-description:
+		Some colors...
+*/
+@csstagged-purple : #7061AB;
+@csstagged-blue : #3B8182;
+
+
 /* -ctag-title:
 		Grey Colors
 */
@@ -503,15 +550,28 @@ Mixin's
 		Variations of greys
 */
 
-@grey-color-xxdk : #000;
-@grey-color-xdk : #333;
-@grey-color-dk : #555;
-@grey-color : #777;
-@grey-color-lt : #999;
-@grey-color-xlt : #ccc;
-@grey-color-xxlt : #eee;
+@gray-darkest : #000;
+@gray-darker : #333;
+@gray-dark : #555;
+@gray : #777;
+@gray-light : #999;
+@gray-lighter : #ccc;
+@gray-lightest : #eee;
 
+/* -ctag-title:
+		Text Colors
+*/
+/* -ctag-description:
+		Variations of text colors
+*/
 
+@text-color-darkest : #000;
+@text-color-darker : #111;
+@text-color-dark : #333;
+@text-color : #555;
+@text-color-light : #777;
+@text-color-lighter : #999;
+@text-color-lightest : #999;
 
 /* -ctag-title:
 		Phi Layout
@@ -570,6 +630,33 @@ Mixin's
 @screen-md-max:              (@screen-lg-min - 1);
 
 
+
+/* -ctag-title: Horizontal Layout */
+/* -ctag-description: Colors used; */
+
+@col: 8.333333vw;
+@col_1: @col;
+@col_2: @col * 2;
+@col_3: @col * 3;
+@col_4: @col * 4;
+@col_5: @col * 5;
+@col_6: @col * 6;
+@col_7: @col * 7;
+@col_8: @col * 8;
+@col_9: @col * 9;
+@col_10: @col * 10;
+@col_11: @col * 11;
+@col_12: @col * 12;
+
+
+.col_md {
+	-ctag-tag: base,size;
+	-ctag-example: ...;
+
+	@media ( max-width: @screen-md-min ) {
+		width: @col_1 !important;
+	}
+}
 
 
 /* -ctag-title:
@@ -631,8 +718,8 @@ Mixin's
 /* -ctag-description:
 
 */
-@border-bottom: 1px solid @grey-color-xxlt;
-@border-bottom-dk: 1px solid @grey-color-xlt;
+@border-bottom: 1px solid @gray-lightest;
+@border-bottom-dk: 1px solid @gray-lighter;
 
 
 /* -ctag-title:
@@ -1077,7 +1164,7 @@ Mixin's
 
 
             .tile_label {
-                -ctag-tag: "graph";
+                -ctag-tag: graph;
                 -ctag-example: "...Rule of Dogs{ .columnStats_typeBox }";
 
                 position: absolute;
@@ -1089,7 +1176,7 @@ Mixin's
                 margin-bottom: -(( @tile_circle_diameter/2 ) + 4px );
 
                 .columnStats_typeBox {
-                    -ctag-tag: "box";
+                    -ctag-tag: placeholder;
                     -ctag-example: "...{ .tagged_incomplete_icon }";
 
                     position: absolute;
@@ -1372,9 +1459,9 @@ Mixin's
 // @import (reference) "../../Shared/Column/Column.less";
 
 .dog {
-    /*<csstag tag="example">
-        <div ...></div>
-    </csstag>*/
+    -ctag-tag: example;
+    -ctag-example: "...";
+
     width: 10px;
     .tail {
         color: pink;
@@ -1396,11 +1483,8 @@ Mixin's
     }
 }
 .cat {
-    /*<csstag tag="example">
-        <div ...>
-            { .spit }
-        </div>
-    </csstag>*/
+    -ctag-tag: example;
+    -ctag-example: "...{ .spit }";
 
     &:extend(
         .dog all
@@ -1599,20 +1683,18 @@ Mixin's
 }
 
 
-// @import (reference) "../../Shared/shared.less";
-// @import (reference) "../RuleDetail.less";
 
 .ruleCSS {
-    /*<csstag tag="page">
-        <div ... style="display: block;">
-            { .ruleDetail_code }
-        </div>
-    </csstag>*/
+    -ctag-tag: page;
+    -ctag-example: "...{ .ruleDetail_code }";
     &:extend(
         .ruleDetail_contentContainer
         .ruleDetail_content
     );
+
     z-index: 100;
+    background-color: @gray-lightest;
+    min-height: 100%;
 
     /*@media ( max-width: @screen-lg-min ) {
         .calc( width , 100% , 100px );
@@ -1625,7 +1707,6 @@ Mixin's
             </textarea>
         </csstag>*/
         width: 100%;
-        height: 300px;
         background-color: #000;
         color: #eee;
         padding: 20px;
@@ -1636,17 +1717,22 @@ Mixin's
     }
 
     .ruleDetail_code {
-        /*<csstag tag="content">
-            <div ...>
+        -ctag-tag: content;
+        /* -ctag-example: ...
                 { .ruleDetail_title }
-                { .ruleDetail_pre }
-            </div>
-        </csstag>*/
-        width: 100%;
+                { .ruleDetail_pre };" */
+
+        width: @col_8;
+        padding-left: @col_1;
+        padding-bottom: 50px;
         height: 100%;
-        background-color: #fff;
         overflow: auto;
-        padding: 30px 30px;
+        // padding: 30px 30px;
+
+        @media ( max-width: @screen-md-min ) {
+            width: @col_7;
+        }
+
 
         .ruleDetail_title {
             /*<csstag tag="code">
@@ -1656,10 +1742,11 @@ Mixin's
                 </div>
             </csstag>*/
             width: 100%;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid @gray-lighter;
             font-size: 18px;
             color: #333;
             padding-top: 20px;
+            margin-bottom: 10px;
             clear: both;
             position: relative;
 
@@ -1668,20 +1755,22 @@ Mixin's
                     <div ...>React</div>
                 </csstag>*/
                 position: absolute;
-                right: 10px;
+                right: 0px;
                 bottom: 0px;
-                &:extend( .hand );
+                font-size: @font-size;
+                .hand();
             }
         }
 
         .ruleDetail_pre {
-            /*<csstag tag="code">
+            -ctag-tag: code;
+            /* -ctag-example:
 <pre ...>
 a [
     color: #f00;
 ]
-</pre>
-            </csstag>*/
+</pre>;*/
+
             width: 100%;
             font-family: "Muli", sans-serif;
             float: left;
@@ -1690,6 +1779,56 @@ a [
             white-space: -pre-wrap;      /* Opera 4-6 */
             white-space: -o-pre-wrap;    /* Opera 7 */
             word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        }
+
+        .ruleDetail_subTitle {
+            -ctag-tag: code;
+            -ctag-example: ...SubTitle;
+
+            color: @text-color-dark;
+            font-size: @font-size-lg;
+            padding: 6px 0px;
+        }
+        .ruleDetail_codeLine {
+            -ctag-tag: code;
+            -ctag-example: "...{ .ruleDetail_variableName }: #fff";
+
+            color: @csstagged-purple;
+            font-size: @font-size;
+
+            > pre {
+
+
+                > code {
+                    color: @text-color-dark;
+                    font-size: @font-size;
+                    font-family: 'Muli', sans-serif;
+                	font-weight: light;
+                    padding: 0px; margin: 0px;
+                    -moz-tab-size: 4;
+                }
+
+            }
+
+            &.indent {
+                padding-left: 20px;
+            }
+
+            .ruleDetail_variableName {
+                -ctag-tag: code;
+                -ctag-example: ...width;
+
+                color: @text-color-dark;
+                font-weight: normal;
+            }
+
+            .ruleDetail_selectorSpan {
+                -ctag-tag: code;
+                -ctag-example: ....dog;
+
+                color: @csstagged-blue;
+                font-weight: normal;
+            }
         }
     }
 }
@@ -1722,252 +1861,155 @@ a [
     body.s_detailTab & {
         /* state */
     }
-}
 
-.ruleDetail_contentContainer {
-    /* -ctag:
-            "placeholder",
-            "...{ .ruleDetail_content }"
-    */
-    // width: @phi;
-    .calc( width , 100% , -300px );
-    .calc( height , 100% , -70px );
-    position: absolute;
-    top: 70px; right: 0px;
-
-    .ruleDetail_content {
-        .ctag(
-            "page",
-            "..."
-        );
-        background-color: #fff;
-        width: 100%; height: 100%;
-    }
-}
-
-
-
-.ruleDetail_header {
-    /* -ctag:
-            "header",
-            "...{ .ruleDetail_back }
-                { .ruleDetail_title }
-                { .ruleDetail_headerNav }"
-    */
-    width: 100%; height: 70px;
-    border-bottom: 1px solid #eee;
-
-    body.s_detailTab & {
-        /* state */
-    }
-
-    .ruleDetail_title {
+    .ruleDetail_contentContainer {
         /* -ctag:
-                "container",
-                "...{ .ruleDetail_titleText }
-                    { .ruleDetail_iconBox }"
+                "placeholder",
+                "...{ .ruleDetail_content }"
         */
-        width: 300px;
-        height: 100%;
-        position: relative;
-        float: left;
-        transition: width .3s;
+        // width: @phi;
+        .calc( width , 100% , -300px );
+        .calc( height , 100% , -70px );
+        position: absolute;
+        top: 70px; right: 0px;
+        overflow: auto;
 
-        /*@media ( max-width: @screen-lg-min ) {
-            width: 120px;
-        }*/
-
-        .ruleDetail_close {
-            /* -ctag:
-                    "button",
-                    "...",
-                    "Close the detail",
-                    ".hand"
-            */
-
-            width: 70px; height: 100%;
-            float: left;
-            background-image: url('_assets/close_arrow.png');
-            &:extend( .hand );
-            transition: width .3s;
-
-            &:hover {
-                background-color: #eee;
-                background-image: url('_assets/close_arrow_dark.png');
-            }
-
-            /*@media ( max-width: @screen-lg-min ) {
-                width: 60px;
-            }*/
-        }
-
-        .ruleDetail_showTree {
-            /* -ctag:
-                    "button",
-                    "..."
-            */
-            width: 70px; height: 100%;
-            float: right;
-            background-image: url('_assets/show_tree.png');
-            &:extend( .hand );
-            display: none;
-            transition: width .3s;
-
-            &:hover {
-                background-color: #eee;
-                background-image: url('_assets/show_tree_dark.png');
-            }
-
-            body.s_detailTab & {
-                display: block;
-            }
-
-            /*@media ( max-width: @screen-lg-min ) {
-                width: 60px;
-            }*/
-        }
-
-        .ruleDetail_titleText {
-            /* -ctag:
-                    "title",
-                    "...A Title"
-            */
+        .ruleDetail_content {
             .ctag(
-                "label",
-                "...A Title"
+                "page",
+                "..."
             );
-
-            float: left;
-            padding: 16px 0px;
-            padding-left: 0px;
-            height: 100%;
-            font-size: 14px;
-            color: #555;
-            &:extend( .hand );
-
-            &:hover {
-                background-color: #eee;
-            }
-        }
-
-        .ruleDetail_iconBox {
-            /* -ctag:
-                    "container,nav_item",
-                    "...<div class='rule_icon'></div>"
-            */
-            width: 50px; height: 100%;
-            position: relative; float: left;
+            background-color: #fff;
+            width: 100%; height: 100%;
         }
     }
 
-    .ruleDetail_headerNav {
+    .ruleDetail_header {
         /* -ctag:
-                "nav",
-                "...
-                    { .ruleDetail_item_css }
-                    { .ruleDetail_item_overview }
-                    { .ruleDetail_item_example }
-                    { .ruleDetail_back }
-                "
+                "header",
+                "...{ .ruleDetail_back }
+                    { .ruleDetail_title }
+                    { .ruleDetail_headerNav }"
         */
-        float: right; clear: right;
-        width: 410px; height: 100%;
-        background-color: #fff;
-        position: relative;
-        display: none;
+        width: 100%; height: 70px;
+        border-bottom: 1px solid #eee;
 
         body.s_detailTab & {
-            display: block;
+            /* state */
         }
 
-        @item_color: #ccc;
-        @item_selected: #000;
-        .ruleDetail_item {
+        .ruleDetail_title {
             /* -ctag:
-                    "nav_item",
-                    "...link_title"
+                    "container",
+                    "...{ .ruleDetail_titleText }
+                        { .ruleDetail_iconBox }"
             */
-            color: @item_color; height: 100%;
-            padding-top: 24px;
-            .calc( width , 33.3333% , -70px/3 );
-            float: right; text-align: center;
-            &:extend( .hand );
+            width: 300px;
+            height: 100%;
+            position: relative;
+            float: left;
+            transition: width .3s;
 
-            &:hover {
-                color: @item_selected;
-                border-bottom: 3px solid #ccc;
-            }
-        }
-        .ruleDetail_item_overview {
-            /* -ctag:
-                    "nav_item",
-                    "...overview",
-                    "",
-                    ".ruleDetail_item"
-            */
-            &:extend(
-                .ruleDetail_header
-                .ruleDetail_headerNav
-                .ruleDetail_item all
-            );
-            body.s_detailTab_overview & {
-                color: @item_selected;
-                border-bottom: 3px solid #555;
-            }
-        }
-        .ruleDetail_item_css {
-            /* -ctag:
-                    "nav_item",
-                    "...overview",
-                    "",
-                    ".ruleDetail_item"
-            */
-            &:extend(
-                .ruleDetail_header
-                .ruleDetail_headerNav
-                .ruleDetail_item all
-            );
+            /*@media ( max-width: @screen-lg-min ) {
+                width: 120px;
+            }*/
 
-            body.s_detailTab_code & {
-                color: @item_selected;
-                border-bottom: 3px solid #555;
+            .ruleDetail_close {
+                /* -ctag:
+                        "button",
+                        "...",
+                        "Close the detail",
+                        ".hand"
+                */
+
+                width: 70px; height: 100%;
+                float: left;
+                background-image: url('_assets/close_arrow.png');
+                &:extend( .hand );
+                transition: width .3s;
+
+                &:hover {
+                    background-color: #eee;
+                    background-image: url('_assets/close_arrow_dark.png');
+                }
+
+                /*@media ( max-width: @screen-lg-min ) {
+                    width: 60px;
+                }*/
             }
-        }
-        .ruleDetail_item_example {
-            /* -ctag:
-                    "nav_item",
-                    "...example",
-                    "",
-                    ".ruleDetail_item"
-            */
-            &:extend(
-                .ruleDetail_header
-                .ruleDetail_headerNav
-                .ruleDetail_item all
-            );
-            body.s_detailTab_example & {
-                color: @item_selected;
-                border-bottom: 3px solid #555;
+
+            .ruleDetail_showTree {
+                /* -ctag:
+                        "button",
+                        "..."
+                */
+                width: 70px; height: 100%;
+                float: right;
+                background-image: url('_assets/show_tree.png');
+                &:extend( .hand );
+                display: none;
+                transition: width .3s;
+
+                &:hover {
+                    background-color: #eee;
+                    background-image: url('_assets/show_tree_dark.png');
+                }
+
+                body.s_detailTab & {
+                    display: block;
+                }
+
+                /*@media ( max-width: @screen-lg-min ) {
+                    width: 60px;
+                }*/
+            }
+
+            .ruleDetail_titleText {
+                /* -ctag:
+                        "title",
+                        "...A Title"
+                */
+                .ctag(
+                    "label",
+                    "...A Title"
+                );
+
+                float: left;
+                padding: 16px 0px;
+                padding-left: 0px;
+                height: 100%;
+                font-size: 14px;
+                color: #555;
+                &:extend( .hand );
+
+                &:hover {
+                    background-color: #eee;
+                }
+            }
+
+            .ruleDetail_iconBox {
+                /* -ctag:
+                        "container,nav_item",
+                        "...<div class='rule_icon'></div>"
+                */
+                width: 50px; height: 100%;
+                position: relative; float: left;
             }
         }
 
-        .ruleDetail_back {
-            /* -ctag:
-                    "button",
-                    "..."
-            */
-            width: 70px; height: 100%;
-            background-image: url("_assets/close.png");
-            background-color: #fff;
-            &:extend( .hand );
-            margin-right: 0px;
-            float: right;
-            transition: all .2s;
 
-            &:hover {
-                background-color: #eee;
-            }
-        }
+    }
+
+
+    .ruleDetail_ruleNavPlaceholder {
+        -ctag-tags: placeholder;
+        -ctag-example: "...{ .ruleDetailNav }";
+
+        position: absolute;
+        right: 0px; top: 0px;
+        width: 100%;
+        .calc( width , 100% , -299px );
+        height: 70px;
     }
 }
 
@@ -1975,25 +2017,21 @@ a [
 // @import (reference) "../../Shared/shared.less";
 
 .ruleDetailNav {
-    /*<csstag tag="navigation">
-        <div ...>
-            { .ruleDetailNav_title }
-        </div>
-    </csstag>*/
-    height: 69px;
-    border-left: 1px solid #eee;
-    float: left;
-    position: absolute;
-    top: 0px;
-    left: 299px;
+    -ctag-tag: navigation;
+    -ctag-example: "...{ .ruleDetailNav_title }";
+
+    height: 100%; width: 100%;
+    //.calc( width , 100% , -299px );
+    border-bottom: 1px solid #eee;
+    //border-left: 1px solid #eee;
     transition: left .3s;
     z-index: 200;
     background-color: #fff;
-    display: none;
 
+    /*display: none;
     body.s_detailTab & {
         display: block;
-    }
+    }*/
 
     /*@media ( max-width: @screen-lg-min ) {
         left: 119px;
@@ -2004,12 +2042,11 @@ a [
             <div ...>rule_name</div>
         </csstag>*/
         width: 100%;
-        float: left;
+        position: absolute;
+        left: 0px; top: 0px;
         height: 70px;
 
         padding-left: 0px;
-        padding-right: 10px;
-        margin-bottom: 10px;
         position: relative;
         overflow: hidden;
 
@@ -2039,6 +2076,106 @@ a [
             width: 16px; height: 100%;
             position: relative;
             margin-left: 20px;
+
+            &:hover {
+                background-color: #eee;
+            }
+        }
+    }
+
+    .ruleDetail_headerNav {
+        -ctag-tag: nav;
+        /* -ctag-example: ...
+                { .ruleDetail_item_css }
+                { .ruleDetail_item_overview }
+                { .ruleDetail_item_example }
+                { .ruleDetail_back };*/
+
+        position: absolute;
+        right: 0px; top: 0px;
+        width: 410px; height: 100%;
+
+        body.s_detailTab & {
+            display: block;
+        }
+
+        @item_color: #ccc;
+        @item_selected: #000;
+
+        .ruleDetail_item {
+            -ctag-tag: nav_item;
+            -ctag-example: ...link_title;
+
+            &:extend( .hand );
+            color: @item_color; height: 100%;
+            padding-top: 24px;
+            width: @col_1;
+            float: right; text-align: center;
+
+            &:hover {
+                color: @item_selected;
+                border-bottom: 3px solid #ccc;
+            }
+        }
+        .ruleDetail_item_overview {
+            /* -ctag:
+                    "nav_item",
+                    "...overview"
+            */
+            &:extend(
+                .ruleDetailNav
+                .ruleDetail_headerNav
+                .ruleDetail_item all
+            );
+            body.s_detailTab_overview & {
+                color: @item_selected;
+                border-bottom: 3px solid #555;
+            }
+        }
+        .ruleDetail_item_css {
+            /* -ctag:
+                    "nav_item",
+                    "...overview"
+            */
+            &:extend(
+                .ruleDetailNav
+                .ruleDetail_headerNav
+                .ruleDetail_item all
+            );
+
+            body.s_detailTab_code & {
+                color: @item_selected;
+                border-bottom: 3px solid #555;
+            }
+        }
+        .ruleDetail_item_example {
+            /* -ctag:
+                    "nav_item",
+                    "...example"
+            */
+            &:extend(
+                .ruleDetailNav
+                .ruleDetail_headerNav
+                .ruleDetail_item all
+            );
+            body.s_detailTab_example & {
+                color: @item_selected;
+                border-bottom: 3px solid #555;
+            }
+        }
+
+        .ruleDetail_back {
+            /* -ctag:
+                    "button",
+                    "..."
+            */
+            width: 70px; height: 100%;
+            background-image: url("_assets/close.png");
+            background-color: #fff;
+            &:extend( .hand );
+            margin-right: 0px;
+            float: right;
+            transition: all .2s;
 
             &:hover {
                 background-color: #eee;
@@ -2434,8 +2571,9 @@ a [
         position: absolute;
         width: 100%; height: 40px;
         background-color: #fff;
-        border-top: 1px solid #eee;
+        border-top: 0px solid #eee;
         left: 0px; bottom: 0px;
+        box-shadow: 0px -3px 3px 0px rgba( 0,0,0,.05);
         z-index: 1000;
 
         /*@media ( max-width: @screen-lg-min ) {
@@ -2460,15 +2598,16 @@ a [
             width: 40px; height: 100%;
             margin-right: 1px;
             margin-top: 0px;
-            &:extend( .hand );
             float: right;
             text-align: center;
             font-size: 12px;
             padding-top: 10px;
 
-            &:hover {
-                background-color: #eee;
-            }
+
+            .handover();
+            //&:hover {
+            //    background-color: #eee;
+            //}
         }
 
         .rulePreview_state {
@@ -2479,7 +2618,7 @@ a [
                 .rulePreview_nav
                 .rulePreview_navItem all
             );
-            
+
             float: left;
             min-width: 40px;
             //max-width: 100px;
@@ -2577,7 +2716,7 @@ a [
 
 
 .styleGuide {
-    -ctag-tags: unique,container;
+    -ctag-tags: app;
     -ctag-example: "...{ .styleGuide_nav }{ .styleGuide_content }";
 
     width: 100%; height: 100%;
@@ -2585,25 +2724,54 @@ a [
     overflow: hidden;
 
     .styleGuide_nav {
-        -ctag-tags: unique,placeholder;
+        -ctag-tags: placeholder;
         -ctag-example: "...{ .styleGuideNav }";
 
         position: absolute;
         left: 0px; top: 0px;
-        width: 300px; height: 100%;
+        width: @col_3; height: 100%;
+
+        @media ( max-width: @screen-md-min ) {
+            width: @col_4;
+        }
     }
 
     .styleGuide_content {
-        -ctag-tags: unique,placeholder;
+        -ctag-tags: placeholder;
         -ctag-example: "...{ .rulePreview }";
 
         position: absolute;
-        right: 0px; top: 0px;
-        .calc( width , 100% , -300px );
+        left: @col_3; top: 0px;
+        width: @col_9;
         height: 100%;
-        background-color: #f00;
-
         overflow: auto;
+
+        @media ( max-width: @screen-md-min ) {
+            width: @col_8; left: @col_4;
+        }
+
+        .styleGuide_ruleNavPlaceholder {
+            -ctag-tags: placeholder;
+            -ctag-example: "...{ .ruleDetailNav }";
+
+            position: absolute;
+            right: 0px; top: 0px;
+            width: 100%;
+            height: @row-lg;
+        }
+
+        .styleGuide_previewPlaceholder {
+            -ctag-tags: placeholder;
+            -ctag-example: "...{ .rulePreview }";
+
+            position: absolute;
+            right: 0px; top: @row-lg;
+            width: 100%;
+            .calc( height , 100% , -@row-lg );
+            overflow: auto;
+        }
+
+
     }
 
 }
@@ -2616,6 +2784,7 @@ a [
     -ctag-example: "...{ .styleGuideNav_mainNav }{ .styleGuideNav_listContainer }";
 
     width: 100%; height: 100%;
+    border-right: 1px solid #ddd;
 
     .styleGuideNav_mainNav {
         -ctag-tags: container,navigation;
@@ -2630,19 +2799,19 @@ a [
         height: @row-lg;
         border-bottom: 1px solid #eee;
 
+
         .styleGuideNav_mainItem {
             -ctag-tags: button,navigation;
             -ctag-example: ...Variables;
-
             &:extend( .handover all );
 
-            width: 50%; height: 100%;
+            width: 100%/3; height: 100%;
             float: left;
-            font-size: @font-size-lg;
+            font-size: @font-size;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
-            .center ( padding-top , @row-lg , @font-size-height-lg );
+            .center ( padding-top , @row-lg , @font-size-height );
 
             &.selected {
                 border-bottom: 4px solid #777;
@@ -2727,7 +2896,7 @@ a [
                         { .variablePage_variableLabel }
                         { .variablePage_variableLabel }';*/
 
-    background-color: @grey-color-xxlt;
+    background-color: @gray-lightest;
     padding: @vpadding-xlg @phi-inv/2;
     min-height: 100%;
 
@@ -2739,7 +2908,7 @@ a [
         font-size: @font-size-xxlg;
         height: @row-lg;
         .center( padding-top , @row-lg , @font-size-height-xxlg );
-        color: @grey-color-dk;
+        color: @gray-dark;
         border-bottom: @border-bottom-dk;
         margin-bottom: @vpadding;
     }
@@ -2753,7 +2922,7 @@ a [
 
         width: 100%;
         font-size: @font-size;
-        color: @grey-color-lt;
+        color: @gray-light;
         margin-bottom: @vpadding;
     }
 
@@ -2764,10 +2933,10 @@ a [
         font-size: @font-size;
         height: @row-md-sm;
         .center( padding-top , @row-md-sm , @font-size-height );
-        color: @grey-color-lt;
+        color: @gray-light;
 
         .variablePage_variableName {
-            color: @grey-color;
+            color: @gray;
             font-weight: bold;
         }
     }

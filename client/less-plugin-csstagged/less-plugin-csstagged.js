@@ -21,7 +21,7 @@ module.exports = function(less) {
 
 
         debug: function ( msg ) {
-            // console.log( msg );
+            console.log( msg );
         },
 
         isArray: function ( variable ) {
@@ -128,6 +128,7 @@ module.exports = function(less) {
         },
         isVariable: function ( rule_value ) {
             if (
+                rule_value &&
                 rule_value.name &&
                 rule_value.name.indexOf("@") == 0
             ) {
@@ -187,7 +188,14 @@ module.exports = function(less) {
                 }
 
                 if ( typeof metadata[ ctag_name ] == "undefined" ) {
-                    metadata[ ctag_name ] = ctag_value;
+                    if (
+                        ctag_name == "description" ||
+                        ctag_name == "title"
+                    ) {
+                        metadata[ ctag_name ] = [ctag_value];
+                    }else{
+                        metadata[ ctag_name ] = ctag_value;
+                    }
                     return;
                 }else if ( invalidCTags.indexOf( ctag_name ) != -1 ) {
                     console.log( "invalid -ctag-" + ctag_name );
@@ -212,6 +220,9 @@ module.exports = function(less) {
         },
         isCSSFunction: function ( rule ) {
             return rule.name && rule.args;
+        },
+        isPointer: function ( rule ) {
+            return rule.selector;
         },
 
         removeCommentFromCSS: function ( rule ) {
@@ -333,11 +344,18 @@ module.exports = function(less) {
             // this.debug( JSON.stringify( node ) );
             // this.debug( first_rule );
 
+
             var originalRuleset = node.originalRuleset;
             var rules = originalRuleset.rules;
             var total_rules = rules.length;
-            var rule,rule_name,rule_value,value,var_name;
-            var metadata={definitions:[],variables:{},original_value:{},extends:[]};
+            var rule,rule_name,rule_value,value,var_name,rule_value_str;
+            var metadata={
+                    definitions:[],
+                    variables:{},original_value:{},
+                    extends:[],
+                    local:{},
+                    pointers:[]
+                };
             var variables = metadata.variables;
             var original_value = metadata.original_value;
 
@@ -373,18 +391,25 @@ module.exports = function(less) {
                     }else if ( this.isProcessedValue( rule ) ) {
                         rule_value = this.getProcessedValue( rule );
                         if ( rule_value ) {
-                            original_value[ rule_name ] =
-                                this.valueToString(
-                                    metadata,
-                                    rule_name,
-                                    rule_value
-                                );
+                            rule_value_str = this.valueToString(
+                                                metadata, rule_name, rule_value
+                                            );
+                            original_value[ rule_name ] = rule_value_str;
+                            metadata.local[rule_name] = rule_value_str;
+                            this.debug( "processed value (" + rule_name + ")");
                         }
                     }else{
-                        this.debug( "not a Processed value or definition.");
+                        this.debug( "not a processed value or def (" + rule_name + ")");
+                        if ( rule.value ) {
+                            metadata.local[rule_name] =
+                                            this.valueToString(
+                                                metadata, rule_name, rule.value
+                                            );
+                        }
+
                     }
                 }else{
-                    this.debug("DOESNT HAV ENAME");
+                    this.debug("DOESNT HAVe a NAME");
 
                     if ( rule.value ) { // comments
                         this.debug( "------comment");
@@ -413,6 +438,7 @@ module.exports = function(less) {
                             );
                         this.debug( "------mixin");
                     }else if ( this.isExtend( rule ) ) {
+
                         metadata.extends.push(
                             this.extendToString(
                                 metadata,
@@ -425,6 +451,25 @@ module.exports = function(less) {
                         this.debug( "OP");
                         original_value[ rule_name ] = "CSS OP";
                         this.debug( "------cssfunk");
+                    }else if ( this.isPointer( rule ) ) {
+                        if (
+                            rule.selector &&
+                            rule.selector.elements &&
+                            rule.selector.elements[0] &&
+                            rule.selector.elements[0].value
+                        ) {
+                            var pointer_str = [];
+                            for ( var a=0; a<rule.selector.elements.length; a++ ) {
+                                pointer_str.push( rule.selector.elements[a].value );
+                            }
+
+                            metadata.pointers.push(
+                                pointer_str.join(" ")
+                            );
+                        }
+                        this.debug( "------pointer");
+                    }else{
+                        this.debug( "------don't know what it is");
                     }
 
                 }

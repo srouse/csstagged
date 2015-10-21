@@ -24,6 +24,11 @@ var VariablesPage = React.createClass({
 
     render: function() {
 
+
+        if ( !RS.route.variables ) {
+            return <div className="variablePage"><div></div></div>;
+        }
+
         var variable_titles = CSSInfo.definitions.title;
         var descriptions = CSSInfo.definitions.description;
         var definitions = CSSInfo.definitions.definitions;
@@ -32,7 +37,7 @@ var VariablesPage = React.createClass({
         var variables = [];
         var variable_title,description;
         var definitions_index = 0;
-        if ( variable_titles.length > RS.route.variables ) {
+        if ( variable_titles && variable_titles.length > RS.route.variables ) {
             variable_title = variable_titles[RS.route.variables];
             description = descriptions[RS.route.variables];
             definitions_index = variable_title.definitions_index;
@@ -51,11 +56,11 @@ var VariablesPage = React.createClass({
         }
 
         var definitions_end_index = definitions.length;
-        if ( variable_titles.length > parseInt( RS.route.variables )+1 ) {
+        if ( variable_titles && variable_titles.length > parseInt( RS.route.variables )+1 ) {
             variable_title = variable_titles[parseInt( RS.route.variables )+1];
             definitions_end_index = variable_title.definitions_index;
         }
-        console.log( definitions_index , variable_titles.length );
+
         var definition;
 
         for ( var i=definitions_index; i<definitions_end_index; i++ ) {

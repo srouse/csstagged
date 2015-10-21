@@ -1,11 +1,10 @@
 
 
 .hand {
-	.ctag(
-		"global,property",
-		"...Label",
-		"Gives any element a hand rollover...and turns off text selection"
-	);
+	-ctag-tags: base,button;
+	-ctag-example: ...Label;
+	-ctag-description: "Gives any element a hand rollover...and turns off text selection";
+
 	cursor: pointer;
 	cursor: hand;
 	-webkit-touch-callout: none;
@@ -16,31 +15,67 @@
     user-select: none;
 }
 
+.hand-test {
+	-ctag-tags: base,button;
+	-ctag-example: ...Label;
+	-ctag-description: "Gives any element a hand rollover...and turns off text selection";
+
+
+	&:extend( .clearfix );
+	cursor: pointer;
+	cursor: hand;
+	test: @col_1;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+	.label();
+
+	&:empty {
+		color: #f00;
+		test: @col_2;
+	}
+
+	-ctag-description: "Here is a dog state that is magically connected to a cat state";
+	&.dog {
+		color: #000;
+		test: @col_3;
+	}
+}
+
 .handover {
-	.ctag(
-		"global,property",
-		"...Label",
-		"Gives any element a hand rollover with a background color rollover"
-	);
+	-ctag-tags: base,button;
+	-ctag-example: ...Label;
+	-ctag-description: "Gives any element a hand rollover...and turns off text selection";
+
 	._handover();
 }
 
 
 .unhand {
-	.ctag(
-		"global,property",
-		"...Label",
-		"Counteracts the effects of 'hand'"
-	);
+	-ctag-tags: base,button;
+	-ctag-example: ...Label;
+	-ctag-description: "Counteracts the effects of 'hand'";
+
 	cursor: default;
 }
 
 .label {
+	-ctag-tags: base,label;
+	-ctag-example: ...Label;
+	-ctag-description: "Basic label";
+
 	font-size: @font-size;
 	color: #555;
 }
 
-
 .clearfix {
+	-ctag-tags: base,misc;
+	-ctag-example: ...;
+	-ctag-description: "Fixes issue with floats and height";
+
 	clear: both;
 }

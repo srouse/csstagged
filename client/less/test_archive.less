@@ -34,3 +34,45 @@
 
 
 @late-var : 23px - 54%;
+
+
+
+
+
+
+/*-ctag-definition:
+    THis is one var...
+*/
+@root-var : #79E1DA;
+@root-var2 : #79E1DA;
+@root-var3 : #79E1DA;
+
+/*-ctag-title:
+    Next Section
+*/
+/*-ctag-definition:
+    THis is one var...
+*/
+@root-var4 : #79E1DA;
+@root-var5 : #79E1DA;
+@root-var6 : #79E1DA;
+
+.test {
+    height: 100%;
+}
+
+.csstagged_variables {
+    -ctag-singlye: ddd fasdf sdf ;
+    width: 50%;
+    &:extend( .test );
+
+    -ctag-title: Hoppy;
+    @my-local-var: #fff;
+}
+
+
+
+/*-ctag-definition:
+    THis is another var...
+*/
+@late-var : 23px - 54%;

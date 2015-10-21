@@ -21,13 +21,19 @@ var StyleGuideNav = React.createClass({
 
     gotoVariables: function () {
         RS.merge(
-            {tab:""}
+            {tab:"",tree:""}
         );
     },
 
-    gotoRules: function () {
+    gotoDesignUI: function () {
         RS.merge(
-            {tab:"rules"}
+            {tab:"design_ui"}
+        );
+    },
+
+    gotoBaseUI: function () {
+        RS.merge(
+            {tab:"base_ui"}
         );
     },
 
@@ -42,18 +48,22 @@ var StyleGuideNav = React.createClass({
 
         var var_title;
         var var_html = [];
-        for ( var v=0; v<variable_titles.length; v++ ) {
-            var_title = variable_titles[v];
-            var_html.push(
-                <div className="styleGuideNav_listRow"
-                    key={ "variables_" + v }
-                    onClick={ this.gotoVariableCluster.bind( this , v ) }>
-                    <div className="styleGuideNav_rowLabel">
-                        { var_title.content }
+
+        if ( variable_titles ) {
+            for ( var v=0; v<variable_titles.length; v++ ) {
+                var_title = variable_titles[v];
+                var_html.push(
+                    <div className="styleGuideNav_listRow"
+                        key={ "variables_" + v }
+                        onClick={ this.gotoVariableCluster.bind( this , v ) }>
+                        <div className="styleGuideNav_rowLabel">
+                            { var_title.content }
+                        </div>
                     </div>
-                </div>
-            );
+                );
+            }
         }
+
         return <div className="styleGuideList">{ var_html }</div>;
     },
 
@@ -61,10 +71,17 @@ var StyleGuideNav = React.createClass({
     render: function() {
 
         var var_class = " selected";
+        var base_class = "";
         var rules_class = "";
         var var_list = [];
-        if ( RS.route.tab == "rules" ) {
+        if ( RS.route.tab == "design_ui" ) {
             rules_class = " selected";
+            base_class = "";
+            var_class = "";
+            var_list = <StyleGuideRulesNav />;
+        }else if ( RS.route.tab == "base_ui" ) {
+            rules_class = "";
+            base_class = " selected";
             var_class = "";
             var_list = <StyleGuideRulesNav />;
         }else{
@@ -77,9 +94,13 @@ var StyleGuideNav = React.createClass({
                             onClick={ this.gotoVariables }>
                             Variables
                         </div>
+                        <div className={ "styleGuideNav_mainItem" + base_class }
+                            onClick={ this.gotoBaseUI }>
+                            Base UI
+                        </div>
                         <div className={ "styleGuideNav_mainItem" + rules_class }
-                            onClick={ this.gotoRules }>
-                            Rules
+                            onClick={ this.gotoDesignUI }>
+                            Design UI
                         </div>
                     </div>
                     <div className="styleGuideNav_listContainer">

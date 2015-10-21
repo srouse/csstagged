@@ -17,15 +17,21 @@ var StyleGuideRulesNav = React.createClass({
         RouteState.removeDiffListenersViaClusterId( "StyleGuideRulesNav" );
     },
 
+    gotoTags: function () {
+        RS.merge(
+            {tag:""}
+        );
+    },
+
     gotoTag: function ( tag ) {
         RS.merge(
             {tag:tag}
         );
     },
 
-    gotoTags: function () {
+    gotoRule: function ( rule ) {
         RS.merge(
-            {tag:""}
+            {tree:rule.uuid}
         );
     },
 
@@ -33,8 +39,13 @@ var StyleGuideRulesNav = React.createClass({
 
         if ( RS.route.tag ) {
             var tag = RS.route.tag;
-            var rules = CSSInfo.tags_hash[ RS.route.tag ];
-            var html = [],rule;
+
+            var rules = CSSInfo.design_tags_hash[ RS.route.tag ];
+            if ( RS.route.tab == "base_ui" ) {
+                rules = CSSInfo.base_tags_hash[ RS.route.tag ];
+            }
+
+            var html = [];
 
             html.push(
                 <div className="styleGuideNav_rulesListHeader"
@@ -48,12 +59,14 @@ var StyleGuideRulesNav = React.createClass({
 
             if ( rules ) {
 
+                var rule_uuid,rule;
                 for ( var t=0; t < rules.length; t++ ) {
-                    rule = rules[t];
+                    rule_uuid = rules[t];
+                    rule = CSSInfo.uuid_hash[ rule_uuid ];
                     html.push(
                         <div className="styleGuideNav_listRow"
                             key={ "rule_" + rule.uuid }
-                            onClick={ this.gotoTag.bind( this , rule ) }>
+                            onClick={ this.gotoRule.bind( this , rule ) }>
                             <div className="styleGuideNav_rowLabelRight">
 
                             </div>
@@ -67,11 +80,21 @@ var StyleGuideRulesNav = React.createClass({
 
         }else{
 
-            var tags = CSSInfo.tags;
+            var tags = CSSInfo.design_tags;
+            if ( RS.route.tab == "base_ui" ) {
+                tags = CSSInfo.base_tags;
+            }
+
             var html = [],tag,tag_rules;
             for ( var t=0; t < tags.length; t++ ) {
                 tag = tags[t];
-                tag_rules = CSSInfo.tags_hash[ tag ];
+
+                if ( RS.route.tab == "base_ui" ) {
+                    tag_rules = CSSInfo.base_tags_hash[ tag ];
+                }else{
+                    tag_rules = CSSInfo.design_tags_hash[ tag ];
+                }
+                
                 html.push(
                     <div className="styleGuideNav_listRow"
                         key={ "tag_" + tag }

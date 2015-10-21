@@ -72,11 +72,7 @@ var RuleDetail = React.createClass({
         RouteState.removeDiffListenersViaClusterId( "rule_detail" );
     },
 
-    change_tab: function ( tab_name ) {
-        RouteState.merge(
-            {detailTab:tab_name}
-        );
-    },
+
 
     closeDetail: function () {
         RouteState.merge(
@@ -143,40 +139,8 @@ var RuleDetail = React.createClass({
                         <div className="ruleDetail_title">
                             <div className="ruleDetail_close"
                                 onClick={ this.close }></div>
-                            { /* <div className="ruleDetail_titleText"
-                                onClick={ this.toRoot }>
-                                { tree_rule.name }
-                            </div>
-                            <div className="ruleDetail_iconBox">
-                                <TypeIcon rule={ tree_rule } />
-                            </div> */ }
                             <div className="ruleDetail_showTree"
                                 onClick={ this.closeDetail }></div>
-                        </div>
-
-                        <div className="ruleDetail_headerNav">
-                            <div className="ruleDetail_item_example"
-                                onClick={
-                                    this.change_tab.bind( this , "example")
-                                }>
-                                example
-                            </div>
-                            <div className="ruleDetail_item_css"
-                                onClick={
-                                    this.change_tab.bind( this , "code")
-                                }>
-                                code
-                            </div>
-                            <div className="ruleDetail_item_overview"
-                                onClick={
-                                    this.change_tab.bind( this , "overview" )
-                                }>
-                                overview
-                            </div>
-
-                            { /*<div className="ruleDetail_back"
-                                onClick={ this.close }></div> */ }
-
                         </div>
                     </div>
 
@@ -184,15 +148,17 @@ var RuleDetail = React.createClass({
                         { content }
                     </div>
 
-
                     <RuleNesting
                         css_info={ this.props.css_info }
                         rule={ tree_rule } />
 
-                    <RuleDetailNav
-                        css_info={ this.props.css_info }
-                        rule_uuid={ this.state.rule_uuid }
-                        rule={ rule } />
+                    <div className="ruleDetail_ruleNavPlaceholder">
+                        <RuleDetailNav
+                            css_info={ this.props.css_info }
+                            rule_uuid={ this.state.rule_uuid }
+                            rule={ rule } />
+                    </div>
+
 
                 </div>;
     }

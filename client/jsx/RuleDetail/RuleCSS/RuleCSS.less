@@ -1,18 +1,16 @@
 
-// @import (reference) "../../Shared/shared.less";
-// @import (reference) "../RuleDetail.less";
 
 .ruleCSS {
-    /*<csstag tag="page">
-        <div ... style="display: block;">
-            { .ruleDetail_code }
-        </div>
-    </csstag>*/
+    -ctag-tag: page;
+    -ctag-example: "...{ .ruleDetail_code }";
     &:extend(
         .ruleDetail_contentContainer
         .ruleDetail_content
     );
+
     z-index: 100;
+    background-color: @gray-lightest;
+    min-height: 100%;
 
     /*@media ( max-width: @screen-lg-min ) {
         .calc( width , 100% , 100px );
@@ -25,7 +23,6 @@
             </textarea>
         </csstag>*/
         width: 100%;
-        height: 300px;
         background-color: #000;
         color: #eee;
         padding: 20px;
@@ -36,17 +33,22 @@
     }
 
     .ruleDetail_code {
-        /*<csstag tag="content">
-            <div ...>
+        -ctag-tag: content;
+        /* -ctag-example: ...
                 { .ruleDetail_title }
-                { .ruleDetail_pre }
-            </div>
-        </csstag>*/
-        width: 100%;
+                { .ruleDetail_pre };" */
+
+        width: @col_8;
+        padding-left: @col_1;
+        padding-bottom: 50px;
         height: 100%;
-        background-color: #fff;
         overflow: auto;
-        padding: 30px 30px;
+        // padding: 30px 30px;
+
+        @media ( max-width: @screen-md-min ) {
+            width: @col_7;
+        }
+
 
         .ruleDetail_title {
             /*<csstag tag="code">
@@ -56,10 +58,11 @@
                 </div>
             </csstag>*/
             width: 100%;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid @gray-lighter;
             font-size: 18px;
             color: #333;
             padding-top: 20px;
+            margin-bottom: 10px;
             clear: both;
             position: relative;
 
@@ -68,20 +71,22 @@
                     <div ...>React</div>
                 </csstag>*/
                 position: absolute;
-                right: 10px;
+                right: 0px;
                 bottom: 0px;
-                &:extend( .hand );
+                font-size: @font-size;
+                .hand();
             }
         }
 
         .ruleDetail_pre {
-            /*<csstag tag="code">
+            -ctag-tag: code;
+            /* -ctag-example:
 <pre ...>
 a [
     color: #f00;
 ]
-</pre>
-            </csstag>*/
+</pre>;*/
+
             width: 100%;
             font-family: "Muli", sans-serif;
             float: left;
@@ -90,6 +95,56 @@ a [
             white-space: -pre-wrap;      /* Opera 4-6 */
             white-space: -o-pre-wrap;    /* Opera 7 */
             word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        }
+
+        .ruleDetail_subTitle {
+            -ctag-tag: code;
+            -ctag-example: ...SubTitle;
+
+            color: @text-color-dark;
+            font-size: @font-size-lg;
+            padding: 6px 0px;
+        }
+        .ruleDetail_codeLine {
+            -ctag-tag: code;
+            -ctag-example: "...{ .ruleDetail_variableName }: #fff";
+
+            color: @csstagged-purple;
+            font-size: @font-size;
+
+            > pre {
+
+
+                > code {
+                    color: @text-color-dark;
+                    font-size: @font-size;
+                    font-family: 'Muli', sans-serif;
+                	font-weight: light;
+                    padding: 0px; margin: 0px;
+                    -moz-tab-size: 4;
+                }
+
+            }
+
+            &.indent {
+                padding-left: 20px;
+            }
+
+            .ruleDetail_variableName {
+                -ctag-tag: code;
+                -ctag-example: ...width;
+
+                color: @text-color-dark;
+                font-weight: normal;
+            }
+
+            .ruleDetail_selectorSpan {
+                -ctag-tag: code;
+                -ctag-example: ....dog;
+
+                color: @csstagged-blue;
+                font-weight: normal;
+            }
         }
     }
 }

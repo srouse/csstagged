@@ -13,7 +13,8 @@ Mixin's
 }
 
 ._handover ( @bg-color: #eee ) {
-	&:extend( .hand );
+	.hand();
+	
 	&:hover {
 		background-color: @bg-color;
 	}

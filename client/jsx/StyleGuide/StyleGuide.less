@@ -2,7 +2,7 @@
 
 
 .styleGuide {
-    -ctag-tags: unique,container;
+    -ctag-tags: app;
     -ctag-example: "...{ .styleGuide_nav }{ .styleGuide_content }";
 
     width: 100%; height: 100%;
@@ -10,25 +10,54 @@
     overflow: hidden;
 
     .styleGuide_nav {
-        -ctag-tags: unique,placeholder;
+        -ctag-tags: placeholder;
         -ctag-example: "...{ .styleGuideNav }";
 
         position: absolute;
         left: 0px; top: 0px;
-        width: 300px; height: 100%;
+        width: @col_3; height: 100%;
+
+        @media ( max-width: @screen-md-min ) {
+            width: @col_4;
+        }
     }
 
     .styleGuide_content {
-        -ctag-tags: unique,placeholder;
+        -ctag-tags: placeholder;
         -ctag-example: "...{ .rulePreview }";
 
         position: absolute;
-        right: 0px; top: 0px;
-        .calc( width , 100% , -300px );
+        left: @col_3; top: 0px;
+        width: @col_9;
         height: 100%;
-        background-color: #f00;
-
         overflow: auto;
+
+        @media ( max-width: @screen-md-min ) {
+            width: @col_8; left: @col_4;
+        }
+
+        .styleGuide_ruleNavPlaceholder {
+            -ctag-tags: placeholder;
+            -ctag-example: "...{ .ruleDetailNav }";
+
+            position: absolute;
+            right: 0px; top: 0px;
+            width: 100%;
+            height: @row-lg;
+        }
+
+        .styleGuide_previewPlaceholder {
+            -ctag-tags: placeholder;
+            -ctag-example: "...{ .rulePreview }";
+
+            position: absolute;
+            right: 0px; top: @row-lg;
+            width: 100%;
+            .calc( height , 100% , -@row-lg );
+            overflow: auto;
+        }
+
+
     }
 
 }

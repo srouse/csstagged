@@ -100,6 +100,9 @@ function processState ( state , returnObj ) {
     state.state_info = _getRuleAndStateInfo( state );
     returnObj.states.push( state );
 
+    var metadata_info = getCommentInfo( state );
+    state.metadata = metadata_info;
+
     // now add the state to the right rule...
     var rule_cumulative = [],rule_cumulative_str;
     var focused_state, rule;
@@ -120,6 +123,9 @@ function processPseudo ( pseudo , returnObj ) {
     pseudo.pseudo_info = {};
     pseudo.pseudo_info = _getRuleAndStateInfo( pseudo );
     returnObj.pseudos.push( pseudo );
+
+    var metadata_info = getCommentInfo( pseudo );
+    pseudo.metadata = metadata_info;
 
     var selector = pseudo.pseudo_info.rule_processed_selector;
     var rule = returnObj.selector_hash[ selector ];

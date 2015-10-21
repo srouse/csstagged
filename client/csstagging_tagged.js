@@ -13,6 +13,7 @@ function processComponent ( tagged_rule , returnObj ) {
 
     if ( tagged_rule.metadata.tags ) {
         var tag;
+        var is_base = false;
         for ( var t=0; t<tagged_rule.metadata.tags.length; t++ ) {
             tag = tagged_rule.metadata.tags[t];
             if ( !returnObj.tags_hash[tag] ) {
@@ -20,6 +21,32 @@ function processComponent ( tagged_rule , returnObj ) {
                 returnObj.tags.push( tag );
             }
             returnObj.tags_hash[tag].push( tagged_rule );
+
+            if ( tag == "base" ) {
+                is_base = true;
+            }
+        }
+
+        // now sort into base and design level tags...
+        for ( var t=0; t<tagged_rule.metadata.tags.length; t++ ) {
+            tag = tagged_rule.metadata.tags[t];
+
+            if ( is_base ) {
+                // don't hide elements that accidentally don't have second tag
+                //if ( tag != "base" ) {
+                    if ( !returnObj.base_tags_hash[tag] ) {
+                        returnObj.base_tags_hash[tag] = [];
+                        returnObj.base_tags.push( tag );
+                    }
+                    returnObj.base_tags_hash[tag].push( tagged_rule.uuid );
+                //}
+            }else{
+                if ( !returnObj.design_tags_hash[tag] ) {
+                    returnObj.design_tags_hash[tag] = [];
+                    returnObj.design_tags.push( tag );
+                }
+                returnObj.design_tags_hash[tag].push( tagged_rule.uuid );
+            }
         }
     }
 
@@ -53,8 +80,6 @@ function processComponent ( tagged_rule , returnObj ) {
     if ( !returnObj.totals.depths_tagged[ tagged_rule.depth ] )
         returnObj.totals.depths_tagged[ tagged_rule.depth ] = 0;
     returnObj.totals.depths_tagged[ tagged_rule.depth ]++;
-
-
 }
 
 function __processExample ( tagged_rule ) {

@@ -1393,6 +1393,185 @@ var RuleCSS = React.createClass({displayName: "RuleCSS",
         });
     },
 
+    getCSSString: function ( rule ) {
+
+        if ( !rule || !rule.metadata )
+            return React.createElement("div", null, "no info");
+
+        var css_str = [];
+
+
+        css_str.push(
+            React.createElement("div", {className: "ruleDetail_title"}, "Context")
+        );
+        css_str.push(
+            React.createElement("div", {className: "ruleDetail_codeLine", 
+                key:  "description" }, 
+                React.createElement("span", {className: "ruleDetail_variableName"}, 
+                     rule.selector
+                )
+            )
+        );
+
+
+        if (
+            rule.metadata.description &&
+            $.trim( rule.metadata.description ).length > 0
+        ) {
+            css_str.push(
+                React.createElement("div", {className: "ruleDetail_title"}, "Description")
+            );
+            for ( var d=0; d<rule.metadata.description.length; d++ ) {
+                css_str.push(
+                    React.createElement("div", {className: "ruleDetail_codeLine", 
+                        key:  "description" }, 
+                        React.createElement("pre", null,  rule.metadata.description[d].content)
+                    )
+                );
+            }
+        }
+
+        if (
+            rule.metadata.pointers.length > 0 ||
+            rule.metadata.extends.length > 0
+        ) {
+            css_str.push(
+                React.createElement("div", {className: "ruleDetail_title"}, "Based On")
+            );
+        }
+
+        var pointers = rule.metadata.pointers;
+        for ( var p=0; p<pointers.length; p++ ) {
+            css_str.push(
+                React.createElement("div", {className: "ruleDetail_codeLine", 
+                    key:  "pointer_" + p}, 
+                    React.createElement("span", {className: "ruleDetail_variableName"},  pointers[p] )
+                )
+            );
+        }
+        var _extends = rule.metadata.extends;
+        for ( var p=0; p<_extends.length; p++ ) {
+            css_str.push(
+                React.createElement("div", {className: "ruleDetail_codeLine", 
+                    key:  "extends_" + p}, 
+                    React.createElement("span", {className: "ruleDetail_variableName"},  _extends[p] )
+                )
+            );
+        }
+
+
+        css_str.push(
+            React.createElement("div", {className: "ruleDetail_title"}, "Local Declarations")
+        );
+        if ( rule.metadata && rule.metadata.local ) {
+            var local = rule.metadata.local;
+            for ( var name in local ) {
+                css_str.push(
+                    React.createElement("div", {className: "ruleDetail_codeLine", 
+                        key:  "local_" + name}, 
+                        React.createElement("span", {className: "ruleDetail_variableName"}, 
+                             name ), ": ",  local[name], ";"
+                    )
+                );
+            }
+        }
+
+
+        if ( rule.pseudos && rule.pseudos.length > 0 ) {
+            css_str.push(
+                React.createElement("div", {className: "ruleDetail_title"}, "Pseudo Selectors")
+            );
+            var pseudos = rule.pseudos,pseudo;
+            for ( var p=0; p<pseudos.length; p++ ) {
+                pseudo = pseudos[p];
+                css_str.push(
+                    React.createElement("div", {className: "ruleDetail_codeLine", 
+                        key:  "pseudo_" + p}, 
+                        React.createElement("span", {className: "ruleDetail_selectorSpan"}, 
+                             pseudo.selector
+                        ), " ",  "{" 
+                    )
+                );
+                var local = pseudo.metadata.local;
+                for ( var name in local ) {
+                    css_str.push(
+                        React.createElement("div", {className: "ruleDetail_codeLine indent", 
+                            key:  "local_pseudo_" + name}, 
+                            React.createElement("span", {className: "ruleDetail_variableName"}, 
+                                 name ), ": ",  local[name], ";"
+                        )
+                    );
+                }
+                css_str.push(
+                    React.createElement("div", {className: "ruleDetail_codeLine", 
+                        key:  "pseudo_close" + p}, 
+                         "}" 
+                    )
+                );
+            }
+        }
+
+
+        if ( rule.states && rule.states.length > 0 ) {
+            css_str.push(
+                React.createElement("div", {className: "ruleDetail_title"}, "States")
+            );
+            var states = rule.states,state;
+            for ( var p=0; p<states.length; p++ ) {
+                state = states[p];
+                css_str.push(
+                    React.createElement("div", {className: "ruleDetail_codeLine", 
+                        key:  "state_" + p}, 
+                        React.createElement("span", {className: "ruleDetail_selectorSpan"}, 
+                             state.selector
+                        ), " ",  "{" 
+                    )
+                );
+                var local_obj = state.metadata.local;
+                for ( var name in local_obj ) {
+                    css_str.push(
+                        React.createElement("div", {className: "ruleDetail_codeLine indent", 
+                            key:  "local_state_" + p + "_" + name}, 
+                            React.createElement("span", {className: "ruleDetail_variableName"}, 
+                                 name ), ": ",  local_obj[name], ";"
+                        )
+                    );
+                }
+                css_str.push(
+                    React.createElement("div", {className: "ruleDetail_codeLine", 
+                        key:  "state_close" + p}, 
+                         "}" 
+                    )
+                );
+            }
+        }
+
+        css_str.push(
+            React.createElement("div", {className: "ruleDetail_title"}, 
+                "Example HTML", 
+                React.createElement("div", {className: "ruleDetail_titleButton", 
+                    onClick:  this.toReact}, "React")
+            )
+        );
+
+        var html_obj = RuleUtil.findRuleExample( rule , this.props.css_info , true );
+        var html = html_obj.html;
+        if ( RouteState.route.react == "react" ) {
+            html = html.replace( /class=/gi , "className=");
+        }
+        css_str.push(
+            React.createElement("div", {className: "ruleDetail_codeLine", 
+                key:  "local_html" }, 
+                React.createElement("pre", null, React.createElement("code", null,  vkbeautify.xml( html , "	") ))
+            )
+        );
+
+
+        console.log( rule );
+
+        return css_str;
+    },
+
     render: function() {
         var rule =  this.props.css_info.uuid_hash[
                         this.props.rule_uuid
@@ -1400,68 +1579,16 @@ var RuleCSS = React.createClass({displayName: "RuleCSS",
 
         var rule = this.props.rule;
 
-        
-
         if ( !rule ) {
             return React.createElement("div", null);
         }
 
-        var state_code = [];
-        var state_header = "";
-        state_header = React.createElement("div", {className: "ruleDetail_title"}, "States");
-        if ( rule.states ) {
-            $.each( rule.states , function ( index , state ) {
-                state_code.push(
-                    React.createElement("textarea", {className: "ruleDetail_textarea", 
-                        readOnly: true, spellCheck: "false", 
-                        key:  "state_" + index, 
-                        value:  ruleToCSSString( state , true) }
-                    )
-                )
-            });
-        }
 
-        var pseudo_code = [];
-        var pseudo_header = "";
-        if ( rule.pseudos ) {
-            pseudo_header = React.createElement("div", {className: "ruleDetail_title"}, "Pseudo Selectors");
-            $.each( rule.pseudos , function ( index , pseudo ) {
-                pseudo_code.push(
-                    React.createElement("textarea", {className: "ruleDetail_textarea", 
-                        readOnly: true, spellCheck: "false", 
-                        key:  "pseudo_" + index, 
-                        value:  ruleToCSSString( pseudo , true) }
-                    )
-                )
-            });
-        }
 
-        var html_obj = RuleUtil.findRuleExample( rule , this.props.css_info , true );
-        var html = html_obj.html;
-        if ( RouteState.route.react == "react" ) {
-            html = html.replace( /class=/gi , "className=");
-        }
-
+        var cssStr = this.getCSSString( rule );
         return  React.createElement("div", {className: "ruleCSS"}, 
                     React.createElement("div", {className: "ruleDetail_code"}, 
-                        React.createElement("div", {className: "ruleDetail_title"}, 
-                            "HTML Example", 
-                            React.createElement("div", {className: "ruleDetail_titleButton", 
-                                onClick:  this.toReact}, "React")
-                        ), 
-                        React.createElement("textarea", {className: "ruleDetail_textarea", 
-                            spellCheck: "false", 
-                            readOnly: true, value:  vkbeautify.xml( html) }
-                        ), 
-                        React.createElement("div", {className: "ruleDetail_title"}, "CSS"), 
-                        React.createElement("textarea", {className: "ruleDetail_textarea", 
-                            spellCheck: "false", 
-                            readOnly: true, value:  ruleToCSSString( rule , true) }
-                        ), 
-                         pseudo_header, 
-                         pseudo_code, 
-                         state_header, 
-                         state_code 
+                         cssStr 
                     )
                 );
     }
@@ -1542,11 +1669,7 @@ var RuleDetail = React.createClass({displayName: "RuleDetail",
         RouteState.removeDiffListenersViaClusterId( "rule_detail" );
     },
 
-    change_tab: function ( tab_name ) {
-        RouteState.merge(
-            {detailTab:tab_name}
-        );
-    },
+
 
     closeDetail: function () {
         RouteState.merge(
@@ -1613,40 +1736,8 @@ var RuleDetail = React.createClass({displayName: "RuleDetail",
                         React.createElement("div", {className: "ruleDetail_title"}, 
                             React.createElement("div", {className: "ruleDetail_close", 
                                 onClick:  this.close}), 
-                            /* <div className="ruleDetail_titleText"
-                                onClick={ this.toRoot }>
-                                { tree_rule.name }
-                            </div>
-                            <div className="ruleDetail_iconBox">
-                                <TypeIcon rule={ tree_rule } />
-                            </div> */ 
                             React.createElement("div", {className: "ruleDetail_showTree", 
                                 onClick:  this.closeDetail})
-                        ), 
-
-                        React.createElement("div", {className: "ruleDetail_headerNav"}, 
-                            React.createElement("div", {className: "ruleDetail_item_example", 
-                                onClick: 
-                                    this.change_tab.bind( this , "example")
-                                }, 
-                                "example"
-                            ), 
-                            React.createElement("div", {className: "ruleDetail_item_css", 
-                                onClick: 
-                                    this.change_tab.bind( this , "code")
-                                }, 
-                                "code"
-                            ), 
-                            React.createElement("div", {className: "ruleDetail_item_overview", 
-                                onClick: 
-                                    this.change_tab.bind( this , "overview")
-                                }, 
-                                "overview"
-                            )
-
-                            /*<div className="ruleDetail_back"
-                                onClick={ this.close }></div> */ 
-
                         )
                     ), 
 
@@ -1654,15 +1745,17 @@ var RuleDetail = React.createClass({displayName: "RuleDetail",
                          content 
                     ), 
 
-
                     React.createElement(RuleNesting, {
                         css_info:  this.props.css_info, 
                         rule:  tree_rule }), 
 
-                    React.createElement(RuleDetailNav, {
-                        css_info:  this.props.css_info, 
-                        rule_uuid:  this.state.rule_uuid, 
-                        rule:  rule })
+                    React.createElement("div", {className: "ruleDetail_ruleNavPlaceholder"}, 
+                        React.createElement(RuleDetailNav, {
+                            css_info:  this.props.css_info, 
+                            rule_uuid:  this.state.rule_uuid, 
+                            rule:  rule })
+                    )
+
 
                 );
     }
@@ -1697,6 +1790,12 @@ var RuleDetailNav = React.createClass({displayName: "RuleDetailNav",
         );
     },
 
+    change_tab: function ( tab_name ) {
+        RouteState.merge(
+            {detailTab:tab_name}
+        );
+    },
+
     closeDetail: function () {
         RouteState.merge(
             {
@@ -1723,6 +1822,21 @@ var RuleDetailNav = React.createClass({displayName: "RuleDetailNav",
                         ), 
                         React.createElement("div", {className: "ruleDetailNav_typeIcon"}, 
                             React.createElement(TypeIcon, {rule:  rule })
+                        )
+                    ), 
+
+                    React.createElement("div", {className: "ruleDetail_headerNav"}, 
+                        React.createElement("div", {className: "ruleDetail_item_example", 
+                            onClick: 
+                                this.change_tab.bind( this , "example")
+                            }, 
+                            "example"
+                        ), 
+                        React.createElement("div", {className: "ruleDetail_item_css", 
+                            onClick: 
+                                this.change_tab.bind( this , "code")
+                            }, 
+                            "code"
                         )
                     )
                 );
@@ -2470,16 +2584,54 @@ var TypeIcon = React.createClass({displayName: "TypeIcon",
 
 var StyleGuide = React.createClass({displayName: "StyleGuide",
 
+    componentDidMount: function() {
+        var me = this;
+        RouteState.addDiffListeners(
+    		["tree","tab","detailTab"],
+    		function ( route , prev_route ) {
+                me.forceUpdate();
+    		},
+            "StyleGuide"
+    	);
+    },
+
+    componentWillUnmount: function(){
+        RouteState.removeDiffListenersViaClusterId( "StyleGuide" );
+    },
+
     render: function() {
 
+        var content = React.createElement(VariablesPage, null);
+        if ( RS.route.tree ) {
+            var rule = CSSInfo.uuid_hash[ RS.route.tree ];
 
+            var page = React.createElement(RulePreview, {
+                            css_info:  CSSInfo, 
+                            rule:  rule });
+            if ( RS.route.detailTab == "code" ) {
+                page = React.createElement(RuleCSS, {
+                            css_info:  CSSInfo, 
+                            rule:  rule });
+            }
+
+            content =
+                React.createElement("div", {className: "styleGuide_ruleOverview"}, 
+                    React.createElement("div", {className: "styleGuide_ruleNavPlaceholder"}, 
+                        React.createElement(RuleDetailNav, {css_info:  CSSInfo, 
+                                rule:  rule })
+                    ), 
+                    React.createElement("div", {className: "styleGuide_previewPlaceholder"}, 
+                         page 
+                    )
+                );
+        }
 
         return  React.createElement("div", {className: "styleGuide"}, 
                     React.createElement("div", {className: "styleGuide_nav"}, 
                         React.createElement(StyleGuideNav, null)
                     ), 
                     React.createElement("div", {className: "styleGuide_content"}, 
-                        React.createElement(VariablesPage, null)
+                         content 
                     )
                 );
     }
@@ -2508,13 +2660,19 @@ var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
 
     gotoVariables: function () {
         RS.merge(
-            {tab:""}
+            {tab:"",tree:""}
         );
     },
 
-    gotoRules: function () {
+    gotoDesignUI: function () {
         RS.merge(
-            {tab:"rules"}
+            {tab:"design_ui"}
+        );
+    },
+
+    gotoBaseUI: function () {
+        RS.merge(
+            {tab:"base_ui"}
         );
     },
 
@@ -2529,18 +2687,22 @@ var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
 
         var var_title;
         var var_html = [];
-        for ( var v=0; v<variable_titles.length; v++ ) {
-            var_title = variable_titles[v];
-            var_html.push(
-                React.createElement("div", {className: "styleGuideNav_listRow", 
-                    key:  "variables_" + v, 
-                    onClick:  this.gotoVariableCluster.bind( this , v) }, 
-                    React.createElement("div", {className: "styleGuideNav_rowLabel"}, 
-                         var_title.content
+
+        if ( variable_titles ) {
+            for ( var v=0; v<variable_titles.length; v++ ) {
+                var_title = variable_titles[v];
+                var_html.push(
+                    React.createElement("div", {className: "styleGuideNav_listRow", 
+                        key:  "variables_" + v, 
+                        onClick:  this.gotoVariableCluster.bind( this , v) }, 
+                        React.createElement("div", {className: "styleGuideNav_rowLabel"}, 
+                             var_title.content
+                        )
                     )
-                )
-            );
+                );
+            }
         }
+
         return React.createElement("div", {className: "styleGuideList"},  var_html );
     },
 
@@ -2548,10 +2710,17 @@ var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
     render: function() {
 
         var var_class = " selected";
+        var base_class = "";
         var rules_class = "";
         var var_list = [];
-        if ( RS.route.tab == "rules" ) {
+        if ( RS.route.tab == "design_ui" ) {
             rules_class = " selected";
+            base_class = "";
+            var_class = "";
+            var_list = React.createElement(StyleGuideRulesNav, null);
+        }else if ( RS.route.tab == "base_ui" ) {
+            rules_class = "";
+            base_class = " selected";
             var_class = "";
             var_list = React.createElement(StyleGuideRulesNav, null);
         }else{
@@ -2564,9 +2733,13 @@ var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
                             onClick:  this.gotoVariables}, 
                             "Variables"
                         ), 
+                        React.createElement("div", {className:  "styleGuideNav_mainItem" + base_class, 
+                            onClick:  this.gotoBaseUI}, 
+                            "Base UI"
+                        ), 
                         React.createElement("div", {className:  "styleGuideNav_mainItem" + rules_class, 
-                            onClick:  this.gotoRules}, 
-                            "Rules"
+                            onClick:  this.gotoDesignUI}, 
+                            "Design UI"
                         )
                     ), 
                     React.createElement("div", {className: "styleGuideNav_listContainer"}, 
@@ -2595,15 +2768,21 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
         RouteState.removeDiffListenersViaClusterId( "StyleGuideRulesNav" );
     },
 
+    gotoTags: function () {
+        RS.merge(
+            {tag:""}
+        );
+    },
+
     gotoTag: function ( tag ) {
         RS.merge(
             {tag:tag}
         );
     },
 
-    gotoTags: function () {
+    gotoRule: function ( rule ) {
         RS.merge(
-            {tag:""}
+            {tree:rule.uuid}
         );
     },
 
@@ -2611,8 +2790,13 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
 
         if ( RS.route.tag ) {
             var tag = RS.route.tag;
-            var rules = CSSInfo.tags_hash[ RS.route.tag ];
-            var html = [],rule;
+
+            var rules = CSSInfo.design_tags_hash[ RS.route.tag ];
+            if ( RS.route.tab == "base_ui" ) {
+                rules = CSSInfo.base_tags_hash[ RS.route.tag ];
+            }
+
+            var html = [];
 
             html.push(
                 React.createElement("div", {className: "styleGuideNav_rulesListHeader", 
@@ -2626,12 +2810,14 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
 
             if ( rules ) {
 
+                var rule_uuid,rule;
                 for ( var t=0; t < rules.length; t++ ) {
-                    rule = rules[t];
+                    rule_uuid = rules[t];
+                    rule = CSSInfo.uuid_hash[ rule_uuid ];
                     html.push(
                         React.createElement("div", {className: "styleGuideNav_listRow", 
                             key:  "rule_" + rule.uuid, 
-                            onClick:  this.gotoTag.bind( this , rule) }, 
+                            onClick:  this.gotoRule.bind( this , rule) }, 
                             React.createElement("div", {className: "styleGuideNav_rowLabelRight"}
 
                             ), 
@@ -2645,11 +2831,21 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
 
         }else{
 
-            var tags = CSSInfo.tags;
+            var tags = CSSInfo.design_tags;
+            if ( RS.route.tab == "base_ui" ) {
+                tags = CSSInfo.base_tags;
+            }
+
             var html = [],tag,tag_rules;
             for ( var t=0; t < tags.length; t++ ) {
                 tag = tags[t];
-                tag_rules = CSSInfo.tags_hash[ tag ];
+
+                if ( RS.route.tab == "base_ui" ) {
+                    tag_rules = CSSInfo.base_tags_hash[ tag ];
+                }else{
+                    tag_rules = CSSInfo.design_tags_hash[ tag ];
+                }
+                
                 html.push(
                     React.createElement("div", {className: "styleGuideNav_listRow", 
                         key:  "tag_" + tag, 
@@ -2698,6 +2894,11 @@ var VariablesPage = React.createClass({displayName: "VariablesPage",
 
     render: function() {
 
+
+        if ( !RS.route.variables ) {
+            return React.createElement("div", {className: "variablePage"}, React.createElement("div", null));
+        }
+
         var variable_titles = CSSInfo.definitions.title;
         var descriptions = CSSInfo.definitions.description;
         var definitions = CSSInfo.definitions.definitions;
@@ -2706,7 +2907,7 @@ var VariablesPage = React.createClass({displayName: "VariablesPage",
         var variables = [];
         var variable_title,description;
         var definitions_index = 0;
-        if ( variable_titles.length > RS.route.variables ) {
+        if ( variable_titles && variable_titles.length > RS.route.variables ) {
             variable_title = variable_titles[RS.route.variables];
             description = descriptions[RS.route.variables];
             definitions_index = variable_title.definitions_index;
@@ -2725,11 +2926,11 @@ var VariablesPage = React.createClass({displayName: "VariablesPage",
         }
 
         var definitions_end_index = definitions.length;
-        if ( variable_titles.length > parseInt( RS.route.variables )+1 ) {
+        if ( variable_titles && variable_titles.length > parseInt( RS.route.variables )+1 ) {
             variable_title = variable_titles[parseInt( RS.route.variables )+1];
             definitions_end_index = variable_title.definitions_index;
         }
-        console.log( definitions_index , variable_titles.length );
+
         var definition;
 
         for ( var i=definitions_index; i<definitions_end_index; i++ ) {

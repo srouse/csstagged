@@ -26,6 +26,12 @@ var RuleDetailNav = React.createClass({
         );
     },
 
+    change_tab: function ( tab_name ) {
+        RouteState.merge(
+            {detailTab:tab_name}
+        );
+    },
+
     closeDetail: function () {
         RouteState.merge(
             {
@@ -52,6 +58,21 @@ var RuleDetailNav = React.createClass({
                         </div>
                         <div className="ruleDetailNav_typeIcon">
                             <TypeIcon rule={ rule } />
+                        </div>
+                    </div>
+
+                    <div className="ruleDetail_headerNav">
+                        <div className="ruleDetail_item_example"
+                            onClick={
+                                this.change_tab.bind( this , "example")
+                            }>
+                            example
+                        </div>
+                        <div className="ruleDetail_item_css"
+                            onClick={
+                                this.change_tab.bind( this , "code")
+                            }>
+                            code
                         </div>
                     </div>
                 </div>;

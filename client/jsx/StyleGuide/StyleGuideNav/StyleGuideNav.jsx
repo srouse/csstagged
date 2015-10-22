@@ -21,19 +21,19 @@ var StyleGuideNav = React.createClass({
 
     gotoVariables: function () {
         RS.merge(
-            {tab:"",tree:""}
+            {tab:"",tree:"",tag:"",rule:""}
         );
     },
 
     gotoDesignUI: function () {
         RS.merge(
-            {tab:"design_ui"}
+            {tab:"design_ui",tag:"",rule:"",tree:""}
         );
     },
 
     gotoBaseUI: function () {
         RS.merge(
-            {tab:"base_ui"}
+            {tab:"base_ui",tag:"",rule:"",tree:""}
         );
     },
 
@@ -92,15 +92,15 @@ var StyleGuideNav = React.createClass({
                     <div className="styleGuideNav_mainNav">
                         <div className={ "styleGuideNav_mainItem" + var_class }
                             onClick={ this.gotoVariables }>
-                            Variables
+                            Vars
                         </div>
                         <div className={ "styleGuideNav_mainItem" + base_class }
                             onClick={ this.gotoBaseUI }>
-                            Base UI
+                            Base
                         </div>
                         <div className={ "styleGuideNav_mainItem" + rules_class }
                             onClick={ this.gotoDesignUI }>
-                            Design UI
+                            Design
                         </div>
                     </div>
                     <div className="styleGuideNav_listContainer">

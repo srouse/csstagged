@@ -21,7 +21,7 @@ module.exports = function(less) {
 
 
         debug: function ( msg ) {
-            console.log( msg );
+            // console.log( msg );
         },
 
         isArray: function ( variable ) {

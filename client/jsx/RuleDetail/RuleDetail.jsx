@@ -148,9 +148,11 @@ var RuleDetail = React.createClass({
                         { content }
                     </div>
 
-                    <RuleNesting
-                        css_info={ this.props.css_info }
-                        rule={ tree_rule } />
+                    <div className="ruleDetail_ruleNestingContainer">
+                        <RuleNesting
+                            css_info={ this.props.css_info }
+                            rule={ tree_rule } />
+                    </div>
 
                     <div className="ruleDetail_ruleNavPlaceholder">
                         <RuleDetailNav

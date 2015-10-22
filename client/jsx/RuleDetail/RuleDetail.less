@@ -49,6 +49,19 @@
         }
     }
 
+    .ruleDetail_ruleNestingContainer {
+        -ctag-tag: navigation;
+        -ctag-example: "...{ .ruleNesting }";
+
+        width: 100%;
+        .calc( height , 100% , -70px );
+        float: left; position: relative;
+
+        body.s_detailTab & {
+            width: 300px; // @phi_inv;
+        }
+    }
+
     .ruleDetail_header {
         /* -ctag:
                 "header",

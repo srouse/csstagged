@@ -48,14 +48,14 @@ var RuleCSS = React.createClass({
 
     getCSSString: function ( rule ) {
 
-        if ( !rule || !rule.metadata )
+        if ( !rule || !rule.metadata || !rule.metadata.pointers )
             return <div>no info</div>;
 
         var css_str = [];
 
 
         css_str.push(
-            <div className="ruleDetail_title">Context</div>
+            <div className="ruleDetail_title">Full Selector</div>
         );
         css_str.push(
             <div className="ruleDetail_codeLine"
@@ -84,12 +84,17 @@ var RuleCSS = React.createClass({
             }
         }
 
+
+        css_str.push(
+            <div className="ruleDetail_title">Based On</div>
+        );
+
         if (
-            rule.metadata.pointers.length > 0 ||
-            rule.metadata.extends.length > 0
+            rule.metadata.pointers.length == 0 &&
+            rule.metadata.extends.length == 0
         ) {
             css_str.push(
-                <div className="ruleDetail_title">Based On</div>
+                <div className="ruleDetail_noneFound">None</div>
             );
         }
 
@@ -111,6 +116,8 @@ var RuleCSS = React.createClass({
                 </div>
             );
         }
+
+
 
 
         css_str.push(

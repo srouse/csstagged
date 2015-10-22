@@ -940,13 +940,13 @@ Mixin's
 
 
 .styleGuideList {
-    -ctag-tags: container,list;
+    -ctag-tags: list;
     -ctag-example: "...{ .styleGuideNav_listRow }{ .styleGuideNav_listRow }";
 
     width: 100%;
 
     .styleGuideNav_listRow {
-        -ctag-tags: app,row,container;
+        -ctag-tags: row;
         /* -ctag-example: "...
                 { .styleGuideNav_rowLabel }
                 { .styleGuideNav_rowLabelRight }";
@@ -1733,7 +1733,6 @@ Mixin's
             width: @col_7;
         }
 
-
         .ruleDetail_title {
             /*<csstag tag="code">
                 <div ...>
@@ -1789,6 +1788,15 @@ a [
             font-size: @font-size-lg;
             padding: 6px 0px;
         }
+
+        .ruleDetail_noneFound {
+            -ctag-tag: label;
+            -ctag-example: ...None Found;
+
+            color: @text-color-lighter;
+            font-size: @font-size;
+        }
+
         .ruleDetail_codeLine {
             -ctag-tag: code;
             -ctag-example: "...{ .ruleDetail_variableName }: #fff";
@@ -1881,6 +1889,19 @@ a [
             );
             background-color: #fff;
             width: 100%; height: 100%;
+        }
+    }
+
+    .ruleDetail_ruleNestingContainer {
+        -ctag-tag: navigation;
+        -ctag-example: "...{ .ruleNesting }";
+
+        width: 100%;
+        .calc( height , 100% , -70px );
+        float: left; position: relative;
+
+        body.s_detailTab & {
+            width: 300px; // @phi_inv;
         }
     }
 
@@ -2189,13 +2210,10 @@ a [
 // @import (reference) "../RuleDetail.less";
 
 .ruleNesting {
-    /*<csstag tag="page">
-    </csstag>*/
+    -ctag-tag: navigation;
+    -ctag-example: ...;
 
-    // .calc( width , 100% , -290px );
-    width: 100%;
-    .calc( height , 100% , -70px );
-    float: left;
+    width: 100%; height: 100%;
     background-color: #fff;
     padding: 20px;
     overflow: auto;
@@ -2205,9 +2223,7 @@ a [
     border-right: 1px solid #eee;
     display: block;
 
-    body.s_detailTab & {
-        width: 300px; // @phi_inv;
-    }
+    
 
     /*@media ( max-width: @screen-lg-min ) {
         body.s_detailTab_example &,
@@ -2829,7 +2845,6 @@ a [
         position: absolute;
         bottom: 0px;
         left: 0px;
-        overflow: auto;
 
     }
 
@@ -2839,16 +2854,27 @@ a [
 
 
 .styleGuideNav_rulesList {
-    -ctag-tags: container,list;
+    -ctag-tags: list;
     /* -ctag-example: "...{ .styleGuideNav_rulesListHeader }
                             { .styleGuideNav_listRow }
                             { .styleGuideNav_listRow }";*/
 
-    &:extend( .styleGuideList all );
-    width: 100%;
+    width: 100%; height: 100%;
+
+    .styleGuideNav_listRow {
+        -ctag-tags: row;
+        /* -ctag-example: "...
+                { .styleGuideNav_rowLabel }
+                { .styleGuideNav_rowLabelRight }";
+        */
+        &:extend(
+            .styleGuideList
+            .styleGuideNav_listRow all
+        );
+    }
 
     .styleGuideNav_rulesListHeader {
-        -ctag-tags: container,row;
+        -ctag-tags: row;
         /* -ctag-example: "...{ .styleGuideNav_rowLabel }";*/
 
         &:extend(
@@ -2858,6 +2884,9 @@ a [
 
         height: @row-md-lg;
         width: 100%; margin-left: 0px;
+        background-image: url("_assets/back_arrow_small.png");
+        background-position: 20px center;
+        padding-left: 26px;
 
         .styleGuideNav_rowLabel {
             -ctag-tags: label,pow;
@@ -2872,6 +2901,34 @@ a [
             overflow: hidden;
         }
     }
+
+    .styleGuideNav_rulesList_listWithHeader {
+        -ctag-tags: row;
+        /* -ctag-example: "...
+                { .styleGuideNav_rulesList .styleGuideNav_listRow }
+                { .styleGuideNav_rulesList .styleGuideNav_listRow }";
+        */
+
+        width: 100%;
+        .calc( height , 100% , -@row-md-lg );
+        position: absolute;
+        top: @row-md-lg; left: 0px;
+        overflow:auto;
+    }
+
+    .styleGuideNav_rulesList_list {
+        -ctag-tags: row;
+        /* -ctag-example: "...
+                { .styleGuideNav_rulesList .styleGuideNav_listRow }
+                { .styleGuideNav_rulesList .styleGuideNav_listRow }";
+        */
+
+        width: 100%; height: 100%;
+        position: absolute;
+        top: 0px; left: 0px;
+        overflow:auto;
+    }
+
 }
 
 

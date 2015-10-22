@@ -1395,14 +1395,14 @@ var RuleCSS = React.createClass({displayName: "RuleCSS",
 
     getCSSString: function ( rule ) {
 
-        if ( !rule || !rule.metadata )
+        if ( !rule || !rule.metadata || !rule.metadata.pointers )
             return React.createElement("div", null, "no info");
 
         var css_str = [];
 
 
         css_str.push(
-            React.createElement("div", {className: "ruleDetail_title"}, "Context")
+            React.createElement("div", {className: "ruleDetail_title"}, "Full Selector")
         );
         css_str.push(
             React.createElement("div", {className: "ruleDetail_codeLine", 
@@ -1431,12 +1431,17 @@ var RuleCSS = React.createClass({displayName: "RuleCSS",
             }
         }
 
+
+        css_str.push(
+            React.createElement("div", {className: "ruleDetail_title"}, "Based On")
+        );
+
         if (
-            rule.metadata.pointers.length > 0 ||
-            rule.metadata.extends.length > 0
+            rule.metadata.pointers.length == 0 &&
+            rule.metadata.extends.length == 0
         ) {
             css_str.push(
-                React.createElement("div", {className: "ruleDetail_title"}, "Based On")
+                React.createElement("div", {className: "ruleDetail_noneFound"}, "None")
             );
         }
 
@@ -1458,6 +1463,8 @@ var RuleCSS = React.createClass({displayName: "RuleCSS",
                 )
             );
         }
+
+
 
 
         css_str.push(
@@ -1745,9 +1752,11 @@ var RuleDetail = React.createClass({displayName: "RuleDetail",
                          content 
                     ), 
 
-                    React.createElement(RuleNesting, {
-                        css_info:  this.props.css_info, 
-                        rule:  tree_rule }), 
+                    React.createElement("div", {className: "ruleDetail_ruleNestingContainer"}, 
+                        React.createElement(RuleNesting, {
+                            css_info:  this.props.css_info, 
+                            rule:  tree_rule })
+                    ), 
 
                     React.createElement("div", {className: "ruleDetail_ruleNavPlaceholder"}, 
                         React.createElement(RuleDetailNav, {
@@ -2587,7 +2596,7 @@ var StyleGuide = React.createClass({displayName: "StyleGuide",
     componentDidMount: function() {
         var me = this;
         RouteState.addDiffListeners(
-    		["tree","tab","detailTab"],
+    		["tree","tab","detailTab","rule"],
     		function ( route , prev_route ) {
                 me.forceUpdate();
     		},
@@ -2602,8 +2611,11 @@ var StyleGuide = React.createClass({displayName: "StyleGuide",
     render: function() {
 
         var content = React.createElement(VariablesPage, null);
-        if ( RS.route.tree ) {
+        if ( RS.route.tree || RS.route.rule ) {
             var rule = CSSInfo.uuid_hash[ RS.route.tree ];
+            if ( RS.route.rule ) {
+                rule = CSSInfo.uuid_hash[ RS.route.rule ];
+            }
 
             var page = React.createElement(RulePreview, {
                             css_info:  CSSInfo, 
@@ -2660,19 +2672,19 @@ var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
 
     gotoVariables: function () {
         RS.merge(
-            {tab:"",tree:""}
+            {tab:"",tree:"",tag:"",rule:""}
         );
     },
 
     gotoDesignUI: function () {
         RS.merge(
-            {tab:"design_ui"}
+            {tab:"design_ui",tag:"",rule:"",tree:""}
         );
     },
 
     gotoBaseUI: function () {
         RS.merge(
-            {tab:"base_ui"}
+            {tab:"base_ui",tag:"",rule:"",tree:""}
         );
     },
 
@@ -2731,15 +2743,15 @@ var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
                     React.createElement("div", {className: "styleGuideNav_mainNav"}, 
                         React.createElement("div", {className:  "styleGuideNav_mainItem" + var_class, 
                             onClick:  this.gotoVariables}, 
-                            "Variables"
+                            "Vars"
                         ), 
                         React.createElement("div", {className:  "styleGuideNav_mainItem" + base_class, 
                             onClick:  this.gotoBaseUI}, 
-                            "Base UI"
+                            "Base"
                         ), 
                         React.createElement("div", {className:  "styleGuideNav_mainItem" + rules_class, 
                             onClick:  this.gotoDesignUI}, 
-                            "Design UI"
+                            "Design"
                         )
                     ), 
                     React.createElement("div", {className: "styleGuideNav_listContainer"}, 
@@ -2780,23 +2792,50 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
         );
     },
 
-    gotoRule: function ( rule ) {
+    backOutOfRule: function () {
         RS.merge(
-            {tree:rule.uuid}
+            {detailTab:"",tree:""}
+        );
+    },
+
+    gotoRule: function ( rule ) {
+        var detailTab = RS.route.detailTab;
+        if ( !detailTab )
+            detailTab = "example";
+
+        RS.merge(
+            {tree:rule.uuid,rule:"",detailTab:detailTab}
         );
     },
 
     render: function() {
 
-        if ( RS.route.tag ) {
+        var html = [];
+
+        if ( RS.route.tree ) {
+            var rule = CSSInfo.uuid_hash[ RS.route.tree ];
+
+            html.push(
+                React.createElement("div", {className: "styleGuideNav_rulesListHeader", 
+                    key:  "tag_title_" + tag, 
+                    onClick:  this.backOutOfRule}, 
+                    React.createElement("div", {className: "styleGuideNav_rowLabel"}, 
+                         rule.name
+                    )
+                )
+            );
+            html .push(
+                React.createElement("div", {className: "styleGuideNav_rulesList_listWithHeader"}, 
+                    React.createElement(RuleNesting, {rule:  rule })
+                )
+            );
+        }else if ( RS.route.tag ) {
             var tag = RS.route.tag;
 
             var rules = CSSInfo.design_tags_hash[ RS.route.tag ];
             if ( RS.route.tab == "base_ui" ) {
                 rules = CSSInfo.base_tags_hash[ RS.route.tag ];
             }
-
-            var html = [];
 
             html.push(
                 React.createElement("div", {className: "styleGuideNav_rulesListHeader", 
@@ -2808,18 +2847,17 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
                 )
             );
 
+            var sub_html = [];
             if ( rules ) {
-
                 var rule_uuid,rule;
                 for ( var t=0; t < rules.length; t++ ) {
                     rule_uuid = rules[t];
                     rule = CSSInfo.uuid_hash[ rule_uuid ];
-                    html.push(
+                    sub_html.push(
                         React.createElement("div", {className: "styleGuideNav_listRow", 
                             key:  "rule_" + rule.uuid, 
                             onClick:  this.gotoRule.bind( this , rule) }, 
                             React.createElement("div", {className: "styleGuideNav_rowLabelRight"}
-
                             ), 
                             React.createElement("div", {className: "styleGuideNav_rowLabel"}, 
                                  rule.name
@@ -2828,6 +2866,11 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
                     );
                 }
             }
+            html.push(
+                React.createElement("div", {className: "styleGuideNav_rulesList_listWithHeader"}, 
+                     sub_html 
+                )
+            );
 
         }else{
 
@@ -2836,17 +2879,21 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
                 tags = CSSInfo.base_tags;
             }
 
-            var html = [],tag,tag_rules;
+            var tag,tag_rules;
+
+            var sub_html = [];
             for ( var t=0; t < tags.length; t++ ) {
                 tag = tags[t];
 
                 if ( RS.route.tab == "base_ui" ) {
+                    if ( tag == "base" )
+                        continue;
                     tag_rules = CSSInfo.base_tags_hash[ tag ];
                 }else{
                     tag_rules = CSSInfo.design_tags_hash[ tag ];
                 }
-                
-                html.push(
+
+                sub_html.push(
                     React.createElement("div", {className: "styleGuideNav_listRow", 
                         key:  "tag_" + tag, 
                         onClick:  this.gotoTag.bind( this , tag) }, 
@@ -2859,6 +2906,11 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
                     )
                 );
             }
+            html.push(
+                React.createElement("div", {className: "styleGuideNav_rulesList_list"}, 
+                     sub_html 
+                )
+            );
 
         }
 

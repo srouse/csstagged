@@ -5,7 +5,7 @@ var StyleGuide = React.createClass({
     componentDidMount: function() {
         var me = this;
         RouteState.addDiffListeners(
-    		["tree","tab","detailTab"],
+    		["tree","tab","detailTab","rule"],
     		function ( route , prev_route ) {
                 me.forceUpdate();
     		},
@@ -20,8 +20,11 @@ var StyleGuide = React.createClass({
     render: function() {
 
         var content = <VariablesPage />;
-        if ( RS.route.tree ) {
+        if ( RS.route.tree || RS.route.rule ) {
             var rule = CSSInfo.uuid_hash[ RS.route.tree ];
+            if ( RS.route.rule ) {
+                rule = CSSInfo.uuid_hash[ RS.route.rule ];
+            }
 
             var page = <RulePreview
                             css_info={ CSSInfo }

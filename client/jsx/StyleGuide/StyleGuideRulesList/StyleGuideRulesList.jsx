@@ -25,7 +25,7 @@ var StyleGuideRulesNav = React.createClass({
 
     gotoTag: function ( tag ) {
         RS.merge(
-            {tag:tag}
+            {tag:tag+""}
         );
     },
 
@@ -66,6 +66,7 @@ var StyleGuideRulesNav = React.createClass({
                     <RuleNesting rule={ rule } />
                 </div>
             );
+
         }else if ( RS.route.tag ) {
             var tag = RS.route.tag;
 
@@ -115,9 +116,8 @@ var StyleGuideRulesNav = React.createClass({
             if ( RS.route.tab == "base_ui" ) {
                 tags = CSSInfo.base_tags;
             }
-
             var tag,tag_rules;
-
+            
             var sub_html = [];
             for ( var t=0; t < tags.length; t++ ) {
                 tag = tags[t];

@@ -39,7 +39,7 @@ var StyleGuideNav = React.createClass({
 
     gotoVariableCluster: function ( index ) {
         RS.merge(
-            {variables:index}
+            {variables:index+""}
         );
     },
 

@@ -2676,15 +2676,15 @@ var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
         );
     },
 
-    gotoDesignUI: function () {
+    gotoComps: function () {
         RS.merge(
-            {tab:"design_ui",tag:"",rule:"",tree:""}
+            {tab:"comps",tag:"",rule:"",tree:""}
         );
     },
 
-    gotoBaseUI: function () {
+    gotoObjs: function () {
         RS.merge(
-            {tab:"base_ui",tag:"",rule:"",tree:""}
+            {tab:"objs",tag:"",rule:"",tree:""}
         );
     },
 
@@ -2725,12 +2725,12 @@ var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
         var base_class = "";
         var rules_class = "";
         var var_list = [];
-        if ( RS.route.tab == "design_ui" ) {
+        if ( RS.route.tab == "comps" ) {
             rules_class = " selected";
             base_class = "";
             var_class = "";
             var_list = React.createElement(StyleGuideRulesNav, null);
-        }else if ( RS.route.tab == "base_ui" ) {
+        }else if ( RS.route.tab == "objs" ) {
             rules_class = "";
             base_class = " selected";
             var_class = "";
@@ -2743,15 +2743,15 @@ var StyleGuideNav = React.createClass({displayName: "StyleGuideNav",
                     React.createElement("div", {className: "styleGuideNav_mainNav"}, 
                         React.createElement("div", {className:  "styleGuideNav_mainItem" + var_class, 
                             onClick:  this.gotoVariables}, 
-                            "Vars"
+                            "Atoms"
                         ), 
                         React.createElement("div", {className:  "styleGuideNav_mainItem" + base_class, 
-                            onClick:  this.gotoBaseUI}, 
-                            "Base"
+                            onClick:  this.gotoObjs}, 
+                            "Objs"
                         ), 
                         React.createElement("div", {className:  "styleGuideNav_mainItem" + rules_class, 
-                            onClick:  this.gotoDesignUI}, 
-                            "Design"
+                            onClick:  this.gotoComps}, 
+                            "Comps"
                         )
                     ), 
                     React.createElement("div", {className: "styleGuideNav_listContainer"}, 
@@ -2834,7 +2834,7 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
             var tag = RS.route.tag;
 
             var rules = CSSInfo.design_tags_hash[ RS.route.tag ];
-            if ( RS.route.tab == "base_ui" ) {
+            if ( RS.route.tab == "objs" ) {
                 rules = CSSInfo.base_tags_hash[ RS.route.tag ];
             }
 
@@ -2876,7 +2876,7 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
         }else{
 
             var tags = CSSInfo.design_tags;
-            if ( RS.route.tab == "base_ui" ) {
+            if ( RS.route.tab == "objs" ) {
                 tags = CSSInfo.base_tags;
             }
             var tag,tag_rules;
@@ -2885,7 +2885,7 @@ var StyleGuideRulesNav = React.createClass({displayName: "StyleGuideRulesNav",
             for ( var t=0; t < tags.length; t++ ) {
                 tag = tags[t];
 
-                if ( RS.route.tab == "base_ui" ) {
+                if ( RS.route.tab == "objs" ) {
                     if ( tag == "base" )
                         continue;
                     tag_rules = CSSInfo.base_tags_hash[ tag ];

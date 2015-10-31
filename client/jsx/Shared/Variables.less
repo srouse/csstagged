@@ -6,6 +6,13 @@
 /* -ctag-description:
 		Some colors...
 */
+/* -ctag-system:
+		csstagged-[
+			tagged-rule-color,
+			simple-rule-color,
+			error-color
+		];
+*/
 @csstagged-tagged-rule-color : #79E1DA;
 @csstagged-simple-rule-color : #FFE29B;
 @csstagged-error-color : #FF8990;
@@ -18,6 +25,12 @@
 /* -ctag-description:
 		Some colors...
 */
+/* -ctag-system:
+		csstagged-[
+			purple,
+			blue
+		];
+*/
 @csstagged-purple : #7061AB;
 @csstagged-blue : #3B8182;
 
@@ -27,6 +40,12 @@
 */
 /* -ctag-description:
 		Variations of greys
+*/
+/* -ctag-system:
+		gray-[
+			dark[er,est],
+			light[er,est]
+		];
 */
 
 @gray-darkest : #000;
@@ -65,24 +84,6 @@
 @phi-rec: 161.8033%;
 @phi-inv: 100 - ( @phi );
 
-@phi-phi: @phi * .618033;
-@phi-phinv: @phi * .381967;
-
-@phi-phi-phi: @phi * .618033 * .618033;
-@phi-phi-phinv: @phi * .618033 * .381967;
-
-@phi-phinv-phi: @phi * .381967 * .618033;
-@phi-phinv-phinv: @phi * .381967 * .381967;
-
-@phinv-phi: @phi-inv * .618033;
-@phinv-phinv: @phi-inv * .381967;
-
-@phinv-phi-phi: @phi-inv * .618033 * .618033;
-@phinv-phi-phinv: @phi-inv * .618033 * .381967;
-
-@phinv-phinv-phi: @phi-inv * .381967 * .618033;
-@phinv-phinv-phinv: @phi-inv * .381967 * .381967;
-
 
 
 /* -ctag-title:
@@ -91,6 +92,15 @@
 /* -ctag-description:
 
 */
+/* -ctag-system:
+		screen-[
+			xs[-max],
+			sm-[min,max],
+			md-[min,max],
+			lg-[min,max]
+		];
+*/
+
 // Extra small screen / phone
 @screen-xs:                  480px;
 
@@ -112,6 +122,9 @@
 
 /* -ctag-title: Horizontal Layout */
 /* -ctag-description: Colors used; */
+/* -ctag-system:
+		col-[1,2,3...12];
+*/
 
 @col: 8.333333vw;
 @col_1: @col;
@@ -136,6 +149,25 @@
 		width: @col_1 !important;
 	}
 }
+
+/* -ctag-title: Horizontal Layout */
+/* -ctag-description: Atoms focused on horizontal layout; */
+/* -ctag-system:
+		width-col-[1,2,3...12];
+*/
+@width-col: 8.333333vw;
+@width-col-1: @width-col;
+@width-col-2: @width-col * 2;
+@width-col-3: @width-col * 3;
+@width-col-4: @width-col * 4;
+@width-col-5: @width-col * 5;
+@width-col-6: @width-col * 6;
+@width-col-7: @width-col * 7;
+@width-col-8: @width-col * 8;
+@width-col-9: @width-col * 9;
+@width-col-10: @width-col * 10;
+@width-col-11: @width-col * 11;
+@width-col-12: @width-col * 12;
 
 
 /* -ctag-title:
@@ -199,6 +231,7 @@
 */
 @border-bottom: 1px solid @gray-lightest;
 @border-bottom-dk: 1px solid @gray-lighter;
+
 
 
 /* -ctag-title:

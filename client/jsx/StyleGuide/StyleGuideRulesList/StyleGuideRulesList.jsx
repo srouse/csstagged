@@ -71,7 +71,7 @@ var StyleGuideRulesNav = React.createClass({
             var tag = RS.route.tag;
 
             var rules = CSSInfo.design_tags_hash[ RS.route.tag ];
-            if ( RS.route.tab == "base_ui" ) {
+            if ( RS.route.tab == "objs" ) {
                 rules = CSSInfo.base_tags_hash[ RS.route.tag ];
             }
 
@@ -113,7 +113,7 @@ var StyleGuideRulesNav = React.createClass({
         }else{
 
             var tags = CSSInfo.design_tags;
-            if ( RS.route.tab == "base_ui" ) {
+            if ( RS.route.tab == "objs" ) {
                 tags = CSSInfo.base_tags;
             }
             var tag,tag_rules;
@@ -122,7 +122,7 @@ var StyleGuideRulesNav = React.createClass({
             for ( var t=0; t < tags.length; t++ ) {
                 tag = tags[t];
 
-                if ( RS.route.tab == "base_ui" ) {
+                if ( RS.route.tab == "objs" ) {
                     if ( tag == "base" )
                         continue;
                     tag_rules = CSSInfo.base_tags_hash[ tag ];

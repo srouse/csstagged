@@ -492,7 +492,11 @@ function processRules ( css_dom ) {
         var sel_str;
         for ( var i=0; i<selector_lookup.length; i++ ) {
             sel_str = selector_lookup[i];
-            if ( sel_str != ">" ) {
+            if (
+                sel_str != ">" //&&
+                //sel_str != "~" &&
+                //sel_str != "+"
+            ) {
                 new_selector_lookup.push( sel_str );
             }
         }

@@ -25,15 +25,15 @@ var StyleGuideNav = React.createClass({
         );
     },
 
-    gotoDesignUI: function () {
+    gotoComps: function () {
         RS.merge(
-            {tab:"design_ui",tag:"",rule:"",tree:""}
+            {tab:"comps",tag:"",rule:"",tree:""}
         );
     },
 
-    gotoBaseUI: function () {
+    gotoObjs: function () {
         RS.merge(
-            {tab:"base_ui",tag:"",rule:"",tree:""}
+            {tab:"objs",tag:"",rule:"",tree:""}
         );
     },
 
@@ -74,12 +74,12 @@ var StyleGuideNav = React.createClass({
         var base_class = "";
         var rules_class = "";
         var var_list = [];
-        if ( RS.route.tab == "design_ui" ) {
+        if ( RS.route.tab == "comps" ) {
             rules_class = " selected";
             base_class = "";
             var_class = "";
             var_list = <StyleGuideRulesNav />;
-        }else if ( RS.route.tab == "base_ui" ) {
+        }else if ( RS.route.tab == "objs" ) {
             rules_class = "";
             base_class = " selected";
             var_class = "";
@@ -92,15 +92,15 @@ var StyleGuideNav = React.createClass({
                     <div className="styleGuideNav_mainNav">
                         <div className={ "styleGuideNav_mainItem" + var_class }
                             onClick={ this.gotoVariables }>
-                            Vars
+                            Atoms
                         </div>
                         <div className={ "styleGuideNav_mainItem" + base_class }
-                            onClick={ this.gotoBaseUI }>
-                            Base
+                            onClick={ this.gotoObjs }>
+                            Objs
                         </div>
                         <div className={ "styleGuideNav_mainItem" + rules_class }
-                            onClick={ this.gotoDesignUI }>
-                            Design
+                            onClick={ this.gotoComps }>
+                            Comps
                         </div>
                     </div>
                     <div className="styleGuideNav_listContainer">

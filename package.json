@@ -2,7 +2,7 @@
     "name" : "csstagged",
     "description" : "csstagged",
     "author" : "srouse",
-    "version" : "0.2.7",
+    "version" : "0.2.8",
     "dependencies": {
         "grunt":"~0.4",
         "grunt-contrib-watch": "~0.6",
@@ -11,7 +11,7 @@
         "grunt-react" : "~0.12",
         "grunt-css-parse" : "~0.2",
         "extend-grunt-plugin" : "~0.1",
-
+        "raphael" : "~2.1",
 
         "less":"~2.5",
         "jquery": "~1.11",

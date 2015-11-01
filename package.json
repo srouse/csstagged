@@ -22,7 +22,9 @@
         "react",
         "routestate",
         "raphael",
-        "nanoscroller"
+        "nanoscroller",
+        "grunt-contrib-less",
+        "grunt-contrib-concat"
     ],
     "devDependencies" : {
     },

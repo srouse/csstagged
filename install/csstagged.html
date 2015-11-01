@@ -11,9 +11,35 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<meta name="viewport" content="user-scalable=no,width=device-width,
 				initial-scale=1.0,maximum-scale=1.0" />
+
+		<script src="csstagged.js"></script>
+		<link rel='stylesheet' type='text/css' href='csstagged.css'></link>
 		<script>
-			var install_base = "../../node_modules/csstagged/";
-			document.write("<script src='" + install_base + "client/install.js'></scr"+"ipt>");
+			var RS,CSSInfo;
+			var install_base = "";
+			window.onload = function () {
+				RouteState.listenToHash();
+				RS = RouteState;
+
+				$.ajax(
+					"csstagged.json?" + Math.random()
+				).done(
+					function ( css_dom ) {
+						var css_info = processRules ( css_dom );
+						CSSInfo = css_info;
+
+						React.render(
+							React.createElement(
+								CSSComp,
+								{
+									css_info:css_info
+								}
+							),
+							document.body
+						);
+					}
+				);
+			};
 		</script>
 	</head>
 	<body></body>

@@ -15,17 +15,17 @@ module.exports = function(grunt) {
     };
 
     configObj.react = configObj.react || {};
-    configObj.react["csscomp"] = {
+    configObj.react["csstagged"] = {
         files: {
-            'client/_client/csscomp.js':
+            'install/csstagged.js':
             'client/**/*.jsx'
         }
     };
 
     configObj.concat = configObj.concat || {};
-    configObj.concat["csscomp"] = {
+    configObj.concat["csstagged"] = {
         files: {
-            'client/_client/csscomp.less':
+            'install/csstagged.less':
             [
                 // 'client/less/test.less',//fonts there
                 'client/less/csstagged.less',//core CTag
@@ -39,17 +39,16 @@ module.exports = function(grunt) {
     }
 
     configObj.less = configObj.less || {};
-    configObj.less["csscomp"] = {
+    configObj.less["csstagged"] = {
         options: {
             plugins: [
                 new (require('./client/less-plugin-csstagged/index.js'))()
             ]
         },
         files: {
-            'client/_client/csscomp.css':
+            'install/csstagged.css':
             [
-                'client/_client/csscomp.less'
-                //'bootstrap/bootstrap.css'
+                'install/csstagged.less'
             ]
         }
     };
@@ -57,10 +56,10 @@ module.exports = function(grunt) {
     configObj.css_parse = {
         dist: {
             files: {
-                'client/_client/csstagged.json':
+                'install/csstagged.json':
                 [
-                    'client/_client/csscomp.css'
-                    //'client/_client/csscomp_bootstrap.css'
+                    'install/csstagged.css'
+                    //'install/csstagged_bootstrap.css'
                 ]
             }
         }
@@ -75,14 +74,58 @@ module.exports = function(grunt) {
         tasks: ["default"]
     };
 
+    /*==========================
+    Final Packages
+    ==========================*/
+    configObj.concat = configObj.concat || {};
+    configObj.concat["final_js"] = {
+        files: {
+            'install/csstagged.js':
+            [
+                "node_modules/jquery/dist/jquery.min.js",
+                "node_modules/routestate/RouteState.js",
+                "node_modules/raphael/raphael-min.js",
+                "node_modules/react/dist/react.js",
+                "node_modules/nanoscroller/bin/javascripts/jquery.nanoscroller.js",
+
+                "client/libs/Hashes.js",
+                "client/libs/CTagCircles.js",
+                "client/libs/RuleUtil.js",
+                "client/libs/vkbeautify.0.99.00.beta.js",
+
+                "client/csstagging_rules.js",
+                "client/csstagging_tagged.js",
+                "client/csstagging_states.js",
+                "client/csstagging_scores.js",
+                "client/csstagging_serializers.js",
+                "client/csstagging_utils.js",
+                "client/csstagging.js",
+                "install/csstagged.js"
+            ]
+        }
+    };
+    configObj.concat["final_css"] = {
+        files: {
+            'install/csstagged.css':
+            [
+                "node_modules/nanoscroller/bin/css/nanoscroller.css",
+                "install/csstagged.css"
+            ]
+        }
+    };
+
+
+
     grunt.initConfig( configObj );
 
     // 'build' was put together in processProjects
     grunt.registerTask( 'default' , [
-        'concat:csscomp',
-        'less:csscomp',
+        'concat:csstagged',
+        'less:csstagged',
         'react',
-        'css_parse'
+        'css_parse',
+        'concat:final_js',
+        'concat:final_css'
     ] );
 
 }

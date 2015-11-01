@@ -2,16 +2,11 @@
 
 
 var path = require("path");
-var fileSave = require('file-save');
-
-var extendGruntPlugin = require('extend-grunt-plugin');
-
 
 module.exports = function (grunt) {
 
     grunt.registerMultiTask('csstagged', 'compile and visualize your less', function () {
 
-        console.log( "Hi" );
 		if ( this.files.length < 1 ) {
 		    grunt.verbose.warn('Destination not written because no source files were provided.');
 	    }
@@ -28,14 +23,13 @@ module.exports = function (grunt) {
                     grunt.log.warn('Source file "' + src + '" not found.');
                     return false;
                 }
-
-                console.log( src );
             }
 
             var dest_arr = file.dest.split(".");
             dest_arr.pop();
             var dest_root = dest_arr.join(".");
-            console.log( "ROOT:" + dest_root );
+            var dest_root_folder = getFolder( dest_root );
+            console.log(dest_root_folder);
 
             //CONCAT
             var concat_options = {};
@@ -47,6 +41,7 @@ module.exports = function (grunt) {
             require('grunt-contrib-concat/tasks/concat.js')( grunt );
             grunt.config.set( 'concat' , concat_options );
             grunt.task.run( 'concat:' + concat_id );
+
 
             //LESS
             var less_options = {};
@@ -64,27 +59,43 @@ module.exports = function (grunt) {
             grunt.config.set( 'less' , less_options );
             grunt.task.run( 'less:' + less_id );
 
+
             //CSS DOM
-
-            //require('grunt-css-parse/tasks/css_parse.js')( grunt );
-            /*var concat_options = {};
-            var concat_id = 'concat.allfiles_' + f;
-            concat_options[ concat_id ] = {
-                src: file.src,
-                dest: dest_root + ".less"
+            var css_parse_options = {};
+            var css_parse_id = 'css_parse.allfiles_' + f;
+            css_parse_options[ css_parse_id ] = {
+                src: dest_root + ".css",
+                dest: dest_root + ".json"
             }
-            require('grunt-contrib-concat/tasks/concat.js')( grunt );
-            grunt.config.set( 'concat' , concat_options );
-            grunt.task.run( 'concat:' + concat_id );*/
+            require('grunt-css-parse/tasks/css_parse.js')( grunt );
+            grunt.config.set( 'css_parse' , css_parse_options );
+            grunt.task.run( 'css_parse:' + css_parse_id );
 
 
-            //src_obj = require( path.resolve( src ) );
-            //protoData.generateData( src_obj );
+            var filename = require.resolve( "../install/csstagged.html" );
+            grunt.file.write(
+                dest_root_folder + "/csstagged.html",
+                grunt.file.read( filename )
+            );
 
-            //fileSave( path.resolve( dest ) )
-            //        .write( protoData.serializedData );
+            // TODO: this is ugly...need all the files to migrate and I don't
+            // know how to get reference to folder right now.
+            var assets_filename = require.resolve( "../client/_client/_assets/logo_h_small.png" );
+
+            grunt.file.recurse( getFolder(assets_filename)  ,
+                function (abspath, rootdir, subdir, filename) {
+                    console.log( filename );
+                }
+            );
         }
 
     });
 
+
+    function getFolder ( filepath ) {
+        var filepath_arr = filepath.split("/");
+        filepath_arr.pop();
+        var filepath_folder = filepath_arr.join("/");
+        return filepath_folder;
+    }
 }

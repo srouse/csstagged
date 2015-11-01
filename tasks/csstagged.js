@@ -29,7 +29,6 @@ module.exports = function (grunt) {
             dest_arr.pop();
             var dest_root = dest_arr.join(".");
             var dest_root_folder = getFolder( dest_root );
-            console.log(dest_root_folder);
 
             //CONCAT
             var concat_options = {};
@@ -65,7 +64,7 @@ module.exports = function (grunt) {
             var css_parse_id = 'css_parse.allfiles_' + f;
             css_parse_options[ css_parse_id ] = {
                 src: dest_root + ".css",
-                dest: dest_root + ".json"
+                dest: dest_root_folder + "csstagged.json"
             }
             require('grunt-css-parse/tasks/css_parse.js')( grunt );
             grunt.config.set( 'css_parse' , css_parse_options );
@@ -80,7 +79,7 @@ module.exports = function (grunt) {
 
             // TODO: this is ugly...need all the files to migrate and I don't
             // know how to get reference to folder right now.
-            var assets_filename = require.resolve( "../client/_client/_assets/logo_h_small.png" );
+            var assets_filename = require.resolve( "../client/_client/_assets/csstagged.css" );
 
             grunt.file.recurse( getFolder(assets_filename)  ,
                 function (abspath, rootdir, subdir, filename) {

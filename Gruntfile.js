@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     configObj.react = configObj.react || {};
     configObj.react["csstagged"] = {
         files: {
-            'install/csstagged.js':
+            'install/_assets/csstagged.js':
             'client/**/*.jsx'
         }
     };
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     configObj.concat = configObj.concat || {};
     configObj.concat["csstagged"] = {
         files: {
-            'install/csstagged.less':
+            'install/_assets/csstagged.less':
             [
                 // 'client/less/test.less',//fonts there
                 'client/less/csstagged.less',//core CTag
@@ -46,9 +46,9 @@ module.exports = function(grunt) {
             ]
         },
         files: {
-            'install/csstagged.css':
+            'install/_assets/csstagged.css':
             [
-                'install/csstagged.less'
+                'install/_assets/csstagged.less'
             ]
         }
     };
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
             files: {
                 'install/csstagged.json':
                 [
-                    'install/csstagged.css'
+                    'install/_assets/csstagged.css'
                     //'install/csstagged_bootstrap.css'
                 ]
             }
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
     configObj.concat = configObj.concat || {};
     configObj.concat["final_js"] = {
         files: {
-            'install/csstagged.js':
+            'install/_assets/csstagged.js':
             [
                 "node_modules/jquery/dist/jquery.min.js",
                 "node_modules/routestate/RouteState.js",
@@ -100,16 +100,16 @@ module.exports = function(grunt) {
                 "client/csstagging_serializers.js",
                 "client/csstagging_utils.js",
                 "client/csstagging.js",
-                "install/csstagged.js"
+                "install/_assets/csstagged.js"
             ]
         }
     };
     configObj.concat["final_css"] = {
         files: {
-            'install/csstagged.css':
+            'install/_assets/csstagged.css':
             [
                 "node_modules/nanoscroller/bin/css/nanoscroller.css",
-                "install/csstagged.css"
+                "install/_assets/csstagged.css"
             ]
         }
     };

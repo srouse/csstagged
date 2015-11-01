@@ -45,27 +45,27 @@
     -ctag-global: "true";
 
     font-family: Muli;
-    src: url('_assets/Muli.ttf');
+    src: url('Muli.ttf');
     font-weight: normal;
 }
 @font-face {
     font-family: Muli;
-    src: url('_assets/Muli-Bold.ttf');
+    src: url('Muli-Bold.ttf');
     font-weight: bold;
 }
 @font-face {
     font-family: Muli;
-    src: url('_assets/Muli-Light.ttf');
+    src: url('Muli-Light.ttf');
     font-weight: light;
 }
 @font-face {
     font-family: Muli;
-    src: url('_assets/Muli-ExtraLight.ttf');
+    src: url('Muli-ExtraLight.ttf');
     font-weight: extralight;
 }
 @font-face {
     font-family: Muli;
-    src: url('_assets/Muli-Italic.ttf');
+    src: url('Muli-Italic.ttf');
     font-style: italic;
 }
 
@@ -105,7 +105,7 @@ html {
 .expandoBack {
     width: 30px; height: 100%;
     float: left;
-    background-image: url('_assets/back_arrow.png');
+    background-image: url('back_arrow.png');
     transition: width .3s, background-size .3s;
     &:extend( .hand );
 
@@ -122,10 +122,10 @@ html {
     &:extend(
         .expandoBack all
     );
-    background-image: url('_assets/close_arrow.png');
+    background-image: url('close_arrow.png');
 
     &:hover {
-        background-image: url('_assets/close_arrow_dark.png');
+        background-image: url('close_arrow_dark.png');
     }
 }
 
@@ -960,7 +960,7 @@ Mixin's
         width: 60px; height: 60px;
         position: absolute;
         right: 0px; top: 0px;
-        background-image: url("_assets/close_light.png");
+        background-image: url("close_light.png");
         &:extend( .hand );
         &:hover {
             background-color: rgba( 0,0,0,.5);
@@ -1295,7 +1295,7 @@ Mixin's
                 height: @column_logo_height;
                 // background-size: 50%;
                 background-size: contain;
-                background-image: url("_assets/logo_h_small@2x.png");
+                background-image: url("logo_h_small@2x.png");
             }
         }
     }
@@ -1980,13 +1980,13 @@ a [
 
                 width: 70px; height: 100%;
                 float: left;
-                background-image: url('_assets/close_arrow.png');
+                background-image: url('close_arrow.png');
                 &:extend( .hand );
                 transition: width .3s;
 
                 &:hover {
                     background-color: #eee;
-                    background-image: url('_assets/close_arrow_dark.png');
+                    background-image: url('close_arrow_dark.png');
                 }
 
                 /*@media ( max-width: @screen-lg-min ) {
@@ -2001,14 +2001,14 @@ a [
                 */
                 width: 70px; height: 100%;
                 float: right;
-                background-image: url('_assets/show_tree.png');
+                background-image: url('show_tree.png');
                 &:extend( .hand );
                 display: none;
                 transition: width .3s;
 
                 &:hover {
                     background-color: #eee;
-                    background-image: url('_assets/show_tree_dark.png');
+                    background-image: url('show_tree_dark.png');
                 }
 
                 body.s_detailTab & {
@@ -2109,7 +2109,7 @@ a [
         .ruleDetailNav_back {
             width: 40px; height: 100%;
             float: left;
-            background-image: url('_assets/back_arrow.png');
+            background-image: url('back_arrow.png');
             transition: width .3s;
             &:extend( .hand );
 
@@ -2226,7 +2226,7 @@ a [
                     "..."
             */
             width: 70px; height: 100%;
-            background-image: url("_assets/close.png");
+            background-image: url("close.png");
             background-color: #fff;
             &:extend( .hand );
             margin-right: 0px;
@@ -2705,14 +2705,14 @@ a [
 
             margin-right: 10px;
             background-color: #fff;
-            background-image: url("_assets/bg_color_icon.png");
+            background-image: url("bg_color_icon.png");
             &:hover {
-                background-image: url("_assets/bg_color_icon_dark.png");
+                background-image: url("bg_color_icon_dark.png");
             }
 
             &.selected {
                 background-color: #777;
-                background-image: url("_assets/bg_color_icon_dark.png");
+                background-image: url("bg_color_icon_dark.png");
 
                 &:hover {
                     background-color: #aaa;
@@ -2729,14 +2729,14 @@ a [
                 .rulePreview_nav
                 .rulePreview_navItem all
             );
-            background-image: url("_assets/outline_icon.png");
+            background-image: url("outline_icon.png");
             &:hover {
-                background-image: url("_assets/outline_icon_dark.png");
+                background-image: url("outline_icon_dark.png");
             }
 
             &.selected {
                 background-color: #777;
-                background-image: url("_assets/outline_icon_dark.png");
+                background-image: url("outline_icon_dark.png");
 
                 &:hover {
                     background-color: #aaa;
@@ -2754,9 +2754,9 @@ a [
             );
 
             background-color: #fff;
-            background-image: url("_assets/html_icon.png");
+            background-image: url("html_icon.png");
             &:hover {
-                background-image: url("_assets/html_icon_dark.png");
+                background-image: url("html_icon_dark.png");
             }
         }
     }
@@ -2919,7 +2919,7 @@ a [
 
         height: @row-md-lg;
         width: 100%; margin-left: 0px;
-        background-image: url("_assets/back_arrow_small.png");
+        background-image: url("back_arrow_small.png");
         background-position: 20px center;
         padding-left: 26px;
 

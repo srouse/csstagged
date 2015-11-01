@@ -25,17 +25,18 @@ module.exports = function (grunt) {
                 }
             }
 
-            var dest_arr = file.dest.split(".");
-            dest_arr.pop();
-            var dest_root = dest_arr.join(".");
-            var dest_root_folder = getFolder( dest_root );
+            if ( !grunt.file.isDir( file.dest ) ) {
+                grunt.log.warn('Destination "' + file.dest + '" is not a directory.');
+            }
+
+            var dest_root_folder = file.dest;
 
             //CONCAT
             var concat_options = {};
             var concat_id = 'concat.allfiles_' + f;
             concat_options[ concat_id ] = {
                 src: file.src,
-                dest: dest_root + ".less"
+                dest: dest_root_folder + "/stylesheet.less"
             }
             require('grunt-contrib-concat/tasks/concat.js')( grunt );
             grunt.config.set( 'concat' , concat_options );
@@ -46,8 +47,8 @@ module.exports = function (grunt) {
             var less_options = {};
             var less_id = 'less.allfiles_' + f;
             less_options[ less_id ] = {
-                src: [dest_root + ".less"],
-                dest: dest_root + ".css",
+                src: [dest_root_folder + "/stylesheet.less"],
+                dest: dest_root_folder + "/stylesheet.css",
                 options: {
                     plugins: [
                         new (require( '../client/less-plugin-csstagged/index.js' ))()
@@ -63,8 +64,8 @@ module.exports = function (grunt) {
             var css_parse_options = {};
             var css_parse_id = 'css_parse.allfiles_' + f;
             css_parse_options[ css_parse_id ] = {
-                src: dest_root + ".css",
-                dest: dest_root_folder + "csstagged.json"
+                src: dest_root_folder + "/stylesheet.css",
+                dest: dest_root_folder + "/csstagged.json"
             }
             require('grunt-css-parse/tasks/css_parse.js')( grunt );
             grunt.config.set( 'css_parse' , css_parse_options );
@@ -77,13 +78,22 @@ module.exports = function (grunt) {
                 grunt.file.read( filename )
             );
 
+            var filename = require.resolve( "../install/styleguide.html" );
+            grunt.file.write(
+                dest_root_folder + "/styleguide.html",
+                grunt.file.read( filename )
+            );
+
             // TODO: this is ugly...need all the files to migrate and I don't
             // know how to get reference to folder right now.
-            var assets_filename = require.resolve( "../client/_client/_assets/csstagged.css" );
-
-            grunt.file.recurse( getFolder(assets_filename)  ,
-                function (abspath, rootdir, subdir, filename) {
-                    console.log( filename );
+            var assets_filename = require.resolve( "../install/_assets/csstagged.css" );
+            var assets_folder = getFolder( assets_filename );
+            grunt.file.recurse(  assets_folder ,
+                function (abspath, rootdir, subdir, filename ) {
+                    grunt.file.write(
+                        dest_root_folder + "/_assets/" + filename,
+                        grunt.file.read( assets_folder + "/" + filename )
+                    );
                 }
             );
         }

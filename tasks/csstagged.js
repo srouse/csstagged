@@ -25,10 +25,6 @@ module.exports = function (grunt) {
                 }
             }
 
-            if ( !grunt.file.isDir( file.dest ) ) {
-                grunt.log.warn('Destination "' + file.dest + '" is not a directory.');
-            }
-
             var dest_root_folder = file.dest;
 
             //CONCAT
@@ -90,9 +86,9 @@ module.exports = function (grunt) {
             var assets_folder = getFolder( assets_filename );
             grunt.file.recurse(  assets_folder ,
                 function (abspath, rootdir, subdir, filename ) {
-                    grunt.file.write(
-                        dest_root_folder + "/_assets/" + filename,
-                        grunt.file.read( assets_folder + "/" + filename )
+                    grunt.file.copy(
+                        assets_folder + "/" + filename,
+                        dest_root_folder + "/_assets/" + filename
                     );
                 }
             );

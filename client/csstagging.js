@@ -483,6 +483,10 @@ function processRules ( css_dom ) {
 
     }
 
+    function bemContextualization ( rule , returnObj ) {
+
+    }
+
     function contextualizeRule ( rule , returnObj ) {
         // look up if it is a child of another comp
         // b/c it's less it will be in sequence (otherwise, fuck off)

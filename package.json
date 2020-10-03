@@ -14,7 +14,7 @@
 
         "less":"~2.5",
         "jquery": "~1.11",
-        "react" : "~0.13",
+        "react" : "~16.13",
         "routestate":"~0.3",
         "nanoscroller":"~0.8"
     },
